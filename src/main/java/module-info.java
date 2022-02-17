@@ -1,0 +1,12 @@
+module at.javatetris.project.javatetris {
+    requires javafx.controls;
+    requires javafx.fxml;
+
+    requires org.controlsfx.controls;
+    requires com.dlsc.formsfx;
+    requires org.kordamp.ikonli.javafx;
+    requires org.kordamp.bootstrapfx.core;
+
+    opens at.javatetris.project.javatetris to javafx.fxml;
+    exports at.javatetris.project.javatetris;
+}
