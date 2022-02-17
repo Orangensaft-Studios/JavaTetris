@@ -1,0 +1,8 @@
+git clone git@netzwerktechnik.htl.rennweg.at:21_2ci/public/projekt02_JavaTetris
+
+git remote add all git@netzwerktechnik.htl.rennweg.at:21_2ci/public/projekt02_JavaTetris
+git remote set-url --add --push all https://github.com/EinSev/JavaTetris.git
+git remote set-url --add --push all git@netzwerktechnik.htl.rennweg.at:21_2ci/public/projekt02_JavaTetris
+
+Bei pushs immer:
+git push all master
