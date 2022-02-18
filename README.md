@@ -16,6 +16,12 @@ ___
 Repository am Schul-Git-Server: `21_2ci/public/projekt02_JavaTetris` <br>
 Repository auf GitHub: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;`https://github.com/EinSev/JavaTetris`
 
+Klonen:
+```
+IntelliJ > File > New > Project from Version Control
+URL: git@netzwerktechnik.htl.rennweg.at:21_2ci/public/projekt02_JavaTetris
+```
+
 Auf beide gleichzeitig pushen in IntelliJ: <br>
 Vorbereitung:
 ```
