@@ -16,7 +16,7 @@ ___
 Repository am Schul-Git-Server: `21_2ci/public/projekt02_JavaTetris` <br>
 Repository auf GitHub: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;`https://github.com/EinSev/JavaTetris`
 
-Auf beide gleichzeitig pushen in IntelliJ:
+Auf beide gleichzeitig pushen in IntelliJ: <br>
 Vorbereitung:
 ```
 git remote add all git@netzwerktechnik.htl.rennweg.at:21_2ci/public/projekt02_JavaTetris
