@@ -1,8 +1,8 @@
 <!-- README file mainly for GitHub -->
-# <center> JavaTetris </center>
-### <center> ein SEW Projekt von </center>
-## <center> [Severin](https://github.com/einsev) und [Roman](https://github.com/Ixpiria)
-### <center> im Jahr 2022 | 2CI</center> 
+# JavaTetris 
+#### ein SEW Projekt von 
+### [Severin](https://github.com/einsev) und [Roman](https://github.com/Ixpiria)
+#### im Jahr 2022 | 2CI
 
 ## ❓ Was ist JavaTetris ##
 JavaTetris ist ein Klon des beliebten Retrospiels "[Tetris](https://de.wikipedia.org/wiki/Tetris)",
@@ -12,7 +12,7 @@ Modi und Statistiküberscihten erweitert, reizt mit Leaderboards und wird von Hi
 ## 📔 Pflichtenheft
 Das Pflichtenheft findet man hier
 
-### 📄 GIT
+## 📄 GIT
 Repository am Schul-Git-Server:&nbsp;`21_2ci/public/projekt02_JavaTetris` <br>
 Repository auf GitHub: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;`https://github.com/EinSev/JavaTetris`
 <br>
