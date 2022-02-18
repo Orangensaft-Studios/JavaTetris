@@ -14,7 +14,7 @@ Das Pflichtenheft findet man hier
 ___
 ### 📄 GIT
 Repository am Schul-Git-Server: `21_2ci/public/projekt02_JavaTetris` <br>
-Repository auf GitHub: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;`https://github.com/EinSev/JavaTetris`
+Repository auf GitHub: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; `https://github.com/EinSev/JavaTetris`
 
 Auf beide gleichzeitig pushen in IntelliJ: <br>
 Vorbereitung:
