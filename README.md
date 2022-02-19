@@ -6,13 +6,24 @@
 #### im Jahr 2022 | 2CI
 
 
-## ❓ Was ist JavaTetris ##
+##❓ Was ist JavaTetris
 JavaTetris ist ein Klon des beliebten Retrospiels "[Tetris](https://de.wikipedia.org/wiki/Tetris)",
 welches man auf [tetris.com](https://tetris.com) kostenlos spielen kann. Jedoch wird dieses Programm mit verschiedenen
-Modi und Statistiküberscihten erweitert, reizt mit Leaderboards und wird von Hintergrundmusik musikalisch untermalt.
+Modi und Statistikübersichten erweitert, reizt mit Leaderboards und wird von Hintergrundmusik musikalisch untermalt.<br>
+*(aus [Pflichtenheft](#📔-Pflichtenheft))*
 
-## 📔 Pflichtenheft
-Das Pflichtenheft findet man [hier](./Ressourcen/Pflichtenheft/)
+
+##📔 Pflichtenheft
+Pflichtenheft v1 findet man [hier](./Ressourcen/Pflichtenheft/JavaTetris_Pflichtenheft_v1). <br>
+Ansonsten ist [hier](./Ressourcen/Pflichtenheft/) der Ordner dazu.
+
+OneDrive: [Link](https://htl3r-my.sharepoint.com/:b:/g/personal/0212_htl_rennweg_at/EcUWClppGLpKqXtuq-EtV0cBfFmAxHpPJ83YAG8JLMawxA?e=5mcyBq)
+
+##🗺️ Roadmap
+- [x] 17 Februar: Projekt erstellt
+- [ ] 22 Februar: Vorstellung Pflichtenheft u. Projekt
+- [ ] 22 März: Zwischenabgabe mit erstem lauffähigen Prototyp
+- [ ] 19 April: Finale Abgabe
 
 ## 📄 GIT
 Repository am Schul-Git-Server:&nbsp;`21_2ci/public/projekt02_JavaTetris` <br>
@@ -21,7 +32,7 @@ Repository auf GitHub: &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;`h
 <br>
 **in IntelliJ**
 <br>
-#### Klonen:
+#### Clone
 ```
 # IntelliJ > File > New > Project from Version Control
 URL: git@netzwerktechnik.htl.rennweg.at:21_2ci/public/projekt02_JavaTetris
