@@ -6,20 +6,20 @@
 #### im Jahr 2022 | 2CI
 
 
-##❓ Was ist JavaTetris
+## ❓ Was ist JavaTetris
 JavaTetris ist ein Klon des beliebten Retrospiels "[Tetris](https://de.wikipedia.org/wiki/Tetris)",
 welches man auf [tetris.com](https://tetris.com) kostenlos spielen kann. Jedoch wird dieses Programm mit verschiedenen
 Modi und Statistikübersichten erweitert, reizt mit Leaderboards und wird von Hintergrundmusik musikalisch untermalt.<br>
 *(aus [Pflichtenheft](#📔-Pflichtenheft))*
 
 
-##📔 Pflichtenheft
-Pflichtenheft v1 findet man [hier](./Ressourcen/Pflichtenheft/JavaTetris_Pflichtenheft_v1). <br>
+## 📔 Pflichtenheft
+Pflichtenheft v1 findet man [hier](./Ressourcen/Pflichtenheft/JavaTetris_Pflichtenheft_v1.pdf). <br>
 Ansonsten ist [hier](./Ressourcen/Pflichtenheft/) der Ordner dazu.
 
 OneDrive: [Link](https://htl3r-my.sharepoint.com/:b:/g/personal/0212_htl_rennweg_at/EcUWClppGLpKqXtuq-EtV0cBfFmAxHpPJ83YAG8JLMawxA?e=5mcyBq)
 
-##🗺️ Roadmap
+## 🗺️ Roadmap
 - [x] 17 Februar: Projekt erstellt
 - [ ] 22 Februar: Vorstellung Pflichtenheft u. Projekt
 - [ ] 22 März: Zwischenabgabe mit erstem lauffähigen Prototyp
