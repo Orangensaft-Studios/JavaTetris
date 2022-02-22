@@ -5,9 +5,10 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 
-public class Move extends Application {
 
-    KeyEvent event ;
+public class Move extends Application implements KeyListener {
+
+    KeyEvent event = new KeyEvent(KeyEvent.KEY_PRESSED, KeyEvent.KEYCODE);
     @Override
     public void start(Stage stage) throws Exception {
 
@@ -16,7 +17,7 @@ public class Move extends Application {
 
     public void keyPressed(KeyEvent e) {
         if (e.getCode() == e.getCode().A) {
-            System.out.println("hi");
+            System.out.println("h");
         }
     }
 
