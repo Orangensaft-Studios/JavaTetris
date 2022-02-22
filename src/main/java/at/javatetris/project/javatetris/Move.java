@@ -19,4 +19,8 @@ public class Move extends Application {
             System.out.println("hi");
         }
     }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 }
