@@ -20,4 +20,8 @@ public class Move extends Application implements KeyListener {
             System.out.println("h");
         }
     }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 }
