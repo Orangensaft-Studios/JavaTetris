@@ -5,9 +5,9 @@ import javafx.scene.shape.Rectangle;
 public class OneCube extends Rectangle {
     private int position;
     private String color;
-    private static final int size = 1;
-    private static final int x;
-    private static final int y;
+    private static final int size = 10;
+    private static final double x = GameStage.getWidth() / 2 ; // half
+    private static final double y = GameStage.getLength() / 10; //10 percent
 
     public OneCube(int position,String color) {
         this.position = position;
