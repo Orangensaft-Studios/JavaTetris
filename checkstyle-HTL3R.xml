@@ -1,0 +1,213 @@
+<?xml version="1.0" standalone="yes"?>
+<!DOCTYPE module [
+        <!ELEMENT module (module|property|metadata|message)*>
+        <!ATTLIST module name NMTOKEN #REQUIRED>
+        <!ELEMENT property EMPTY>
+        <!ATTLIST property
+                name NMTOKEN #REQUIRED
+                value CDATA #REQUIRED
+                default CDATA #IMPLIED
+                >
+        <!ELEMENT metadata EMPTY>
+        <!ATTLIST metadata
+                name NMTOKEN #REQUIRED
+                value CDATA #REQUIRED
+                >
+        <!ELEMENT message EMPTY>
+        <!ATTLIST message
+                key NMTOKEN #REQUIRED
+                value CDATA #REQUIRED
+                >
+        ]>
+
+<module name="Checker">
+    <property name="charset" value="UTF-8"/>
+    <property name="severity" value="warning"/>
+
+    <property name="fileExtensions" value="java"/>
+    <!-- start cs25 -->
+    <module name="FileTabCharacter">
+        <property name="eachLine" value="true"/>
+    </module>
+
+    <module name="TreeWalker">
+        <module name="SuppressionCommentFilter"/>
+
+        <property name="tabWidth" value="4"/>
+
+        <!-- File should be named as the class -->
+        <module name="OuterTypeFilename"/>
+
+        <!-- Only one class per File -->
+        <module name="OneTopLevelClass"/>
+
+        <!-- No escaped Strings and Chars -->
+        <!--
+        <module name="IllegalTokenText">
+            <property name="tokens" value="STRING_LITERAL, CHAR_LITERAL"/>
+            <property name="format"
+                      value="\\u00(09|0(a|A)|0(c|C)|0(d|D)|22|27|5(C|c))|\\(0(10|11|12|14|15|42|47)|134)"/>
+            <property name="message"
+                      value="Consider using special escape sequence instead of octal value or Unicode escaped value."/>
+        </module>
+        -->
+        <module name="AvoidEscapedUnicodeCharacters">
+            <property name="allowEscapesForControlCharacters" value="true"/>
+            <property name="allowByTailComment" value="true"/>
+            <property name="allowNonPrintableEscapes" value="true"/>
+        </module>
+
+        <!-- We want explicit imports -->
+        <module name="AvoidStarImport">
+            <property name="excludes" value="java.io,java.net,java.lang.Math,org.junit"/>
+        </module>
+        <module name="IllegalImport"/> <!-- defaults to sun.* packages -->
+        <module name="RedundantImport"/>
+        <module name="UnusedImports"/>
+
+        <!-- We do not want to have things like method declarations or imports to be line wrapped -->
+        <module name="NoLineWrap"/>
+
+        <!-- Empty blocks are useless -->
+        <module name="EmptyBlock">
+            <property name="option" value="TEXT"/>
+            <property name="tokens"
+                      value="LITERAL_TRY, LITERAL_FINALLY, LITERAL_IF, LITERAL_ELSE, LITERAL_SWITCH"/>
+        </module>
+
+        <!-- no Spaghetti code -->
+        <module name="OneStatementPerLine"/>
+
+        <!-- Switches should have a default  -->
+        <module name="MissingSwitchDefault"/>
+
+        <!-- Fallthroughs are potentially dangerous -->
+        <module name="FallThrough"/>
+
+        <!-- If there is something to do -> do it ! -->
+        <module name="TodoComment"/>
+
+        <!-- We want to have our code structured, so we want empty lines between line separators,
+        after header, package, all import declarations, fields, constructors, methods,
+        nested classes, static initializers and instance initializers -->
+        <module name="EmptyLineSeparator">
+            <property name="allowNoEmptyLineBetweenFields" value="true"/>
+        </module>
+
+
+        <!-- There should be a space between method parameters -->
+        <module name="MethodParamPad"/>
+
+        <!-- There should be no spaces between the names tokens -->
+        <module name="NoWhitespaceBefore">
+            <property name="tokens"
+                      value="COMMA, SEMI, POST_INC, POST_DEC, DOT"/>
+            <property name="allowLineBreaks" value="true"/>
+        </module>
+
+        <!-- No passing in between parantheses -->
+        <module name="ParenPad">
+            <property name="option" value="nospace"/>
+        </module>
+
+        <!-- No line wrap at these tokens -->
+        <module name="OperatorWrap">
+            <property name="option" value="NL"/>
+            <property name="tokens"
+                      value="BAND, BOR, BSR, BXOR, DIV, EQUAL, GE, GT, LAND, LE, LITERAL_INSTANCEOF, LOR,
+                    LT, MINUS, MOD, NOT_EQUAL, PLUS, QUESTION, SL, SR, STAR "/>
+        </module>
+
+        <!-- Empty catch blocks are trying to hide something ! -->
+        <module name="EmptyCatchBlock">
+            <property name="exceptionVariableName" value="expected"/>
+        </module>
+
+        <!-- Generics do not need whitespaces -->
+        <module name="GenericWhitespace">
+            <message key="ws.followed"
+                     value="GenericWhitespace ''{0}'' is followed by whitespace."/>
+            <message key="ws.preceded"
+                     value="GenericWhitespace ''{0}'' is preceded with whitespace."/>
+            <message key="ws.illegalFollow"
+                     value="GenericWhitespace ''{0}'' should followed by whitespace."/>
+            <message key="ws.notPreceded"
+                     value="GenericWhitespace ''{0}'' is not preceded with whitespace."/>
+        </module>
+
+        <!-- Comments should be intended as the thing that they are commenting -->
+        <module name="CommentsIndentation"/>
+
+        <module name="Indentation">
+            <property name="forceStrictCondition" value="false"/><!-- TODO !? -->
+        </module>
+
+        <module name="NeedBraces">
+            <property name="allowSingleLineStatement" value="true"/>
+        </module>
+        <module name="LeftCurly">
+            <property name="option" value="eol"/>
+        </module>
+
+        <module name="RightCurly">
+            <property name="id" value="RightCurlyAlone"/>
+            <property name="option" value="SAME"/>
+            <property name="tokens"
+                      value=" LITERAL_TRY, LITERAL_CATCH, LITERAL_FINALLY, LITERAL_IF, LITERAL_ELSE, CLASS_DEF,
+                      METHOD_DEF, CTOR_DEF, LITERAL_FOR, LITERAL_WHILE, LITERAL_DO, STATIC_INIT, INSTANCE_INIT"/>
+        </module>
+
+        <module name="MethodName">
+            <property name="format" value="^[a-z][a-z0-9][a-zA-Z0-9_]*$"/>
+            <message key="name.invalidPattern"
+                     value="Method name ''{0}'' must match pattern ''{1}''."/>
+        </module>
+        <!-- start 2 -->
+        <!-- start javadoc -->
+        <module name="JavadocType">
+            <property name="scope" value="public"/>
+        </module>
+        <module name="SingleLineJavadoc">
+            <property name="ignoreInlineTags" value="false"/>
+        </module>
+
+        <module name="JavadocMethod">
+            <property name="validateThrows" value="true"/>
+        </module>
+        <module name="MissingJavadocMethod"/>
+        <module name="MissingJavadocType"/>
+        <module name="JavadocStyle">
+            <property name="scope" value="public"/>
+            <property name="checkFirstSentence" value="false"/>
+        </module>
+        <module name="InvalidJavadocPosition"/>
+        <module name="JavadocType">
+            <property name="authorFormat" value="\S"/>
+        </module>
+        <module name="JavadocVariable"/>
+        <!-- end javadoc -->
+
+        <module name="ClassTypeParameterName"/>
+        <module name="ConstantName"/>
+        <module name="LocalFinalVariableName"/>
+        <module name="LocalVariableName"/>
+        <module name="MemberName"/>
+        <module name="MethodTypeParameterName"/>
+        <module name="PackageName"/>
+        <module name="ParameterName"/>
+        <module name="StaticVariableName"/>
+        <module name="TypeName"/>
+
+        <module name="MagicNumber"/>
+        <module name="ArrayTypeStyle"/>
+        <module name="AvoidNestedBlocks"/>
+        <module name="AvoidInlineConditionals"/>
+        <module name="EmptyStatement"/>
+        <module name="WhitespaceAround"/>
+
+        <!-- end 2 -->
+        <!-- start noimport -->
+
+
+    </module>
+</module>

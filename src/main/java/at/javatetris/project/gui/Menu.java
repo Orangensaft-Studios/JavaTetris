@@ -1,9 +1,7 @@
-package at.javatetris.project.javatetris;
+package at.javatetris.project.gui;
 
-import javafx.application.Application;
-import javafx.fxml.FXML;
+import at.javatetris.project.Main;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 

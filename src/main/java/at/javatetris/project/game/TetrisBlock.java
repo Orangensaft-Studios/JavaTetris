@@ -1,6 +1,4 @@
-package at.javatetris.project.javatetris;
-
-import javafx.scene.paint.Color;
+package at.javatetris.project.game;
 
 import java.util.Random;
 

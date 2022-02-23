@@ -1,4 +1,4 @@
-module at.javatetris.project.javatetris {
+module at.javatetris.project {
     requires javafx.controls;
     requires javafx.fxml;
 
@@ -7,6 +7,10 @@ module at.javatetris.project.javatetris {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
 
-    opens at.javatetris.project.javatetris to javafx.fxml;
-    exports at.javatetris.project.javatetris;
+    opens at.javatetris.project to javafx.fxml;
+    exports at.javatetris.project;
+    exports at.javatetris.project.gui;
+    opens at.javatetris.project.gui to javafx.fxml;
+    exports at.javatetris.project.game;
+    opens at.javatetris.project.game to javafx.fxml;
 }

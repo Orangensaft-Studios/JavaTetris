@@ -1,5 +1,6 @@
-package at.javatetris.project.javatetris;
+package at.javatetris.project;
 
+import at.javatetris.project.gui.Menu;
 import javafx.application.Application;
 import javafx.stage.Stage;
 

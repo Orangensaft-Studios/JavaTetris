@@ -1,4 +1,4 @@
-package at.javatetris.project.javatetris;
+package at.javatetris.project.game;
 
 public class Generate {
     public void generate(){
