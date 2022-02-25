@@ -2,7 +2,10 @@ package at.javatetris.project;
 
 import javafx.application.Application;
 import javafx.geometry.Orientation;
+import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class GameStage extends Application {
@@ -14,9 +17,13 @@ public class GameStage extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("JavaTetris");
-        FlowPane flowPane = new FlowPane(Orientation.HORIZONTAL);
-        //Scene scene = new Scene(flowPane, width, length, new TetrisBlock);
-        //stage.setScene(scene);
+        Pane flowPane = new Pane();
+        TetrisBlock block = new TetrisBlock();
+        //TetrisBlock[] blocks = TetrisBlock.generateBlock();
+        OneCube cube = new OneCube();
+        Scene scene = new Scene(flowPane, width, length);
+        stage.setScene(scene);
+        flowPane.getChildren().addAll(block);
         stage.show();
     }
 

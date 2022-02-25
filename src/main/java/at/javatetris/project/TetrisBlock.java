@@ -1,5 +1,7 @@
 package at.javatetris.project;
 
+import javafx.scene.paint.Color;
+
 import java.util.Random;
 
 public class TetrisBlock extends OneCube{
@@ -9,13 +11,19 @@ public class TetrisBlock extends OneCube{
     //cyan,blue,red,orange,yellow,green,purple
 
 
+    public TetrisBlock() {
+        generateBlock();
+    }
+
     public void generateBlock(){
         Random rand = new Random();
         int colorPick = rand.nextInt(colors.length) + 1;
         block[0] = new OneCube(0, colors[colorPick]);
+        block[0].setFill(Color.YELLOW);
         for (int i = 1; i < 4; i++) {
 
             block[i] = new OneCube(rand.nextInt(4) + 1, colors[colorPick]);
+            block[i].setFill(Color.YELLOW);
         }
     }
 }

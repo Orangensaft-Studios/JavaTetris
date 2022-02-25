@@ -1,5 +1,6 @@
 package at.javatetris.project;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class OneCube extends Rectangle {
@@ -14,9 +15,17 @@ public class OneCube extends Rectangle {
         this.color = color;
         setHeight(size);
         setWidth(size);
+        setX(x + position * 10);
+        setY(y + position * 10);
+        this.setFill(Color.YELLOW);
     }
 
     public OneCube(){
         this.position = 1;
+        setHeight(size);
+        setWidth(size);
+        setX(x);
+        setY(y);
+        this.setFill(Color.AQUA);
     }
 }
