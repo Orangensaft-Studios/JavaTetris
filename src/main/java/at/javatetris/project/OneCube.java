@@ -1,4 +1,4 @@
-package at.javatetris.project.game;
+package at.javatetris.project;
 
 import javafx.scene.shape.Rectangle;
 

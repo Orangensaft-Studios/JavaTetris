@@ -1,11 +1,11 @@
-package at.javatetris.project.game;
+package at.javatetris.project;
 
 import javafx.application.Application;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 
-
+/*
 public class Move extends Application implements KeyListener {
 
     KeyEvent event = new KeyEvent(KeyEvent.KEY_PRESSED, KeyEvent.KEYCODE);
@@ -24,4 +24,10 @@ public class Move extends Application implements KeyListener {
     public static void main(String[] args) {
         launch(args);
     }
+
+
 }
+
+ */
+
+

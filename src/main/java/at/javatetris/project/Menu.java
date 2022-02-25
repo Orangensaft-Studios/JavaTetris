@@ -1,6 +1,5 @@
-package at.javatetris.project.gui;
+package at.javatetris.project;
 
-import at.javatetris.project.Main;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -23,6 +22,4 @@ public class Menu {
             System.out.println("File nicht vorhanden");
         }
     }
-
-
 }

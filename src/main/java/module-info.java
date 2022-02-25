@@ -9,8 +9,5 @@ module at.javatetris.project {
 
     opens at.javatetris.project to javafx.fxml;
     exports at.javatetris.project;
-    exports at.javatetris.project.gui;
-    opens at.javatetris.project.gui to javafx.fxml;
-    exports at.javatetris.project.game;
-    opens at.javatetris.project.game to javafx.fxml;
+
 }
