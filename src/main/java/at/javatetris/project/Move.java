@@ -1,33 +1,31 @@
 package at.javatetris.project;
 
-import javafx.application.Application;
-import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
+import java.util.TimerTask;
 
+import static at.javatetris.project.GameStage.*;
+import static at.javatetris.project.OneCube.getY1;
 
-/*
-public class Move extends Application implements KeyListener {
-
-    KeyEvent event = new KeyEvent(KeyEvent.KEY_PRESSED, KeyEvent.KEYCODE);
-    @Override
-    public void start(Stage stage) throws Exception {
-
-        keyPressed(event);
-    }
-
-    public void keyPressed(KeyEvent e) {
-        if (e.getCode() == e.getCode().A) {
-            System.out.println("h");
+class Move extends TimerTask {
+    private double y1  = getBlock().getLowestPoint();
+    public void run() {
+        y1 += 10;
+        if (y1 >= getHeight()){
+            end();
+            cancel();
         }
+
+        System.out.println(y1);
+        getBlock().moveDown();
     }
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+
+
 
 
 }
 
- */
+
+
+
 
 
