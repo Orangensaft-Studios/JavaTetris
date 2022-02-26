@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.javatetris.project.InfoGUI">
+   <children>
+      <VBox alignment="TOP_CENTER" layoutX="97.0" layoutY="1.0" prefHeight="400.0" prefWidth="392.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="About / Info" wrappingWidth="283.705078125">
+               <font>
+                  <Font size="52.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="JavaTetris" wrappingWidth="238.705078125">
+               <font>
+                  <Font size="52.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ein SEW Projekt von">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Severin Rosner">
+               <font>
+                  <Font size="31.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="und">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Roman Krebs">
+               <font>
+                  <Font size="31.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="von Februar - April 2022 | 2CI">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="(c) Orangensaft Studios" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Version: pre-prod (0.02)">
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Text>
+         </children>
+      </VBox>
+      <ImageView fitHeight="78.0" fitWidth="86.0" layoutY="1.0" onMouseClicked="#ButtonBack" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/arrowBack_icon.png" />
+         </image>
+      </ImageView>
+      <Line endX="136.0" layoutX="464.0" layoutY="79.0" startX="-466.0" />
+      <Line endX="119.0" layoutX="481.0" layoutY="340.0" startX="-481.0" />
+   </children>
+</Pane>

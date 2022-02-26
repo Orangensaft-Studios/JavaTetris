@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.javatetris.project.SettingsGUI">
+   <children>
+      <Line endX="136.0" layoutX="468.0" layoutY="85.0" startX="-466.0" />
+      <VBox alignment="TOP_CENTER" layoutX="77.0" layoutY="5.0" prefHeight="390.0" prefWidth="464.0">
+         <children>
+            <Text fx:id="settingsHeader" strokeType="OUTSIDE" strokeWidth="0.0" text="Einstellungen" wrappingWidth="309.705078125">
+               <font>
+                  <Font size="52.0" />
+               </font>
+            </Text>
+            <HBox prefHeight="61.0" prefWidth="392.0" spacing="50.0">
+               <children>
+                  <Text fx:id="musicTxt" strokeType="OUTSIDE" strokeWidth="0.0" text="Musik">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="20.0" />
+                     </HBox.margin>
+                  </Text>
+                  <ImageView fitHeight="41.0" fitWidth="54.0" pickOnBounds="true" preserveRatio="true">
+                     <HBox.margin>
+                        <Insets top="15.0" />
+                     </HBox.margin>
+                     <image>
+                        <Image url="@../icons/speaker_icon.png" />
+                     </image>
+                  </ImageView>
+                  <Slider prefHeight="14.0" prefWidth="186.0" style="-fx-border-color: black; -fx-progress-color: black;">
+                     <HBox.margin>
+                        <Insets top="20.0" />
+                     </HBox.margin>
+                  </Slider>
+               </children>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </HBox>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+               <children>
+                  <Text fx:id="languageTxt" strokeType="OUTSIDE" strokeWidth="0.0" text="Sprache">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets top="20.0" />
+                     </HBox.margin>
+                  </Text>
+                  <ImageView fitHeight="33.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/language_icon.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets top="20.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <ChoiceBox fx:id="languageDrpdwnTxt" prefHeight="26.0" prefWidth="185.0" value="Sprache wählen">
+                     <items>
+                        <FXCollections fx:factory="observableArrayList">
+                           <String fx:id="germanChoice" fx:value="Deutsch" />
+                           <String fx:id="englishChoice" fx:value="Englisch" />
+                        </FXCollections>
+                     </items>
+                     <HBox.margin>
+                        <Insets left="30.0" top="20.0" />
+                     </HBox.margin>
+                  </ChoiceBox>
+               </children>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </HBox>
+         </children>
+      </VBox>
+      <ImageView fitHeight="78.0" fitWidth="86.0" layoutX="-1.0" onMouseClicked="#ButtonBack" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/arrowBack_icon.png" />
+         </image>
+      </ImageView>
+   </children>
+</Pane>
