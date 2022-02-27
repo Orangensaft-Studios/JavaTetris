@@ -9,13 +9,13 @@ public class Language {
 
     private static String language;
 
-    private static ResourceBundle languageBundle = ResourceBundle.getBundle("at.javatetris.project.Language", getLocale());
+    private static ResourceBundle languageBundle = ResourceBundle.getBundle("at.javatetris.project.Language", getLocaleFromConfig());
 
     public static ResourceBundle getResourceBundle() {
         return languageBundle;
     }
 
-    protected static Locale getLocale() {
+    protected static Locale getLocaleFromConfig() {
         if(Settings.getSettings().getProperty("locale").equals("en")) {
             language = "en";
             return Locale.ENGLISH;
@@ -27,10 +27,11 @@ public class Language {
 
 
     protected static String get() {
+        getLocaleFromConfig();
         return language;
     }
 
-    public static String set(String key) {
+    public static String getWord(String key) {
         return getResourceBundle().getString(key);
     }
 }

@@ -3,6 +3,7 @@
 <?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.image.Image?>
@@ -42,7 +43,7 @@
                         <Image url="@../icons/speaker_icon.png" />
                      </image>
                   </ImageView>
-                  <Slider prefHeight="14.0" prefWidth="186.0" style="-fx-border-color: black; -fx-progress-color: black;">
+                  <Slider prefHeight="14.0" prefWidth="186.0">
                      <HBox.margin>
                         <Insets top="20.0" />
                      </HBox.margin>
@@ -70,7 +71,7 @@
                         <Insets top="20.0" />
                      </HBox.margin>
                   </ImageView>
-                  <ChoiceBox fx:id="languageDrpdwnTxt" prefHeight="26.0" prefWidth="185.0" value="Sprache wählen">
+                  <ChoiceBox fx:id="languageDrpdwn" prefHeight="26.0" prefWidth="185.0" value="Deutsch">
                      <items>
                         <FXCollections fx:factory="observableArrayList">
                            <String fx:id="germanChoice" fx:value="Deutsch" />
@@ -85,6 +86,13 @@
                <VBox.margin>
                   <Insets />
                </VBox.margin>
+            </HBox>
+            <Button fx:id="keymapBtn" mnemonicParsing="false" onAction="#controlsClicked" prefHeight="46.0" prefWidth="291.0" style="-fx-background-color: black;" text="Keymapping / Steuerung" textFill="WHITE" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+               <children>
+                  <Button fx:id="setSettingsBtn" mnemonicParsing="false" onAction="#setSettings" prefHeight="48.0" prefWidth="220.0" style="-fx-background-color: green;" text="Einstellung anwenden" textFill="WHITE" />
+                  <Button fx:id="resetSettingsBtn" mnemonicParsing="false" onAction="#resetSettings" prefHeight="48.0" prefWidth="220.0" style="-fx-background-color: red;" text="Einstellung zurücksetzen" textFill="WHITE" />
+               </children>
             </HBox>
          </children>
       </VBox>

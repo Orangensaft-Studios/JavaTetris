@@ -28,7 +28,7 @@ public class MenuGUI {
         FXMLLoader fxmlLoader = new FXMLLoader(MenuGUI.class.getResource("fxml/menu_" + Language.get() + ".fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = Main.getStage();
-        stage.setTitle("JavaTetris - Menü");
+        stage.setTitle("JavaTetris");
         stage.setScene(scene);
         stage.show();
     }
@@ -43,10 +43,10 @@ public class MenuGUI {
 
         //PopUp Alert if you really want to close the game
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Spiel schließen");
-        alert.setContentText("Das Spiel wirklich schließen?");
-        ButtonType yesButton = new ButtonType("Ja", ButtonBar.ButtonData.YES);
-        ButtonType noButton = new ButtonType("Nein", ButtonBar.ButtonData.NO);
+        alert.setTitle(Language.getWord("closeGame"));
+        alert.setContentText(Language.getWord("questionCloseGame"));
+        ButtonType yesButton = new ButtonType(Language.getWord("yes"), ButtonBar.ButtonData.YES);
+        ButtonType noButton = new ButtonType(Language.getWord("no"), ButtonBar.ButtonData.NO);
         alert.getButtonTypes().setAll(yesButton, noButton);
         alert.showAndWait().ifPresent(type -> {
             if (type == yesButton) {

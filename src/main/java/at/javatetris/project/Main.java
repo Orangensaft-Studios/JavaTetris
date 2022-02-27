@@ -25,7 +25,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage mainStage) throws IOException, Exception {
-        Settings.load();
+        Settings.checkFile();
 
         mainStage.setResizable(false);
         Main.mainStage = mainStage;

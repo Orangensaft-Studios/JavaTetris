@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -21,12 +22,20 @@ public class InfoGUI {
         FXMLLoader fxmlLoader = new FXMLLoader(MenuGUI.class.getResource("fxml/info_" + Language.get() + ".fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = Main.getStage();
-        stage.setTitle("JavaTetris - Info");
+        stage.setTitle("JavaTetris");
         stage.setScene(scene);
     }
 
     @FXML
     public void ButtonBack(MouseEvent e) throws IOException {
         MenuGUI.start();
+    }
+
+    @FXML
+    private Text versionTxt;
+
+    @FXML
+    public void initialize() {
+        versionTxt.setText(Language.getWord("versionTxt") + Settings.searchSettings("gameVersion"));
     }
 }

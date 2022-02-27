@@ -1,22 +1,16 @@
 package at.javatetris.project;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.Locale;
+
 
 /**
  * class for SettingGUI
@@ -29,10 +23,13 @@ public class SettingsGUI {
      * @throws IOException
      */
     public static void start() throws IOException {
+
+        System.out.println("SettingsGUI.java: Sprache in config: " + Language.get());
+
         FXMLLoader fxmlLoader = new FXMLLoader(MenuGUI.class.getResource("fxml/settings_" + Language.get() + ".fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = Main.getStage();
-        stage.setTitle("JavaTetris - Info");
+        stage.setTitle("JavaTetris");
         stage.setScene(scene);
 
     }
@@ -44,32 +41,56 @@ public class SettingsGUI {
 
 
     @FXML
-    private Text settingsHeader;
-    @FXML
-    private Text musicTxt;
-    @FXML
-    private Text languageTxt;
-    //@FXML
-    //private Text languageDrpdwnTxt;
-    @FXML
-    private String germanChoice;
-    @FXML
-    private String englishChoice;
-
-
-    @FXML
     public void initialize() {
-        /*
-        settingsHeader.setText(Language.set("settingsHeader"));
-        musicTxt.setText(Language.set("musicTxt"));
-        languageTxt.setText(Language.set("languageTxt"));
-        //languageDrpdwnTxt.
-        //languageDrpdwnTxt(Language.set("languageDrpdwnTxt"));
-        germanChoice = Language.set("germanChoice");
-        englishChoice = Language.set("englishChoice");
 
-         */
     }
+
+    @FXML
+    private ChoiceBox languageDrpdwn;
+
+    @FXML
+    public void controlsClicked(ActionEvent actionEvent) {
+
+    }
+
+    @FXML
+    public void setSettings(ActionEvent actionEvent) throws Exception {
+        String selectedLanguage = (String)languageDrpdwn.getValue();
+        if (selectedLanguage.equals("English") || selectedLanguage.equals("Englisch")) {
+            System.out.println("SettingsGUI.java: Ausgewählte Sprache: eng");
+            Settings.setSettings("locale", "en");
+            start();
+        } else if (selectedLanguage.equals("German") || selectedLanguage.equals("Deutsch")) {
+            System.out.println("SettingsGUI.java: Ausgewählte Sprache: de");
+            Settings.setSettings("locale", "de");
+            start();
+        }
+    }
+
+    @FXML
+    public void resetSettings(ActionEvent actionEvent) throws Exception {
+        System.out.println("SettingsGUI.java: Sprache: " + Language.get());
+        //PopUp Alert if you really want to close the game
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle(Language.getWord("resetSettingsTitle"));
+        alert.setContentText(Language.getWord("resetSettingsContent"));
+        ButtonType yesButton = new ButtonType(Language.getWord("yes"), ButtonBar.ButtonData.YES);
+        ButtonType noButton = new ButtonType(Language.getWord("no"), ButtonBar.ButtonData.NO);
+        alert.getButtonTypes().setAll(yesButton, noButton);
+        alert.showAndWait().ifPresent(type -> {
+            if (type == yesButton) {
+                try {
+                    Settings.setConfigToDefault();
+                    start();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+    }
+
+
 
 
 }

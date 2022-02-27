@@ -3,6 +3,7 @@
 <?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.image.Image?>
@@ -70,7 +71,7 @@
                         <Insets top="20.0" />
                      </HBox.margin>
                   </ImageView>
-                  <ChoiceBox fx:id="languageDrpdwnTxt" prefHeight="26.0" prefWidth="185.0" value="Choose language">
+                  <ChoiceBox fx:id="languageDrpdwn" prefHeight="26.0" prefWidth="185.0" value="English">
                      <items>
                         <FXCollections fx:factory="observableArrayList">
                            <String fx:id="germanChoice" fx:value="German" />
@@ -85,6 +86,13 @@
                <VBox.margin>
                   <Insets />
                </VBox.margin>
+            </HBox>
+            <Button fx:id="keymapBtn" mnemonicParsing="false" onAction="#controlsClicked" prefHeight="46.0" prefWidth="291.0" style="-fx-background-color: black;" text="Keymapping / Controls" textFill="WHITE" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+               <children>
+                  <Button fx:id="setSettingsBtn" mnemonicParsing="false" onAction="#setSettings" prefHeight="48.0" prefWidth="220.0" style="-fx-background-color: green;" text="Set new settings" textFill="WHITE" />
+                  <Button fx:id="resetSettingsBtn" mnemonicParsing="false" onAction="#resetSettings" prefHeight="48.0" prefWidth="220.0" style="-fx-background-color: red;" text="Reset settings" textFill="WHITE" />
+               </children>
             </HBox>
          </children>
       </VBox>
