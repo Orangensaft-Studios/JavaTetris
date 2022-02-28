@@ -12,15 +12,15 @@ import static at.javatetris.project.OneCube.*;
 
 public class GameStage extends Application {
 
-    private static final double width = 400;
+    private static final int width = 400;
 
-    private static final double height = 600;
+    private static final int height = 600;
     private static TetrisBlock block = new TetrisBlock();
     protected static TetrisBlock mass = new TetrisBlock();
     private static TetrisBlock all = new TetrisBlock();
     private static OneCube[] prevBlock;
     private static boolean end = true;
-
+    private static int numBlocks = 0;
     @Override
     public void start(Stage stage) throws Exception {
         stage.setTitle("JavaTetris");
@@ -73,11 +73,11 @@ public class GameStage extends Application {
         launch(args);
     }
 
-    public static double getWidth() {
+    public static int getWidth() {
         return width;
     }
 
-    public static double getHeight() {
+    public static int getHeight() {
         return height;
     }
 
@@ -89,15 +89,16 @@ public class GameStage extends Application {
         end = false;
     }
     public void begin(){
-        System.out.println(Arrays.deepToString(prevBlock));
-        mass.getChildren().addAll(prevBlock);
-       OneCube[] blocks = TetrisBlock.generateBlock();
-       prevBlock = blocks;
+        block.save();
+        mass.getChildren().addAll(block.generateSave());
+       OneCube[] newBLocks = TetrisBlock.generateBlock();
+        prevBlock = newBLocks;
+        block.getChildren().remove(0,4);
        block.setTranslateX(0);
        block.setTranslateY(0);
-        block.getChildren().remove(0,4);
-       block.getChildren().addAll(blocks);
+       block.getChildren().addAll(newBLocks);
         end = true;
+        numBlocks += 4;
 
     }
 }

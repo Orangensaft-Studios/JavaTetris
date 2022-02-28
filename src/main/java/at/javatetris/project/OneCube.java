@@ -15,7 +15,6 @@ public class OneCube extends Rectangle {
     private static double newY = GameStage.getHeight() / 20; //5 percent
 
     public OneCube(int position,String color,int prevPosX, int prevPosY) {
-        this.position = position;
         this.color = color;
         setHeight(size);
         setWidth(size);
@@ -25,7 +24,6 @@ public class OneCube extends Rectangle {
         newY = y + prevPosY;
         System.out.println(x + prevPosX);
         System.out.println(y + prevPosY);
-        System.out.println(position + "one");
         if (position == 1){
             setTranslateX(newX + (size + 2 * _stroke));
         } else if (position == 2) {
