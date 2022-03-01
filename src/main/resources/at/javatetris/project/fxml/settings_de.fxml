@@ -17,7 +17,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.javatetris.project.SettingsGUI">
    <children>
-      <Line endX="136.0" layoutX="468.0" layoutY="85.0" startX="-466.0" />
+      <Line endX="136.0" layoutX="464.0" layoutY="86.0" startX="-466.0" />
       <VBox alignment="TOP_CENTER" layoutX="77.0" layoutY="5.0" prefHeight="390.0" prefWidth="464.0">
          <children>
             <Text fx:id="settingsHeader" strokeType="OUTSIDE" strokeWidth="0.0" text="Einstellungen" wrappingWidth="309.705078125">
@@ -94,9 +94,10 @@
                   <Button fx:id="resetSettingsBtn" mnemonicParsing="false" onAction="#resetSettings" prefHeight="48.0" prefWidth="220.0" style="-fx-background-color: red;" text="Einstellung zurücksetzen" textFill="WHITE" />
                </children>
             </HBox>
+            <Text fx:id="settingInfoTxt" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="107.20003662109389" />
          </children>
       </VBox>
-      <ImageView fitHeight="78.0" fitWidth="86.0" layoutX="-1.0" onMouseClicked="#ButtonBack" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="85.0" fitWidth="95.0" onMouseClicked="#ButtonBack" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../icons/arrowBack_icon.png" />
          </image>

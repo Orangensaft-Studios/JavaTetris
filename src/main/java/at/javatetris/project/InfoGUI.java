@@ -19,23 +19,33 @@ public class InfoGUI {
      * @throws IOException
      */
     public static void start() throws IOException {
+
         FXMLLoader fxmlLoader = new FXMLLoader(MenuGUI.class.getResource("fxml/info_" + Language.get() + ".fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = Main.getStage();
         stage.setTitle("JavaTetris");
         stage.setScene(scene);
+
+
     }
 
+    /**
+     * when Button ButtonBack clicked, open MenuGUI
+     * @param e event when Button clicked
+     * @throws IOException exception
+     */
     @FXML
-    public void ButtonBack(MouseEvent e) throws IOException {
+    public void buttonBack(MouseEvent e) throws IOException {
         MenuGUI.start();
     }
 
+    /** Text at the bottom to display current version */
     @FXML
     private Text versionTxt;
 
+    /** on load, set versionTxt in correct language and get current version from settings (config file) */
     @FXML
     public void initialize() {
-        versionTxt.setText(Language.getWord("versionTxt") + Settings.searchSettings("gameVersion"));
+        versionTxt.setText(Language.getPhrase("versionTxt") + " " + Settings.searchSettings("gameVersion"));
     }
 }
