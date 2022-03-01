@@ -21,9 +21,11 @@ public class TetrisBlock extends Group {
     final static String[] colors = {"#00FFFF","#0000EE","#FF0000","#FF7F00","#FFFF00","00FF00","#BF3EFF"};
     static int position = 0;
     static int prevPos;
+    static int saveSpawnPoint;
+    static int lowestPoint = 0;
     static int blockPosX = 0;
     static int blockPosY = 0;
-    static int [] positions =new int[3];
+    static int [] positions =new int[4];
     static int specialPos;
     static int colorPick;
     static int[][] endpositions = new int[getWidth() /
@@ -38,16 +40,15 @@ public class TetrisBlock extends Group {
     //cyan,blue,red,orange,yellow,green,purple
 
     public static OneCube[] generateBlock(){
-
+        lowestPoint = 0;
         blockPosX = 0;
         blockPosY = 0;
         OneCube [] block = new OneCube[4];
-        int size = getSize();
         int stroke = get_stroke();
         Random rand = new Random();
         colorPick = rand.nextInt(colors.length);
-        block[0] = new OneCube(0,colors[colorPick],blockPosX,blockPosY);
-        block[0].setFill(Color.web(colors[colorPick]));
+        block[0] = new OneCube(0,blockPosX,blockPosY,false);
+        block[0].setFill(Color.web(colors[1]));
         specialPos = rand.nextInt(7) + 1;
         if (specialPos == 1){
             blockPosX = -2 * (size + 2 * stroke);
@@ -56,9 +57,10 @@ public class TetrisBlock extends Group {
         }
         for (int i = 1; i < 4; i++) {
             if (specialPos == 1){
-                block[i] = new OneCube(1,colors[colorPick], blockPosX, blockPosY);
+                block[i] = new OneCube(1, blockPosX, blockPosY,false);
                 block[i].setFill(Color.web(colors[colorPick]));
                 blockPosX += (size + 2 * stroke);
+                positions[i] = position;
             }else {
                 prevPos = position;
                 position = rand.nextInt(4) + 1;
@@ -67,8 +69,8 @@ public class TetrisBlock extends Group {
                     position = rand.nextInt(4) + 1;
                 }
 
-                positions[i - 1] = position;
-                block[i] = new OneCube(position,colors[colorPick], blockPosX, blockPosY);
+                positions[i] = position;
+                block[i] = new OneCube(position, blockPosX, blockPosY,false);
                 block[i].setFill(Color.web(colors[colorPick]));
 
 
@@ -78,23 +80,31 @@ public class TetrisBlock extends Group {
                     case 3 -> blockPosY += (size + 2 * stroke);
                     case 4 -> blockPosY -= (size + 2 * stroke);
                 }
+                if (lowestPoint < blockPosY){
+                    lowestPoint = blockPosY;
+                }
+                System.out.println(blockPosY + "bY");
+                System.out.println(lowestPoint);
             }
+        }
+        if (blockPosY > lowestPoint){
+            saveSpawnPoint = lowestPoint + blockPosY;
         }
         return block;
     }
 
     public void moveLeft(){
-        setTranslateX(getTranslateX() - 10);
+        setTranslateX(getTranslateX() - (size + 2 * get_stroke()));
 
     }
 
     public void moveRight(){
-        setTranslateX(getTranslateX() + 10);
+        setTranslateX(getTranslateX() + (size + 2 * get_stroke()));
 
     }
 
     public void moveDown(){
-        setTranslateY(getTranslateY() + 10);
+        setTranslateY(getTranslateY() + (size + 2 * get_stroke()));
 
     }
 
@@ -111,17 +121,14 @@ public class TetrisBlock extends Group {
     }
 
     public double getLowestPoint(){
-        double blockp = blockPosY;
-        System.out.println(blockPosY + "brg");
-        System.out.println(getY1());
-        System.out.println(size);
-        System.out.println(2*get_stroke());
-        if (blockp == -30 || blockp == 30){
+        double blockp = lowestPoint;
+        System.out.println(lowestPoint + "brg");
+        /**if (blockp == -30 || blockp == 30){
             blockPosY = 0;
         }else if(blockp == 0){
             blockPosY = 30;
-        }
-        return  blockPosY + getY1() + size + (2 * get_stroke());
+        }*/
+        return  blockp + getY1() + size + (2 * get_stroke());
     }
     public void save(){
         endpositions[((int) getTranslateX() / ((size + (2 * get_stroke()))))
@@ -132,14 +139,18 @@ public class TetrisBlock extends Group {
 
     public OneCube[] generateSave(){
         OneCube[] saves = new OneCube[4];
-        int y = (int)getY11() - (int)getY1();
+        int y = (int)getY11() - (int)getY1() - (size + 2 * get_stroke()) - saveSpawnPoint;
         int x = (int) getTranslateX();
-        System.out.println(Arrays.deepToString(saves));
+        System.out.println(colorPick);
         System.out.println(Arrays.toString(positions));
-        saves[0] = new OneCube(0,colors[colorPick],x, y);
-        for (int i = 2; i >= 0; i--) {
-            saves[3 - i] = new OneCube(positions[i],colors[colorPick],x,y);
-            switch (position) {
+        saves[0] = new OneCube(0,x, y,true);
+        saves[0].setFill(Color.web(colors[colorPick]));
+        for (int i = 3; i > 0; i--) {
+
+            saves[i] = new OneCube(positions[i],x,y,true);
+            saves[i].setFill(Color.web(colors[colorPick]));
+
+            switch (positions[i]) {
                 case 1 -> x -= (size + 2 * get_stroke());
                 case 2 -> x += (size + 2 * get_stroke());
                 case 3 -> y -= (size + 2 * get_stroke());

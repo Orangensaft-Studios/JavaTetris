@@ -7,15 +7,14 @@ import javafx.scene.shape.StrokeType;
 public class OneCube extends Rectangle {
     private int position;
     private String color;
-    protected static int size = 18;
+    protected static int size = 8;
     protected static int _stroke = 1;
     protected static double x = GameStage.getWidth() / 2 ; // half
     protected static double y = GameStage.getHeight() / 20; //5percent
     private static double newX = GameStage.getHeight() / 2; //half
     private static double newY = GameStage.getHeight() / 20; //5 percent
 
-    public OneCube(int position,String color,int prevPosX, int prevPosY) {
-        this.color = color;
+    public OneCube(int position,int prevPosX, int prevPosY, boolean afterSave) {
         setHeight(size);
         setWidth(size);
         setTranslateX(x + prevPosX);
@@ -25,13 +24,29 @@ public class OneCube extends Rectangle {
         System.out.println(x + prevPosX);
         System.out.println(y + prevPosY);
         if (position == 1){
-            setTranslateX(newX + (size + 2 * _stroke));
+            if (afterSave){
+                setTranslateX(newX - (size + 2 * _stroke));
+            }else{
+                setTranslateX(newX + (size + 2 * _stroke));
+            }
         } else if (position == 2) {
-            setTranslateX(newX - (size + 2 * _stroke));
+            if (afterSave){
+                setTranslateX(newX + (size + 2 * _stroke));
+            }else{
+                setTranslateX(newX - (size + 2 * _stroke));
+            }
         }else if (position == 3) {
-            setTranslateY(newY + (size + 2 * _stroke));
+            if (afterSave){
+                setTranslateY(newY - (size + 2 * _stroke));
+            }else{
+                setTranslateY(newY + (size + 2 * _stroke));
+            }
         }else if (position == 4) {
-            setTranslateY(newY - (size + 2 * _stroke));
+            if (afterSave){
+                setTranslateY(newY + (size + 2 * _stroke));
+            }else{
+                setTranslateY(newY - (size + 2 * _stroke));
+            }
         }
         setStrokeType(StrokeType.OUTSIDE);
         setStrokeWidth(_stroke);

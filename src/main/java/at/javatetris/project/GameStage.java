@@ -27,7 +27,7 @@ public class GameStage extends Application {
         OneCube[] blocks = TetrisBlock.generateBlock();
         prevBlock = blocks;
         Timer timer = new Timer();
-        timer.schedule(new Move(),0,500);
+        timer.schedule(new Move(),0,100);
         all.getChildren().addAll(mass,block);
         Scene scene = new Scene(all, width, height);
         stage.setScene(scene);
@@ -60,7 +60,7 @@ public class GameStage extends Application {
                 }
             }else{
                 begin();
-                timer.schedule(new Move(),0,500);
+                timer.schedule(new Move(),0,100);
             }
         });
 
