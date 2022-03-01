@@ -43,13 +43,13 @@
                   <Font size="31.0" />
                </font>
             </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="von February - April 2022 | 2CI">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="from February - April 2022 | 2CI">
                <font>
                   <Font size="20.0" />
                </font>
             </Text>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="(c) Orangensaft Studios" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="" fx:id="versionTxt">
+            <Text fx:id="versionTxt" strokeType="OUTSIDE" strokeWidth="0.0" text="">
                <VBox.margin>
                   <Insets top="30.0" />
                </VBox.margin>
@@ -59,7 +59,7 @@
             </Text>
          </children>
       </VBox>
-      <ImageView fitHeight="78.0" fitWidth="86.0" layoutY="1.0" onMouseClicked="#ButtonBack" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="78.0" fitWidth="86.0" layoutY="1.0" onMouseClicked="#buttonBack" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../icons/arrowBack_icon.png" />
          </image>
