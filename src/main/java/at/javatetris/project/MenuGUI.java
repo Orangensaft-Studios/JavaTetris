@@ -1,5 +1,6 @@
 package at.javatetris.project;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -8,7 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
+//TODO: Tooltips language anpassen
 /**
  * main MenuGUI class
  * @author Severin Rosner
@@ -22,7 +23,6 @@ public class MenuGUI {
         FXMLLoader fxmlLoader = new FXMLLoader(MenuGUI.class.getResource("fxml/menu_" + Language.get() + ".fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = Main.getStage();
-        stage.setTitle("JavaTetris");
         stage.setScene(scene);
         stage.show();
     }
@@ -46,6 +46,10 @@ public class MenuGUI {
                 Main.getStage().close();
             }
         });
+    }
+
+    public void chooseModeClicked(ActionEvent actionEvent) throws IOException {
+        ChooseModeGUI.start();
     }
 
     /**

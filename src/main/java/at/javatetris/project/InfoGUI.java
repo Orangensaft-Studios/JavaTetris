@@ -20,13 +20,10 @@ public class InfoGUI {
      */
     public static void start() throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(MenuGUI.class.getResource("fxml/info_" + Language.get() + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(InfoGUI.class.getResource("fxml/info_" + Language.get() + ".fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = Main.getStage();
-        stage.setTitle("JavaTetris");
         stage.setScene(scene);
-
-
     }
 
     /**

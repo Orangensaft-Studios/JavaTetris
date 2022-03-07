@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.javatetris.project.ControlsGUI">
+   <children>
+      <ImageView fitHeight="78.0" fitWidth="86.0" onMouseClicked="#buttonBack" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/arrowBack_icon.png" />
+         </image>
+      </ImageView>
+      <Line endX="136.0" layoutX="464.0" layoutY="78.0" startX="-466.0" />
+      <VBox alignment="TOP_CENTER" layoutX="78.0" layoutY="5.0" prefHeight="390.0" prefWidth="464.0">
+         <children>
+            <Text fx:id="controlsHeader" strokeType="OUTSIDE" strokeWidth="0.0" text="Controls" wrappingWidth="198.705078125">
+               <font>
+                  <Font size="52.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </Text>
+            <HBox prefHeight="55.0" prefWidth="464.0" spacing="30.0">
+               <children>
+                  <HBox prefHeight="60.0" prefWidth="200.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pause/Play" underline="true">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets top="10.0" />
+                           </HBox.margin>
+                        </Text>
+                        <Text fx:id="pauseKey" onMouseClicked="#pauseField" strokeType="OUTSIDE" strokeWidth="0.0" text="KEY" wrappingWidth="48.7734375">
+                           <HBox.margin>
+                              <Insets left="30.0" top="10.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="20.0" prefWidth="200.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Drop" underline="true">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets top="10.0" />
+                           </HBox.margin>
+                        </Text>
+                        <Text fx:id="dropKey" onMouseClicked="#dropField" strokeType="OUTSIDE" strokeWidth="0.0" text="KEY" wrappingWidth="48.7734375">
+                           <HBox.margin>
+                              <Insets left="90.0" top="10.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <HBox prefHeight="55.0" prefWidth="464.0" spacing="30.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+               <children>
+                  <HBox prefHeight="60.0" prefWidth="200.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Rotate left" underline="true">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets top="10.0" />
+                           </HBox.margin>
+                        </Text>
+                        <Text fx:id="rotateLeftKey" onMouseClicked="#rotateLeftField" strokeType="OUTSIDE" strokeWidth="0.0" text="KEY" wrappingWidth="48.7734375">
+                           <HBox.margin>
+                              <Insets left="35.0" top="10.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="20.0" prefWidth="200.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Rotate right" underline="true">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets top="10.0" />
+                           </HBox.margin>
+                        </Text>
+                        <Text fx:id="rotateRightKey" onMouseClicked="#rotateRightField" strokeType="OUTSIDE" strokeWidth="0.0" text="KEY" wrappingWidth="48.7734375">
+                           <HBox.margin>
+                              <Insets left="30.0" top="10.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <Text fx:id="controlsInfoTxt" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="185.60000000000014" />
+            <HBox prefHeight="55.0" prefWidth="464.0" spacing="30.0">
+               <children>
+                  <HBox prefHeight="60.0" prefWidth="200.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Move left" underline="true">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets top="10.0" />
+                           </HBox.margin>
+                        </Text>
+                        <Text fx:id="moveLeftKey" onMouseClicked="#moveLeftField" strokeType="OUTSIDE" strokeWidth="0.0" text="KEY" wrappingWidth="48.7734375">
+                           <HBox.margin>
+                              <Insets left="45.0" top="10.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="20.0" prefWidth="200.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Move right" underline="true">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets top="10.0" />
+                           </HBox.margin>
+                        </Text>
+                        <Text fx:id="moveRightKey" onMouseClicked="#moveRightField" strokeType="OUTSIDE" strokeWidth="0.0" text="KEY" wrappingWidth="48.7734375">
+                           <HBox.margin>
+                              <Insets left="40.0" top="10.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+               <children>
+                  <Button fx:id="resetControlsBtn" mnemonicParsing="false" onAction="#resetControls" prefHeight="48.0" prefWidth="220.0" style="-fx-background-color: red;" text="Reset controls" textFill="WHITE" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</Pane>

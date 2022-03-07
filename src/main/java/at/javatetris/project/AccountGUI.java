@@ -20,7 +20,6 @@ public class AccountGUI {
         FXMLLoader fxmlLoader = new FXMLLoader(MenuGUI.class.getResource("fxml/account_" + Language.get() + ".fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = Main.getStage();
-        stage.setTitle("JavaTetris");
         stage.setScene(scene);
 
 
