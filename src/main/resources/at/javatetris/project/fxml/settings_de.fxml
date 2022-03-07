@@ -94,10 +94,9 @@
                   <Button fx:id="resetSettingsBtn" mnemonicParsing="false" onAction="#resetSettings" prefHeight="48.0" prefWidth="220.0" style="-fx-background-color: red;" text="Einstellung zurücksetzen" textFill="WHITE" />
                </children>
             </HBox>
-            <Text fx:id="settingInfoTxt" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="107.20003662109389" />
          </children>
       </VBox>
-      <ImageView fitHeight="85.0" fitWidth="95.0" onMouseClicked="#ButtonBack" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="85.0" fitWidth="95.0" onMouseClicked="#buttonBack" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../icons/arrowBack_icon.png" />
          </image>

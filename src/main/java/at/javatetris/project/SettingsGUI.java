@@ -29,7 +29,6 @@ public class SettingsGUI {
         FXMLLoader fxmlLoader = new FXMLLoader(MenuGUI.class.getResource("fxml/settings_" + Language.get() + ".fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         Stage stage = Main.getStage();
-        stage.setTitle("JavaTetris");
         stage.setScene(scene);
     }
 
@@ -39,7 +38,7 @@ public class SettingsGUI {
      * @throws IOException
      */
     @FXML
-    public void ButtonBack(MouseEvent e) throws IOException {
+    public void buttonBack(MouseEvent e) throws IOException {
         MenuGUI.start();
     }
 
@@ -49,14 +48,11 @@ public class SettingsGUI {
     }
 
     @FXML
-    private Text settingInfoTxt;
-
-    @FXML
     private ChoiceBox languageDrpdwn;
 
     @FXML
-    public void controlsClicked(ActionEvent actionEvent) {
-
+    public void controlsClicked(ActionEvent actionEvent) throws IOException {
+        ControlsGUI.start();
     }
 
     @FXML
@@ -64,11 +60,11 @@ public class SettingsGUI {
         String selectedLanguage = (String)languageDrpdwn.getValue();
         if (selectedLanguage.equals("English") || selectedLanguage.equals("Englisch")) {
             System.out.println("SettingsGUI.java: Ausgewählte Sprache: eng");
-            Settings.setNewValueToSetting("locale", "en");
+            Settings.setNewValue("locale", "en", "settings");
             start();
         } else if (selectedLanguage.equals("German") || selectedLanguage.equals("Deutsch")) {
             System.out.println("SettingsGUI.java: Ausgewählte Sprache: de");
-            Settings.setNewValueToSetting("locale", "de");
+            Settings.setNewValue("locale", "de", "settings");
             start();
         }
     }
@@ -89,10 +85,9 @@ public class SettingsGUI {
         alert.showAndWait().ifPresent(type -> {
             if (type == yesButton) {
                 try {
-                    Settings.setToDefault();
+                    Settings.setConfigToDefault();
                     System.out.println("SettingsGUI.java: Settings zurückgesetzt");
                     start();
-                    settingInfoTxt.setText(Language.getPhrase("settingInfoTxt"));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

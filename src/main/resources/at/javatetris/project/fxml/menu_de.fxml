@@ -83,7 +83,7 @@
             </VBox>
             <VBox prefHeight="217.0" prefWidth="211.0" spacing="34.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="47.0" prefWidth="212.0" style="-fx-background-color: black;" text="Modusauswahl" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#chooseModeClicked" prefHeight="47.0" prefWidth="212.0" style="-fx-background-color: black;" text="Modusauswahl" textFill="WHITE">
                      <tooltip>
                         <Tooltip text="Klicke um einen Modus auszuwählen" />
                      </tooltip>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.javatetris.project.ChooseModeGUI">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="114.0" layoutX="189.0" layoutY="248.0" onMouseClicked="#startInfinityMode" stroke="BLACK" strokeType="INSIDE" width="166.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="114.0" layoutX="188.0" layoutY="102.0" onMouseClicked="#startTimeMode" stroke="BLACK" strokeType="INSIDE" width="166.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="85.0" layoutX="-6.0" layoutY="116.0" onMouseClicked="#startModeTutorial" stroke="BLACK" strokeType="INSIDE" width="93.0" />
+      <ImageView fitHeight="85.0" fitWidth="95.0" onMouseClicked="#buttonBack" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/arrowBack_icon.png" />
+         </image>
+      </ImageView>
+      <Line endX="136.0" layoutX="465.0" layoutY="85.0" startX="-466.0" />
+      <Text layoutX="139.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Choose Mode">
+         <font>
+            <Font size="52.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="75.0" fitWidth="72.0" layoutX="7.0" layoutY="123.0" onMouseClicked="#startModeTutorial" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/mode_tutorial_icon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="104.0" fitWidth="153.0" layoutX="214.0" layoutY="253.0" onMouseClicked="#startInfinityMode" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/mode_infinity_icon.png" />
+         </image>
+      </ImageView>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="197.0" layoutX="374.0" layoutY="165.0" onMouseClicked="#startClassicMode" stroke="BLACK" strokeType="INSIDE" width="194.0" />
+      <ImageView fitHeight="208.0" fitWidth="179.0" layoutX="382.0" layoutY="173.0" onMouseClicked="#startClassicMode" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/mode_classic_icon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="104.0" fitWidth="153.0" layoutX="195.0" layoutY="108.0" onMouseClicked="#startTimeMode" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/mode_time_icon.png" />
+         </image>
+      </ImageView>
+      <Text fill="#fafafa" layoutX="168.0" layoutY="315.0" onMouseClicked="#startInfinityMode" rotate="-90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Infinity">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text layoutX="214.0" layoutY="124.0" onMouseClicked="#startTimeMode" strokeType="OUTSIDE" strokeWidth="0.0" text="Against time">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </Text>
+      <Text layoutX="404.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Classic">
+         <font>
+            <Font size="46.0" />
+         </font>
+      </Text>
+      <Text layoutX="13.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tutorial">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+   </children>
+</Pane>

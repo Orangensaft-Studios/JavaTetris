@@ -10,9 +10,7 @@ import java.io.IOException;
  * @author Severin Rosner
  */
 public class Main extends Application {
-    /**
-     * the main stage for the GUIs except GameStage
-     */
+    /** the main stage for the GUIs except GameStage */
     private static Stage mainStage;
 
     /**
@@ -25,10 +23,16 @@ public class Main extends Application {
 
     @Override
     public void start(Stage mainStage) throws IOException, Exception {
+        //check if setting File is available and then load from it
         Settings.checkFile();
 
+        //set the mainStage
         mainStage.setResizable(false);
+        mainStage.setTitle("JavaTetris | Version: " + Settings.searchSettings("gameVersion"));
         Main.mainStage = mainStage;
+
+
+        //call MenuGUI
         MenuGUI.start();
     }
 
