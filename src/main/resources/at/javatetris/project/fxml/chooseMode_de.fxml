@@ -8,7 +8,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.javatetris.project.ChooseModeGUI">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" height="114.0" layoutX="189.0" layoutY="248.0" onMouseClicked="#startInfinityMode" stroke="BLACK" strokeType="INSIDE" width="166.0" />

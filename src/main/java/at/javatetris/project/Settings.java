@@ -24,8 +24,11 @@ public class Settings {
 
     /** default lines for config, add config values here */
     private static final List<String> DEFAULT_CONFIG = Arrays.asList(
-            "locale=de",
-            "gameVersion=pre-prod (0.2)"
+            "locale = de",
+            "gameVersion = alpha (0.3)",
+            "username=",
+            "password=",
+            "accountType="
     );
 
     private static final List<String> DEFAULT_CONTROLS = Arrays.asList(

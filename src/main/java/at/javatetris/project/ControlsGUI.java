@@ -59,7 +59,7 @@ public class ControlsGUI {
     //TODO: funktional machen, checken ob zwei den gleichen KEY haben,
     // usw., Felder vlt bissl größer machen damit sich auch SPACE ausgeht, set ne
 
-    /** on load,  */
+    /** on load, set key texts to in controls saved keys */
     @FXML
     public void initialize() {
         pauseKey.setText(Settings.searchControls("pauseKey"));

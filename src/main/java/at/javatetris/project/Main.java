@@ -1,6 +1,7 @@
 package at.javatetris.project;
 
 import javafx.application.Application;
+import javafx.scene.chart.PieChart;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -23,7 +24,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage mainStage) throws IOException, Exception {
-        //check if setting File is available and then load from it
+        //check if setting and controls Files are available and then load from it
         Settings.checkFile();
 
         //set the mainStage
@@ -31,6 +32,12 @@ public class Main extends Application {
         mainStage.setTitle("JavaTetris | Version: " + Settings.searchSettings("gameVersion"));
         Main.mainStage = mainStage;
 
+        //load JDBC Driver to enable DataBase actions
+        if(DataBase.loadJDBCDriver()) {
+            System.out.println("Main.java: JDBC Driver loaded successfully");
+        } else {
+            System.out.println("Main.java: JDBC Driver couldn't be loaded");
+        }
 
         //call MenuGUI
         MenuGUI.start();

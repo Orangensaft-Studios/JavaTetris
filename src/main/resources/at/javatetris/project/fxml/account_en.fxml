@@ -13,7 +13,6 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.javatetris.project.AccountGUI">
    <children>
       <ImageView fitHeight="85.0" fitWidth="95.0" onMouseClicked="#buttonBack" pickOnBounds="true" preserveRatio="true">
@@ -29,12 +28,12 @@
                   <Font size="52.0" />
                </font>
             </Text>
-            <HBox prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="100.0">
                <VBox.margin>
                   <Insets top="6.0" />
                </VBox.margin>
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Benutzername">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
                      <font>
                         <Font size="31.0" />
                      </font>
@@ -51,7 +50,7 @@
             </HBox>
             <HBox prefHeight="70.0" prefWidth="464.0" spacing="30.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Passwort">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Password">
                      <font>
                         <Font size="31.0" />
                      </font>
@@ -68,21 +67,21 @@
             </HBox>
             <HBox prefHeight="80.0" prefWidth="464.0" spacing="65.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#loginClicked" prefHeight="65.0" prefWidth="200.0" style="-fx-background-color: black;" text="Anmelden" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#loginClicked" prefHeight="65.0" prefWidth="200.0" style="-fx-background-color: black;" text="Log in" textFill="WHITE">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#registerClicked" prefHeight="65.0" prefWidth="200.0" style="-fx-background-color: black;" text="Registrieren" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#registerClicked" prefHeight="65.0" prefWidth="200.0" style="-fx-background-color: black;" text="Register" textFill="WHITE">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                   </Button>
                </children>
             </HBox>
-            <HBox prefHeight="62.0" prefWidth="464.0" spacing="10.0">
+            <HBox prefHeight="62.0" prefWidth="464.0" spacing="15.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Angemeldet als: ">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Logged in as:">
                      <font>
                         <Font size="22.0" />
                      </font>
