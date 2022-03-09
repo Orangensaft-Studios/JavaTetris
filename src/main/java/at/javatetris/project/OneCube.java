@@ -13,10 +13,13 @@ public class OneCube extends Rectangle {
      * the position, where the next One Cube will be positioned
      */
     private int position;
+
+    public static int blockPosX;
+    public static int blockPosY;
     /**
      * the size of the Tetromino
      */
-    protected final static int SIZE = 8;
+    private static final int SIZE = 18;
     /**
      * the size of the stroke
      */
@@ -24,11 +27,11 @@ public class OneCube extends Rectangle {
     /**
      * the X-Coordinate of the right top corner of the Square
      */
-    protected final static double X = GameStage.getWidth() / 2; // half
+    protected final static int X = GameStage.PLAY_AREA / 2; // half
     /**
      * the Y-Coordinate of the right top corner of the Square
      */
-    protected final static double Y = GameStage.getHeight() / 20; //5percent
+    protected final static int Y = 0;
     /**
      * the X-Coordinate of the right top corner of the Square after calculating the extra shift
      */
@@ -43,48 +46,47 @@ public class OneCube extends Rectangle {
      * @param position where the Block will be positioned
      * @param prevPosX where the block before was in X Coordinate
      * @param prevPosY where the block before was in Y Coordinate
-     * @param afterSave recreating the Block, after it fell down
      */
-    public OneCube(int position,int prevPosX, int prevPosY, boolean afterSave) {
+    public OneCube(int position,int prevPosX, int prevPosY) {
         setHeight(SIZE);
         setWidth(SIZE);
-        setTranslateX(X + prevPosX);
-        setTranslateY(Y + prevPosY);
+        setX(X + prevPosX);
+        setY(Y + prevPosY);
         newX = X + prevPosX;
         newY = Y + prevPosY;
-        System.out.println(X + prevPosX);
-        System.out.println(Y + prevPosY);
+
         if (position == 1) {
-            if (afterSave) {
-                setTranslateX(newX - (SIZE + 2 * STROKE));
-            } else {
-                setTranslateX(newX + (SIZE + 2 * STROKE));
-            }
+            setX(newX + (SIZE + 2 * STROKE));
         } else if (position == 2) {
-            if (afterSave) {
-                setTranslateX(newX + (SIZE + 2 * STROKE));
-            } else {
-                setTranslateX(newX - (SIZE + 2 * STROKE));
-            }
+            setX(newX - (SIZE + 2 * STROKE));
         } else if (position == 3) {
-            if (afterSave) {
-                setTranslateY(newY - (SIZE + 2 * STROKE));
-            } else {
-                setTranslateY(newY + (SIZE + 2 * STROKE));
-            }
+            setY(newY + (SIZE + 2 * STROKE));
         } else if (position == 4) {
-            if (afterSave) {
-                setTranslateY(newY + (SIZE + 2 * STROKE));
-            } else {
-                setTranslateY(newY - (SIZE + 2 * STROKE));
-            }
+            setY(newY - (SIZE + 2 * STROKE));
+        } else if( position == 0){
+            blockPosX = 0;
+            blockPosY = 0;
         }
         setStrokeType(StrokeType.OUTSIDE);
         setStrokeWidth(STROKE);
         setStroke(Color.BLACK);
 
+        switch (position) {
+            case 1 -> blockPosX += (SIZE + 2 * STROKE);
+            case 2 -> blockPosX -= (SIZE + 2 * STROKE);
+            case 3 -> blockPosY += (SIZE + 2 * STROKE);
+            case 4 -> blockPosY -= (SIZE + 2 * STROKE);
+
+        }
 
     }
+
+    public OneCube(int x, int y){
+        setX(this.X + x);
+        setY(this.Y + y);
+    }
+
+
 
     /**
      * Setting One Cube from another One Cube
@@ -138,4 +140,5 @@ public class OneCube extends Rectangle {
     public static double getY1() {
         return Y;
     }
+
 }
