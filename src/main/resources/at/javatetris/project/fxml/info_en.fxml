@@ -19,11 +19,14 @@
                   <Font size="52.0" />
                </font>
             </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="JavaTetris" wrappingWidth="238.705078125">
-               <font>
-                  <Font size="52.0" />
-               </font>
-            </Text>
+            <ImageView fitHeight="49.0" fitWidth="299.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../icons/jt_logo.jpg" />
+               </image>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
+            </ImageView>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="a SEW project by">
                <font>
                   <Font size="20.0" />

@@ -1,5 +1,7 @@
 <!-- README file mainly for GitHub -->
 
+![JavaTetris Logo](src/main/resources/at/javatetris/project/icons/jt_logo.jpg)
+
 # JavaTetris 
 #### ein SEW Projekt von 
 ### [Severin](https://github.com/einsev) und [Roman](https://github.com/Ixpiria)

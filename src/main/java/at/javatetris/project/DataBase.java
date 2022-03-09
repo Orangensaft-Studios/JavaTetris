@@ -12,7 +12,7 @@ public class DataBase {
 
 
     /** url to connect to database */
-    private final static String url = "jdbc:mysql://6.tcp.eu.ngrok.io:15453/javatetrisdb";
+    private final static String url = "jdbc:mysql://0.tcp.eu.ngrok.io:10120/javatetrisdb";
 
     /** username to log into database */
     private final static String user = "jt";
