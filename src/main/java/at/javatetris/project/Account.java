@@ -4,19 +4,19 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 
-import java.io.File;
-import java.io.FileWriter;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.FileAlreadyExistsException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.SocketHandler;
+import java.util.Properties;
+
+import static java.nio.file.StandardOpenOption.APPEND;
 
 public class Account {
-
     public static void create(String username, String password) throws Exception {
+
+        // !!! DATABASE ISNT ACTIVATED / IMPLEMENTED, EVERY CODE WITH DATABASE JUST FOR LATER !!!
 
         //try creating user in database and store return value
         String createUser = DataBase.createUser(username, password);
@@ -26,39 +26,57 @@ public class Account {
             //set local username in config file
             Settings.setNewValue("username", username, "settings");
             Settings.setNewValue("password", password, "settings");
-            Settings.setNewValue("accountType=", "online", "settings");
+
+            //missing: also load the data from database
 
             //PopUp Alert account created
+
+            Alert alert = Main.alertBuilder(Alert.AlertType.INFORMATION, "accountCreatedTitle", "accountCreatedHeader", "accountCreatedContent", true);
+            /*
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle(Language.getPhrase("accountCreatedTitle"));
             alert.setHeaderText(Language.getPhrase("accountCreatedHeader"));
-            alert.setContentText(Language.getPhrase("accountCreatedContent") + username);
             ButtonType okButton = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
             alert.getButtonTypes().setAll(okButton);
+             */
+            alert.setContentText(Language.getPhrase("accountCreatedContent") + username);
             alert.show();
         } else if (createUser.equals("UsrAlrExists")) {
             //PopUp if username already exists
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle(Language.getPhrase("usrAlrExistsTitle"));
-            alert.setHeaderText(Language.getPhrase("usrAlrExistsHeader"));
-            alert.setContentText(Language.getPhrase("usrAlrExistsContent") + username);
-            ButtonType okButton = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
-            alert.getButtonTypes().setAll(okButton);
-            alert.show();
+            userAlrExistsAlert(username);
         } else {
-
             //PopUp because online account creation not implemented yet
+            Alert alert = Main.alertBuilder(Alert.AlertType.INFORMATION, "onlineAccNotImplementedTitle", "onlineAccNotImplementedHeader", "onlineAccNotImplementedContent", false);
+            /*
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle(Language.getPhrase("onlineAccNotImplementedTitle"));
             alert.setHeaderText(Language.getPhrase("onlineAccNotImplementedHeader"));
             alert.setContentText(Language.getPhrase("onlineAccNotImplementedContent"));
+             */
             ButtonType createLocalAccountBtn = new ButtonType(Language.getPhrase("accountNotCreatedCreateLocalAcc"), ButtonBar.ButtonData.OK_DONE);
             ButtonType cancelBtn = new ButtonType(Language.getPhrase("cancel"), ButtonBar.ButtonData.CANCEL_CLOSE);
             alert.getButtonTypes().setAll(createLocalAccountBtn, cancelBtn);
             alert.showAndWait().ifPresent(type -> {
-                if(type == createLocalAccountBtn) {
+                if (type == createLocalAccountBtn) {
                     try {
-                        createLocal(username, password);
+                        String returnValueCreateLocalUser = createLocal(username, password);
+                        if (returnValueCreateLocalUser.equals("UsrAlrExists")) {
+                            //PopUp if username already exists
+                            userAlrExistsAlert(username);
+                        } else if (returnValueCreateLocalUser.equals("LocalAccountCreated")) {
+                            //PopUp Alert local account created
+                            Alert alertLclAccCreated = Main.alertBuilder(Alert.AlertType.INFORMATION, "localAccCreatedTitle", "localAccCreatedHeader","accountCreatedContent", true);
+                            /*
+                            Alert alertLclAccCreated = new Alert(Alert.AlertType.INFORMATION);
+                            alertLclAccCreated.setTitle(Language.getPhrase("localAccCreatedTitle"));
+                            alertLclAccCreated.setHeaderText(Language.getPhrase("localAccCreatedHeader"));
+                            ButtonType okButton = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
+                            alertLclAccCreated.getButtonTypes().setAll(okButton);
+                             */
+                            alertLclAccCreated.setContentText(Language.getPhrase("accountCreatedContent") + username);
+
+                            alertLclAccCreated.show();
+                        }
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
@@ -99,7 +117,22 @@ public class Account {
 
     }
 
-    private static void createLocal(String username, String password) throws Exception {
+    private static void userAlrExistsAlert(String username) {
+        Alert alertUsrAlrEx = Main.alertBuilder(Alert.AlertType.WARNING, "usrAlrExistsTitle", "usrAlrExistsHeader", "usrAlrExistsContent", true);
+        /*
+        Alert alertUsrAlrEx = new Alert(Alert.AlertType.WARNING);
+        alertUsrAlrEx.setTitle(Language.getPhrase("usrAlrExistsTitle"));
+        alertUsrAlrEx.setHeaderText(Language.getPhrase("usrAlrExistsHeader"));
+        alertUsrAlrEx.setContentText(Language.getPhrase("usrAlrExistsContent") + username);
+
+        ButtonType okButton = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
+        alertUsrAlrEx.getButtonTypes().setAll(okButton);
+        */
+
+        alertUsrAlrEx.show();
+    }
+
+    private static String createLocal(String username, String password) throws Exception {
 
         final List<String> USER_DATA_TEMPLATE = Arrays.asList(
                 "username=" + username,
@@ -111,41 +144,73 @@ public class Account {
                 "timePlayed=0"
         );
 
-        //TODO: check if file alr exists so username alr exists, maybe write all users to extra file
 
-        FileWriter writeUsernameToAllUsernames = new FileWriter(Settings.ALL_USERNAMES_FILE_PATH);
-        writeUsernameToAllUsernames.write(username);
-        writeUsernameToAllUsernames.close();
+        //check if user alr exists
+        if (doesUsernameExistInFile(username)) {
+            return "UsrAlrExists";
+        }
+
+        //write the username to the all username file
+        Files.writeString(
+                Path.of(Settings.ALL_USERNAMES_FILE_PATH),
+                username + System.lineSeparator(), APPEND
+        );
 
         //create a user data file with username as name
-
-
-
         File playerDataFile = new File(username + ".properties");
         Files.write(Paths.get(Settings.JAVATETRIS_USR_DATA_DIR_PATH + playerDataFile), USER_DATA_TEMPLATE, StandardCharsets.UTF_8);
 
+        //set username, password and accountType in config/settings file
+        setUsernameAndPasswordInSettings(username, password);
 
+        //load user data template to user data properties
+        UserData.load(username);
 
-        Settings.setNewValue("username", username, "settings");
-        Settings.setNewValue("password", password, "settings");
-        Settings.setNewValue("accountType", "local", "settings");
-
-        //PopUp Alert local account created
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(Language.getPhrase("localAccCreatedTitle"));
-        alert.setHeaderText(Language.getPhrase("localAccCreatedHeader"));
-        alert.setContentText(Language.getPhrase("accountCreatedContent") + username);
-        ButtonType okButton = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
-        alert.getButtonTypes().setAll(okButton);
-        alert.show();
+        //return that the local account was created
+        return "LocalAccountCreated";
     }
 
-    public static void login(String username, String password) {
-        if (Settings.searchSettings("accountType").equals("online")) {
-            DataBase.onlineLogin(username, password);
+    public static void login(String username, String password) throws Exception {
+        //TODO: passwort check
+        if (DataBase.onlineLogin(username, password)) {
+            setUsernameAndPasswordInSettings(username, password);
         } else {
-
+            //check if user exists in allUsernames File and then log in or alert that it doesn't exist
+            if (doesUsernameExistInFile(username)) {
+                setUsernameAndPasswordInSettings(username, password);
+                UserData.load(username);
+            } else {
+                Alert alert = Main.alertBuilder(Alert.AlertType.WARNING, "userDoesntExistTitle", "userDoesntExistHeader", "userDoesntExistContent", true);
+                /*
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle(Language.getPhrase("userDoesntExistTitle"));
+                alert.setContentText(Language.getPhrase("userDoesntExistContent"));
+                ButtonType okButton = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
+                alert.getButtonTypes().setAll(okButton);
+                 */
+                alert.setHeaderText(Language.getPhrase("userDoesntExistHeader") + username + Language.getPhrase("userDoesntExistHeader2"));
+                alert.show();
+            }
         }
     }
+
+    private static boolean doesUsernameExistInFile(String username) throws IOException {
+        //read all lines from all username files
+        List<String> file = Files.readAllLines(Path.of(Settings.ALL_USERNAMES_FILE_PATH));
+        for (String line : file) {
+            //check if the given username already exists in allUsernames file
+            if (line.equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static void setUsernameAndPasswordInSettings (String username, String password) throws Exception {
+        Settings.setNewValue("username", username, "settings");
+        Settings.setNewValue("password", password, "settings");
+    }
+
+
 
 }

@@ -54,45 +54,43 @@ public class AccountGUI {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
+        //TODO: check if empty, maybe extract method from registerClicked
+
         Account.login(username, bytesToHex(password));
 
 
-        Settings.setNewValue("username", username, "settings");
         loggedInAs.setText(Settings.searchSettings("username"));
     }
 
     public void registerClicked(ActionEvent actionEvent) throws Exception {
-        //boolean canCreateAccount = true;
-
         final String username = usernameField.getText();
         String password = passwordField.getText();
 
+        //if username text field is empty
         if (username == null || username.trim().isEmpty()) {
             System.out.println("AccountGUI.java: Username empty");
             //PopUp Alert empty username
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle(Language.getPhrase("usernameEmptyTitle"));
-            alert.setHeaderText(Language.getPhrase("usernameEmptyHeader"));
-            alert.setContentText(Language.getPhrase("checkAndTryAgain"));
-            ButtonType okButton = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
-            alert.getButtonTypes().setAll(okButton);
+            Alert alert = Main.alertBuilder(Alert.AlertType.WARNING, "usernameEmptyTitle", "usernameEmptyHeader", "checkAndTryAgain", true);
             alert.show();
             return;
-            //canCreateAccount = false;
+        } else {
+            if (!username.matches("^[\\Da-zA-Z]{3,15}")) { //no number, a-z A-Z, min. 3 max. 15 letters
+                //PopUp Alert empty username
+                Alert alert = Main.alertBuilder(Alert.AlertType.WARNING, "notValidUserNameTitle", "notValidUserNameHeader", "notValidUserNameContent", true);
+                alert.show();
+                return;
+            } else {
+                //TODO: not defined error occured, Alert in main oder so machen
+            }
         }
 
+        //if password text field is empty
         if (password == null || password.trim().isEmpty()) {
             System.out.println("AccountGUI.java: Password empty");
             //PopUp Alert empty passwort
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle(Language.getPhrase("passwordEmptyTitle"));
-            alert.setHeaderText(Language.getPhrase("passwordEmptyHeader"));
-            alert.setContentText(Language.getPhrase("checkAndTryAgain"));
-            ButtonType okButton = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
-            alert.getButtonTypes().setAll(okButton);
+            Alert alert = Main.alertBuilder(Alert.AlertType.WARNING, "passwordEmptyTitle", "passwordEmptyHeader", "checkAndTryAgain", true);
             alert.show();
             return;
-            //canCreateAccount = false;
         } else {
             password = bytesToHex(password);
         }

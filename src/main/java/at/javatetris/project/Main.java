@@ -2,6 +2,9 @@ package at.javatetris.project;
 
 import javafx.application.Application;
 import javafx.scene.chart.PieChart;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -41,6 +44,19 @@ public class Main extends Application {
 
         //call MenuGUI
         MenuGUI.start();
+    }
+
+    public static Alert alertBuilder(Alert.AlertType type, String titleKey, String headerKey, String contentKey, boolean implementOkButton) {
+        Alert alert = new Alert(type);
+        alert.setTitle(Language.getPhrase(titleKey));
+        alert.setHeaderText(Language.getPhrase(headerKey));
+        alert.setContentText(Language.getPhrase(contentKey));
+        if (implementOkButton) {
+            ButtonType okButton = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
+            alert.getButtonTypes().setAll(okButton);
+        }
+        //alert.show();
+        return alert;
     }
 
     /**

@@ -138,6 +138,7 @@ public class ControlsGUI {
     }
 
     public void resetControls(ActionEvent actionEvent) throws Exception {
+        //TODO: Alert ob wirklich zurücksetzen
         System.out.println("ControlsGUI.java: resetControls clicked");
         Settings.setControlsToDefault();
         initialize();

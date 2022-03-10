@@ -57,6 +57,8 @@ public class DataBase {
      */
     public static String createUser(String username, String passwordHash) {
 
+        return "AnC";
+        /*
         System.out.println("DataBase.java: Connecting database to create User...");
 
         try {
@@ -93,10 +95,17 @@ public class DataBase {
         }
 
         return "AnC"; //Account not Created
+
+         */
     }
 
 
     public static boolean onlineLogin(String username, String password) {
+
+        return false;
+
+        /*
+
         System.out.println("DataBase.java: Connecting database to login to User...");
 
         try {
@@ -124,6 +133,7 @@ public class DataBase {
 
         return false;
 
+         */
 
     }
 

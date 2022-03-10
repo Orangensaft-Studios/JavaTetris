@@ -6,7 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -75,10 +74,7 @@ public class SettingsGUI {
         System.out.println("SettingsGUI.java: Sprache: " + Language.get());
 
         //PopUp Alert if you really want to close the game
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(Language.getPhrase("resetSettingsTitle"));
-        alert.setHeaderText(Language.getPhrase("resetSettingsHeader"));
-        alert.setContentText(Language.getPhrase("resetSettingsContent"));
+        Alert alert = Main.alertBuilder(Alert.AlertType.CONFIRMATION, "resetSettingsTitle", "resetSettingsHeader", "resetSettingsContent", false);
         ButtonType yesButton = new ButtonType(Language.getPhrase("yes"), ButtonBar.ButtonData.YES);
         ButtonType noButton = new ButtonType(Language.getPhrase("no"), ButtonBar.ButtonData.NO);
         alert.getButtonTypes().setAll(yesButton, noButton);

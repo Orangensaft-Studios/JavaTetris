@@ -41,7 +41,7 @@
                         <Insets top="20.0" />
                      </HBox.margin>
                   </Text>
-                  <TextField fx:id="usernameField" prefHeight="33.0" prefWidth="197.0">
+                  <TextField fx:id="usernameField" prefHeight="33.0" prefWidth="197.0" promptText="Must be 3 - 15 letters, no numbers">
                      <HBox.margin>
                         <Insets top="26.0" />
                      </HBox.margin>
@@ -58,7 +58,7 @@
                         <Insets right="75.0" />
                      </HBox.margin>
                   </Text>
-                  <PasswordField fx:id="passwordField" prefHeight="33.0" prefWidth="197.0">
+                  <PasswordField fx:id="passwordField" prefHeight="33.0" prefWidth="197.0" promptText="Enter a secure password">
                      <HBox.margin>
                         <Insets top="5.0" />
                      </HBox.margin>
@@ -67,12 +67,12 @@
             </HBox>
             <HBox prefHeight="80.0" prefWidth="464.0" spacing="65.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#loginClicked" prefHeight="65.0" prefWidth="200.0" style="-fx-background-color: black;" text="Log in" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#loginClicked" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: black;" text="Log in" textFill="WHITE">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#registerClicked" prefHeight="65.0" prefWidth="200.0" style="-fx-background-color: black;" text="Register" textFill="WHITE">
+                  <Button mnemonicParsing="false" onAction="#registerClicked" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: black;" text="Register" textFill="WHITE">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>

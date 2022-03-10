@@ -9,7 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-//TODO: Tooltips language anpassen
+
 /**
  * main MenuGUI class
  * @author Severin Rosner
@@ -34,10 +34,14 @@ public class MenuGUI {
     @FXML
     public void closeJavaTetris(MouseEvent e) {
         //PopUp Alert if you really want to close the game
+        Alert alert = Main.alertBuilder(Alert.AlertType.CONFIRMATION, "closeGameTitle", "closeGameHeader", "closeGameContent", false);
+        /*
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle(Language.getPhrase("closeGameTitle"));
         alert.setHeaderText(Language.getPhrase("closeGameHeader"));
         alert.setContentText(Language.getPhrase("closeGameContent"));
+
+         */
         ButtonType yesButton = new ButtonType(Language.getPhrase("yes"), ButtonBar.ButtonData.YES);
         ButtonType noButton = new ButtonType(Language.getPhrase("no"), ButtonBar.ButtonData.NO);
         alert.getButtonTypes().setAll(yesButton, noButton);

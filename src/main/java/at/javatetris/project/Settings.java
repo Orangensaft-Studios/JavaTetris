@@ -24,16 +24,21 @@ public class Settings {
     /** location of controls properties file */
     private final static String CONTROLS_FILE_PATH = JAVATETRIS_DIR_PATH + "controls.properties";
 
-    /** location of controls properties file */
+    /** location of all usernames passwort properties file */
     public final static String ALL_USERNAMES_FILE_PATH = JAVATETRIS_USR_DATA_DIR_PATH + "allUsernames.txt";
+
+    /** setting properties */
+    private static Properties settings;
+
+    /** controls properties */
+    private static Properties controls;
 
     /** default lines for config, add config values here */
     private static final List<String> DEFAULT_CONFIG = Arrays.asList(
             "locale = de",
-            "gameVersion = alpha (0.3)",
+            "gameVersion = alpha (0.4)",
             "username=",
-            "password=",
-            "accountType="
+            "password="
     );
 
     private static final List<String> DEFAULT_CONTROLS = Arrays.asList(
@@ -44,12 +49,6 @@ public class Settings {
             "moveLeftKey=A",
             "moveRightKey=D"
     );
-
-    /** setting properties */
-    private static Properties settings;
-
-    /** controls properties */
-    private static Properties controls;
 
     /**
      * getter for setting properties
@@ -97,6 +96,7 @@ public class Settings {
         }
 
         if (!allUsernames.exists()) {
+            //create all usernames file (for Account.java)
             Files.createFile(Paths.get(ALL_USERNAMES_FILE_PATH));
 
             System.out.println("Settings,java: allUserNamesFile created her: " + allUsernames.getAbsolutePath());
@@ -180,6 +180,7 @@ public class Settings {
 
         //store and reload
         file.store(outputStream, null);
+
         load();
 
         //debug

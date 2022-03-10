@@ -139,7 +139,7 @@
         <module name="CommentsIndentation"/>
 
         <module name="Indentation">
-            <property name="forceStrictCondition" value="false"/><!-- TODO !? -->
+            <property name="forceStrictCondition" value="false"/>
         </module>
 
         <module name="NeedBraces">
