@@ -41,12 +41,23 @@ public class AccountGUI {
     @FXML
     private Text loggedInAs;
 
+    @FXML
+    public void initialize() {
+        loggedInAs.setText(Settings.searchSettings("username"));
+    }
+
     public void buttonBack(MouseEvent event) throws IOException {
         MenuGUI.start();
     }
 
     public void loginClicked(ActionEvent actionEvent) throws Exception {
-        Settings.setNewValue("username", usernameField.getText(), "settings");
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+
+        Account.login(username, bytesToHex(password));
+
+
+        Settings.setNewValue("username", username, "settings");
         loggedInAs.setText(Settings.searchSettings("username"));
     }
 
@@ -86,7 +97,11 @@ public class AccountGUI {
             password = bytesToHex(password);
         }
 
+        //create Account
         Account.create(username, password);
+
+        //set logged in text to username
+        loggedInAs.setText(Settings.searchSettings("username"));
     }
 
 

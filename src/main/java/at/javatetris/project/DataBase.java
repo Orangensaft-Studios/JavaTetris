@@ -12,13 +12,13 @@ public class DataBase {
 
 
     /** url to connect to database */
-    private final static String url = "jdbc:mysql://0.tcp.eu.ngrok.io:10120/javatetrisdb";
+    private final static String url = "jdbc:mysql://ip:3306/javatetrisdb";
 
     /** username to log into database */
-    private final static String user = "jt";
+    private final static String user = "";
 
     /** password to log into database */
-    private final static String pass = "fqD6P&&NT5Kj";
+    private final static String pass = "";
 
     /**
      * return if the JDBC Driver was loaded
@@ -57,7 +57,7 @@ public class DataBase {
      */
     public static String createUser(String username, String passwordHash) {
 
-        System.out.println("DataBase.java: Connecting database...");
+        System.out.println("DataBase.java: Connecting database to create User...");
 
         try {
 
@@ -66,13 +66,13 @@ public class DataBase {
 
             System.out.println("Database.java: Connected successfully to: " + url);
 
-            PreparedStatement st = connection.prepareStatement("select * from UserData where username = ?");
-            st.setString(1, username);
-            ResultSet r1 = st.executeQuery();
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from UserData where username = ?");
+            preparedStatement.setString(1, username);
+            ResultSet r1 = preparedStatement.executeQuery();
 
             if(r1.next()) {
                 System.out.println("DataBase.java: User '" + username + "' already exists");
-                return "Username already exists";
+                return "UsrAlrExists";
             }
 
             String sql = "INSERT INTO UserData (username, password) VALUES (?, ?)";
@@ -94,5 +94,39 @@ public class DataBase {
 
         return "AnC"; //Account not Created
     }
+
+
+    public static boolean onlineLogin(String username, String password) {
+        System.out.println("DataBase.java: Connecting database to login to User...");
+
+        try {
+            // start connection
+            Connection connection = DriverManager.getConnection(url, user, pass);
+
+            System.out.println("Database.java: Connected successfully to: " + url);
+
+            PreparedStatement preparedStatement = connection.prepareStatement("select username, password from UserData where username = ?");
+
+            preparedStatement.setString(1, username);
+            ResultSet r1 = preparedStatement.executeQuery();
+
+            //if user found, look if given password matches
+            if(r1.next()) {
+                System.out.println("DataBase.java: User '" + username + "' exists, comparing passwords now");
+                if (r1.getString("password").equals(password)) {
+                    return true;
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("DataBase.java: " + e.getMessage());
+        }
+
+        return false;
+
+
+    }
+
+
 
 }

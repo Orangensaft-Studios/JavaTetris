@@ -16,6 +16,8 @@ public class ChooseModeGUI {
         stage.show();
     }
 
+    //TODO: check if you are logged in and ask if you really want to play without logged in
+
     public void buttonBack(MouseEvent event) throws IOException {
         MenuGUI.start();
     }

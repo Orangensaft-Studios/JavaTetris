@@ -14,13 +14,18 @@ import java.util.Properties;
  */
 public class Settings {
     /** user home path + AppData\Local\JavaTetris\ */
-    private final static String SETTING_DIR_PATH = System.getProperty("user.home") + "\\AppData\\Local\\JavaTetris\\";
+    private final static String JAVATETRIS_DIR_PATH = System.getProperty("user.home") + "\\AppData\\Local\\JavaTetris\\";
+
+    public final static String JAVATETRIS_USR_DATA_DIR_PATH = JAVATETRIS_DIR_PATH + "\\userData\\";
 
     /** location of setting properties file */
-    private final static String SETTING_FILE_PATH = SETTING_DIR_PATH + "config.properties";
+    private final static String SETTING_FILE_PATH = JAVATETRIS_DIR_PATH + "config.properties";
 
     /** location of controls properties file */
-    private final static String CONTROLS_FILE_PATH = SETTING_DIR_PATH + "controls.properties";
+    private final static String CONTROLS_FILE_PATH = JAVATETRIS_DIR_PATH + "controls.properties";
+
+    /** location of controls properties file */
+    public final static String ALL_USERNAMES_FILE_PATH = JAVATETRIS_USR_DATA_DIR_PATH + "allUsernames.txt";
 
     /** default lines for config, add config values here */
     private static final List<String> DEFAULT_CONFIG = Arrays.asList(
@@ -62,16 +67,20 @@ public class Settings {
         return controls;
     }
 
+
     /**
      * check if setting file is here, else create directory and file with defaultConfig
      * @throws Exception e
      * */
     public static void checkFile() throws Exception {
-        Files.createDirectories(Paths.get(SETTING_DIR_PATH));
-        System.out.println("Settings.java: Directory: " + SETTING_DIR_PATH);
+        Files.createDirectories(Paths.get(JAVATETRIS_DIR_PATH));
+        Files.createDirectories(Paths.get(JAVATETRIS_USR_DATA_DIR_PATH));
+
+        System.out.println("Settings.java: Directory: " + JAVATETRIS_DIR_PATH);
 
         File settingFile = new File(SETTING_FILE_PATH);
         File controlsFile = new File(CONTROLS_FILE_PATH);
+        File allUsernames = new File(ALL_USERNAMES_FILE_PATH);
 
         if (!settingFile.exists()) {
             //write the config lines in the new created config.properties file
@@ -80,13 +89,17 @@ public class Settings {
             System.out.println("Settings.java: Setting File was created here: " + settingFile.getAbsolutePath());
         }
 
-
-
         if (!controlsFile.exists()) {
             //write the controls lines in the new created controls.properties file
             Files.write(Paths.get(CONTROLS_FILE_PATH), DEFAULT_CONTROLS, StandardCharsets.UTF_8);
 
             System.out.println("Settings.java: Controls File was created here: " + controlsFile.getAbsolutePath());
+        }
+
+        if (!allUsernames.exists()) {
+            Files.createFile(Paths.get(ALL_USERNAMES_FILE_PATH));
+
+            System.out.println("Settings,java: allUserNamesFile created her: " + allUsernames.getAbsolutePath());
         }
 
         load();
@@ -98,19 +111,18 @@ public class Settings {
      * */
     public static void load() throws Exception {
 
-        settings = new Properties();
-
         //load config file
+        settings = new Properties();
         InputStream settingsInputStream = new FileInputStream(SETTING_FILE_PATH);
         settings.load(settingsInputStream);
 
+        //update language
         Language.updateLanguageFromConfig();
 
+        //load control file
         controls = new Properties();
-        //load from controls file
         InputStream controlsInputStream = new FileInputStream(CONTROLS_FILE_PATH);
         controls.load(controlsInputStream);
-
     }
 
     /**
@@ -146,14 +158,14 @@ public class Settings {
      * @param value value in settings properties (e.g. en)
      * @throws Exception e
      * */
-    public static void setNewValue(String key, String value, String settingsOrControlsFile) throws Exception {
+    public static void setNewValue(String key, String value, String fileName) throws Exception {
         String path;
         Properties file;
 
-        if (settingsOrControlsFile.equals("settings")) {
+        if (fileName.equals("settings")) {
             path = SETTING_FILE_PATH;
             file = getSettings();
-        } else if (settingsOrControlsFile.equals("controls")) {
+        } else if (fileName.equals("controls")) {
             path = CONTROLS_FILE_PATH;
             file = getControls();
         } else {
@@ -189,6 +201,11 @@ public class Settings {
         return getSettings().getProperty(key);
     }
 
+    /**
+     * search for a control
+     * @param key key to search for
+     * @return value to key
+     */
     public static String searchControls(String key) {
         return getControls().getProperty(key);
     }

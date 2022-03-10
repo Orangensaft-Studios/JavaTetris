@@ -89,7 +89,7 @@
                         <Insets top="10.0" />
                      </HBox.margin>
                   </Text>
-                  <Text fx:id="loggedInAs" strokeType="OUTSIDE" strokeWidth="0.0" text="USERNAME_NOT_FOUND">
+                  <Text fx:id="loggedInAs" strokeType="OUTSIDE" strokeWidth="0.0" text="NO_USER_LOGGED_IN">
                      <HBox.margin>
                         <Insets top="10.0" />
                      </HBox.margin>
