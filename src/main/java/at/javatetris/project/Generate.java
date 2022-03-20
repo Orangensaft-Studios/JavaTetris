@@ -41,7 +41,8 @@ public class Generate {
     public static int[][] fieldStatus = new int[PLAY_AREA
             / GameStage.SIZE][(getHeight() / GameStage.SIZE) + 1];
 
-
+    private static int[] rounds = new int[7];
+    private static int inRound = 0;
 
 
     /**
@@ -87,6 +88,21 @@ public class Generate {
         Random rand = new Random();
         colorPick = rand.nextInt(COLORS.length);
         form = rand.nextInt(7) + 1;
+        for (int i = 0; i < rounds.length; i++) {
+            if (rounds[i] == form){
+                form = rand.nextInt(7) + 1;
+                i = 0;
+            }
+            while (rounds[i] == form){
+                form = rand.nextInt(7) + 1;
+            }
+        }
+        rounds[inRound] = form;
+        inRound ++;
+        if (inRound == 7){
+            inRound = 0;
+            rounds = new int[7];
+        }
         System.out.println(form);
 
         if (form == 1) {
@@ -165,7 +181,6 @@ public class Generate {
     public static Group SaveArrayToGroup(Group group,OneCube[][] cubes){
         for (int x = 0; x < fieldStatus.length; x++) {
             for (int y = 0; y < (getHeight() / SIZE); y++) {
-                System.out.println(cubes[x][y]);
                 if (cubes[x][y] != null){
                     group.getChildren().addAll(cubes[x][y]);
                 }

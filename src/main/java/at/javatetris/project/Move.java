@@ -59,26 +59,8 @@ class Move extends TimerTask {
      */
 
     public static void MoveLeft(TetrisBlock tBlock) {
-        int[] leftToCheck = getLeftToCheck()[0];
-        if (leftToCheck[0] == 1){
-            if (checkLeft(tBlock.c1)){
-                return;
-            }
-        }
-        if(leftToCheck[1] == 1){
-            if (checkLeft(tBlock.c2)){
-                return;
-            }
-        }
-        if(leftToCheck[2] == 1){
-            if (checkLeft(tBlock.c3)){
-                return;
-            }
-        }
-        if(leftToCheck[3] == 1){
-            if (checkLeft(tBlock.c4)){
-                return;
-            }
+        if (checkLeft(tBlock)){
+            return;
         }
         tBlock.c1.setX(tBlock.c1.getX() - GameStage.SIZE);
         tBlock.c2.setX(tBlock.c2.getX() - GameStage.SIZE);
@@ -87,8 +69,15 @@ class Move extends TimerTask {
 
     }
 
-    private static boolean checkLeft(OneCube cube){
-        return (cube.getX() / SIZE) == 0 ||  fieldStatus[(int)cube.getX() / GameStage.SIZE - 1][(int)cube.getY() / GameStage.SIZE] == 1;
+    private static boolean checkLeft(TetrisBlock tBlock){
+        if((int) tBlock.c1.getX() / SIZE - 1 < 0 || (int) tBlock.c2.getX() / SIZE - 1 < 0
+                || (int) tBlock.c3.getX() / SIZE - 1 < 0 || (int) tBlock.c4.getX() / SIZE - 1 < 0){
+            return true;
+        }
+        return (fieldStatus[(int) tBlock.c1.getX() / SIZE - 1][((int) tBlock.c1.getY() / SIZE)] == 1)
+                || (fieldStatus[(int) tBlock.c2.getX() / SIZE  - 1][((int) tBlock.c2.getY() / SIZE)] == 1)
+                || (fieldStatus[(int) tBlock.c3.getX() / SIZE  - 1][((int) tBlock.c3.getY() / SIZE)] == 1)
+                || (fieldStatus[(int) tBlock.c4.getX() / SIZE  - 1][((int) tBlock.c4.getY() / SIZE)] == 1);
     }
 
     public static void MoveRight(TetrisBlock tBlock) {

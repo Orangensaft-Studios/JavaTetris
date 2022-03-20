@@ -149,7 +149,7 @@ public class GameStage {
             fieldStatus[fieldStatus.length - 1][i] = 1;
         }
 
-        System.out.println(Arrays.deepToString(fieldStatus));
+
 
 
         TetrisBlock currentBlock = nextBLock;
@@ -381,7 +381,7 @@ public class GameStage {
                         }
                         break;
                     case 2:
-                        System.out.println(2);
+
                         if (RotateCube(tBlock.c1, 2 * SIZE,0) &&  RotateCube(tBlock.c2,SIZE,-SIZE)){
                             SetCubeCoordiantes(tBlock.c1, 2 * SIZE,0);
                             SetCubeCoordiantes(tBlock.c2,SIZE,-SIZE);
@@ -487,8 +487,11 @@ public class GameStage {
         }
     }
     private static boolean RotateCube(OneCube cube,int xMove, int yMove){
+        if ((int) cube.getX() / SIZE + xMove / SIZE < 0 || ((int) cube.getY() / SIZE) + yMove / SIZE < 0){
+            return false;
+        }
         return fieldStatus[(int) cube.getX() / SIZE + xMove / SIZE][((int) cube.getY() / SIZE) + yMove / SIZE] == 0
-                &&cube.getX()  + xMove <= PLAY_AREA && cube.getX() + xMove >= 0 && cube.getY() + yMove < getHeight();
+                && cube.getX()  + xMove <= PLAY_AREA && cube.getX() + xMove >= 0 && cube.getY() + yMove < getHeight();
     }
 
     private static void SetCubeCoordiantes(OneCube cube,int xMove, int yMove){
@@ -546,7 +549,7 @@ public class GameStage {
         //checks if bottom is reached or collision with another Tetromino occurs
         if (CheckMoveDown(TBlock) && spawn){
             group = new Group();
-            System.out.println(Arrays.deepToString(group.getChildren().toArray(new Node[0])) +"group");
+
 
             all.getChildren().remove(nextBLock.c1);
             all.getChildren().remove(nextBLock.c2);
@@ -562,15 +565,15 @@ public class GameStage {
             fieldStatus[(int) TBlock.c3.getX() / SIZE][(int) TBlock.c3.getY() / SIZE] = 1;
             fieldStatus[(int) TBlock.c4.getX() / SIZE][(int) TBlock.c4.getY() / SIZE] = 1;
 
-            System.out.println(Arrays.deepToString(everyCube));
+
             everyCube = DeleteRow(everyCube);
-            System.out.println(Arrays.deepToString(everyCube));
+
 
             all.getChildren().remove(block.c1);
             all.getChildren().remove(block.c2);
             all.getChildren().remove(block.c3);
             all.getChildren().remove(block.c4);
-            System.out.println(Arrays.deepToString(all.getChildren().toArray(new Node[0])));
+
             if (firstRound == 1){
                 for (int i = 2; i < 3; i++) {
                     all.getChildren().remove(6);
@@ -581,7 +584,7 @@ public class GameStage {
                 }
             }
 
-            System.out.println(Arrays.deepToString(all.getChildren().toArray(new Node[0])));
+
             group = SaveArrayToGroup(group,everyCube);
 
             all.getChildren().add(group);
