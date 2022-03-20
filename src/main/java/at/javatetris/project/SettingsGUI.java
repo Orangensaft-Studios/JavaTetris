@@ -6,7 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,43 +19,48 @@ public class SettingsGUI {
 
     /**
      * start method to load settings.fxml
-     * @throws IOException
      */
-    public static void start() throws IOException {
-
-        //System.out.println("SettingsGUI.java: Sprache in config: " + Language.get());
-
-        FXMLLoader fxmlLoader = new FXMLLoader(MenuGUI.class.getResource("fxml/settings_" + Language.get() + ".fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = Main.getStage();
-        stage.setScene(scene);
+    public static void start()  {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(MenuGUI.class.getResource("fxml/settings_" + Language.get() + ".fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = Main.getStage();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            Main.errorAlert("SettingsGUI.java");
+            e.printStackTrace();
+        }
     }
 
     /**
-     *
-     * @param e
-     * @throws IOException
+     * on arrow back click, load MenuGUI
+     * @param e mouseclick on image
      */
     @FXML
-    public void buttonBack(MouseEvent e) throws IOException {
+    private void buttonBack(MouseEvent e) {
         MenuGUI.start();
     }
 
-    @FXML
-    public void initialize() {
-
-    }
-
+    /** language dropdown */
     @FXML
     private ChoiceBox languageDrpdwn;
 
+    /**
+     * open controls gui when clicked
+     * @param actionEvent controls button clicked
+     */
     @FXML
-    public void controlsClicked(ActionEvent actionEvent) throws IOException {
+    private void controlsClicked(ActionEvent actionEvent) {
         ControlsGUI.start();
     }
 
+    /**
+     * set settings when clicked
+     * @param actionEvent save settings button clicked
+     */
     @FXML
-    public void setSettings(ActionEvent actionEvent) throws Exception {
+    private void setSettings(ActionEvent actionEvent) {
+        //set language
         String selectedLanguage = (String)languageDrpdwn.getValue();
         if (selectedLanguage.equals("English") || selectedLanguage.equals("Englisch")) {
             System.out.println("SettingsGUI.java: Ausgewählte Sprache: eng");
@@ -67,18 +71,21 @@ public class SettingsGUI {
             Settings.setNewValue("locale", "de", "settings");
             start();
         }
+        //set music
+        //TODO music
     }
 
+    /**
+     * reset settings Alert and call when clicked
+     * @param actionEvent mouseclick on reset button
+     */
     @FXML
-    public void resetSettings(ActionEvent actionEvent) throws Exception {
+    private void resetSettings(ActionEvent actionEvent) {
 
         System.out.println("SettingsGUI.java: Sprache: " + Language.get());
 
         //PopUp Alert if you really want to close the game
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(Language.getPhrase("resetSettingsTitle"));
-        alert.setHeaderText(Language.getPhrase("resetSettingsHeader"));
-        alert.setContentText(Language.getPhrase("resetSettingsContent"));
+        Alert alert = Main.alertBuilder(Alert.AlertType.CONFIRMATION, "resetSettingsTitle", "resetSettingsHeader", "resetSettingsContent", false);
         ButtonType yesButton = new ButtonType(Language.getPhrase("yes"), ButtonBar.ButtonData.YES);
         ButtonType noButton = new ButtonType(Language.getPhrase("no"), ButtonBar.ButtonData.NO);
         alert.getButtonTypes().setAll(yesButton, noButton);
@@ -89,6 +96,7 @@ public class SettingsGUI {
                     System.out.println("SettingsGUI.java: Settings zurückgesetzt");
                     start();
                 } catch (Exception e) {
+                    Main.errorAlert("SettingsGUI.java");
                     e.printStackTrace();
                 }
             }

@@ -1,7 +1,6 @@
 package at.javatetris.project;
 
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,51 +11,70 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.security.Key;
+
+/**
+ * class for Controls GUI, set new controls, save, reset, display
+ * @author Severin Rosner
+ */
 
 public class ControlsGUI {
-
+    /** scene */
     private static Scene scene;
 
+    /** pauseKey text */
     @FXML
     private Text pauseKey;
 
+    /** dropKey text */
     @FXML
     private Text dropKey;
 
+    /** rotateKey text */
     @FXML
-    private Text rotateLeftKey;
+    private Text rotateKey;
 
-    @FXML
-    private Text rotateRightKey;
-
+    /** moveLeftKey text */
     @FXML
     private Text moveLeftKey;
 
+    /** moveRightKey text */
     @FXML
     private Text moveRightKey;
 
     /**
-     * start method to load controls.fxml
-     * @throws IOException
+     * start method to load controls fxml file
      */
-    public static void start() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(ControlsGUI.class.getResource("fxml/controls_" + Language.get() + ".fxml"));
-        //Scene scene = new Scene(fxmlLoader.load());
-        scene = new Scene(fxmlLoader.load());
-        Stage stage = Main.getStage();
-        stage.setScene(scene);
+    public static void start() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ControlsGUI.class.getResource("fxml/controls_" + Language.get() + ".fxml"));
+            //Scene scene = new Scene(fxmlLoader.load());
+            scene = new Scene(fxmlLoader.load());
+            Stage stage = Main.getStage();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            Main.errorAlert("ControlsGUI.java");
+            e.printStackTrace();
+        }
     }
 
+    /**
+     * getter for scene
+     * @return scene
+     * */
     public static Scene getScene() {
         return scene;
     }
 
-    public void buttonBack(MouseEvent mouseEvent) throws IOException {
+    /**
+     * on arrow back click, load SettingsGUI
+     * @param mouseEvent mouseclick on image
+     */
+    @FXML
+    private void buttonBack(MouseEvent mouseEvent) {
         SettingsGUI.start();
     }
 
-    //TODO: funktional machen, checken ob zwei den gleichen KEY haben,
+    //TODO funktional machen, checken ob zwei den gleichen KEY haben,
     // usw., Felder vlt bissl größer machen damit sich auch SPACE ausgeht, set ne
 
     /** on load, set key texts to in controls saved keys */
@@ -64,33 +82,15 @@ public class ControlsGUI {
     public void initialize() {
         pauseKey.setText(Settings.searchControls("pauseKey"));
         dropKey.setText(Settings.searchControls("dropKey"));
-        rotateLeftKey.setText(Settings.searchControls("rotateLeftKey"));
-        rotateRightKey.setText(Settings.searchControls("rotateRightKey"));
+        rotateKey.setText(Settings.searchControls("rotateKey"));
         moveLeftKey.setText(Settings.searchControls("moveLeftKey"));
         moveRightKey.setText(Settings.searchControls("moveRightKey"));
     }
 
+
     private EventHandler<KeyEvent> keyHandler;
 
-    public void setKey(Text fieldName) {
-
-
-        /*
-        EventHandler handler = new EventHandler<javafx.scene.input.KeyEvent>() {
-            public void handle(javafx.scene.input.KeyEvent keyEvent) {
-                fieldName.setText(keyEvent.getCode().getName());
-                try {
-                    Settings.setNewValue(fieldName.getId(), keyEvent.getCode().toString(), "controls");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                getScene().removeEventHandler(KeyEvent.KEY_PRESSED, this);
-            }
-        };
-
-         */
-
-
+    private void setKey(Text fieldName) {
         getScene().addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
             fieldName.setText(key.getCode().getName());
             try {
@@ -99,45 +99,41 @@ public class ControlsGUI {
                 e.printStackTrace();
             }
         });
-
-
-
-
     }
 
     @FXML
-    public void pauseField(MouseEvent mouseEvent) {
+    private void pauseField(MouseEvent mouseEvent) {
         System.out.println("ControlsGUI.java: pauseField clicked");
         setKey(pauseKey);
     }
 
     @FXML
-    public void dropField(MouseEvent mouseEvent) {
+    private void dropField(MouseEvent mouseEvent) {
         System.out.println("ControlsGUI.java: dropField clicked");
         setKey(dropKey);
     }
 
-    public void rotateLeftField(MouseEvent mouseEvent) {
-        System.out.println("ControlsGUI.java: rotateLeftField clicked");
-        setKey(rotateLeftKey);
+    @FXML
+    private void rotateField(MouseEvent mouseEvent) {
+        System.out.println("ControlsGUI.java: rotateField clicked");
+        setKey(rotateKey);
     }
 
-    public void rotateRightField(MouseEvent mouseEvent) {
-        System.out.println("ControlsGUI.java: rotateRightField clicked");
-        setKey(rotateRightKey);
-    }
-
-    public void moveLeftField(MouseEvent mouseEvent) {
+    @FXML
+    private void moveLeftField(MouseEvent mouseEvent) {
         System.out.println("ControlsGUI.java: moveLeftField clicked");
         setKey(moveLeftKey);
     }
 
-    public void moveRightField(MouseEvent mouseEvent) {
+    @FXML
+    private void moveRightField(MouseEvent mouseEvent) {
         System.out.println("ControlsGUI.java: moveRightField clicked");
         setKey(moveRightKey);
     }
 
-    public void resetControls(ActionEvent actionEvent) throws Exception {
+    @FXML
+    private void resetControls(ActionEvent actionEvent) {
+        //TODO: Alert ob wirklich zurücksetzen
         System.out.println("ControlsGUI.java: resetControls clicked");
         Settings.setControlsToDefault();
         initialize();

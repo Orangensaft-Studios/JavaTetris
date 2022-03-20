@@ -1,24 +1,48 @@
 package at.javatetris.project;
 
-import javax.xml.transform.Result;
 import java.math.BigDecimal;
 import java.sql.*;
 
 /**
- * class to interact with a MariaDB database hosted on a RPI
+ * class to interact with a MariaDB database
  * @author Severin Rosner
  */
 public class DataBase {
 
+    /*
+        CREATE TABLE `UserData` (
+        `user_id` INT NOT NULL AUTO_INCREMENT,
+        `username` VARCHAR(15),
+        `password` TEXT,
+        `hs_classic` BIGINT DEFAULT NULL,
+        `hs_time` BIGINT DEFAULT NULL,
+        `hs_infinity` BIGINT DEFAULT NULL,
+        `gamesPlayed` INT DEFAULT NULL,
+        `timePlayed` INT DEFAULT NULL,
+         PRIMARY KEY (`user_id`)
+         );
+     */
+
+    /** test db url **/
+    private final static String TESTDB_URL = "f80b6byii2vwv8cx.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/d0wqm1nk4cd7grbp";
+    /** test db user */
+    private final static String TESTDB_USER = "p3bs7tr9owwcbhai";
+    /** test db pass */
+    private final static String TESTDB_PASS = "gudg7axv72fc76j2";
+
+    /** javatetris db url */
+    private final static String JAVADB_URL = "eporqep6b4b8ql12.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/yzt9k662l77hxtvp";
+    /** javatetris db user */
+    private final static String JAVADB_USER = "o7ns5btnilp7rnsz";
+    /** javatetris db pass */
+    private final static String JAVADB_PASS = "woihlq9ng24vh2e2";
 
     /** url to connect to database */
-    private final static String url = "jdbc:mysql://0.tcp.eu.ngrok.io:10120/javatetrisdb";
-
+    private final static String URL = TESTDB_URL;
     /** username to log into database */
-    private final static String user = "jt";
-
+    private final static String USER = TESTDB_USER;
     /** password to log into database */
-    private final static String pass = "fqD6P&&NT5Kj";
+    private final static String PASS = TESTDB_PASS;
 
     /**
      * return if the JDBC Driver was loaded
@@ -29,6 +53,7 @@ public class DataBase {
             Class.forName("com.mysql.cj.jdbc.Driver");
             return true;
         } catch (ClassNotFoundException e) {
+            Main.errorAlert("ChooseModeGUI.java: Couldn't load JDBC driver");
             return false;
         }
     }
@@ -40,13 +65,18 @@ public class DataBase {
     public static boolean checkConnection() {
         System.out.println("DataBase.java: Checking... Connecting database...");
         try {
-            Connection connection = DriverManager.getConnection(url, user, pass);
-            System.out.println("Database.java: Connected successfully to" + url);
+            getConnection();
+            System.out.println("Database.java: Connected successfully to" + URL);
             return true;
         } catch (SQLException e) {
+            Main.errorAlert("DataBase.java");
             System.out.println("DataBase.java: " + e.getMessage());
             return false;
         }
+    }
+
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection("jdbc:mysql://" + URL, USER, PASS);
     }
 
     /**
@@ -56,25 +86,23 @@ public class DataBase {
      * @return if user was created
      */
     public static String createUser(String username, String passwordHash) {
-
-        System.out.println("DataBase.java: Connecting database...");
+        System.out.println("DataBase.java: Connecting database to create User...");
 
         try {
-
             // start connection
-            Connection connection = DriverManager.getConnection(url, user, pass);
+            Connection connection = getConnection();
+            System.out.println("Database.java: Connected successfully to: " + URL);
 
-            System.out.println("Database.java: Connected successfully to: " + url);
-
-            PreparedStatement st = connection.prepareStatement("select * from UserData where username = ?");
-            st.setString(1, username);
-            ResultSet r1 = st.executeQuery();
-
-            if(r1.next()) {
+            //looks if the user already exists in DataBase
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from UserData where username = ?");
+            preparedStatement.setString(1, username);
+            ResultSet r1 = preparedStatement.executeQuery();
+            if (r1.next()) {
                 System.out.println("DataBase.java: User '" + username + "' already exists");
-                return "Username already exists";
+                return "UsrAlrExists";
             }
 
+            //create online account
             String sql = "INSERT INTO UserData (username, password) VALUES (?, ?)";
 
             PreparedStatement stmt = connection.prepareStatement(sql);
@@ -85,14 +113,96 @@ public class DataBase {
 
             if (rowsInserted > 0) {
                 System.out.println("DataBase.java: User '" + username + "' was created successfully!");
+
+                Settings.setNewValue("accountType", "online", "settings");
                 return "AwC"; //Account was Created
             }
         } catch (SQLException e) {
+            Main.errorAlert("DataBase.java");
             System.out.println("DataBase.java: " + e.getMessage());
             return "AnC"; //Account not Created
         }
 
         return "AnC"; //Account not Created
     }
+
+    /**
+     * try an online login
+     * @param username to login
+     * @param password entered password
+     * @return error value or success
+     */
+    public static String onlineLogin(String username, String password) {
+        System.out.println("DataBase.java: Connecting database to login to User '" + username + "'");
+
+        try {
+            // start connection
+            Connection connection = getConnection();
+
+            System.out.println("Database.java: Connected successfully to: " + URL);
+
+            PreparedStatement preparedStatement = connection.prepareStatement("select username, password from UserData where username = ?");
+
+            preparedStatement.setString(1, username);
+            ResultSet r1 = preparedStatement.executeQuery();
+
+            //if user found, look if given password matches
+            if (r1.next()) {
+                System.out.println("DataBase.java: User '" + username + "' exists, comparing passwords now");
+                if (r1.getString("password").equals(password)) {
+                    loadOnlineUserData(connection, username);
+
+                    //return successful login
+                    System.out.println("DataBase.java: Logged in with '" + username + "'");
+                    Settings.setNewValue("accountType", "online", "settings");
+                    preparedStatement.close();
+                    return "loggedIn";
+                } else {
+                    System.out.println("Database.java: userorpasswordfalse1");
+                    preparedStatement.close();
+                    return "userOrPasswordFalse";
+                }
+            } else {
+                System.out.println("Database.java: userorpasswordfalse2");
+                preparedStatement.close();
+                return "userOrPasswordFalse";
+            }
+
+        } catch (SQLException e) {
+            System.out.println("DataBase.java: " + e.getMessage());
+            return "coudlntLogIn";
+        }
+    }
+
+    public static void loadOnlineUserData(Connection connection, String username) {
+
+        try {
+            String query = "SELECT * FROM UserData where username = ?";
+            Statement statement = connection.createStatement();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, username);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int userId = resultSet.getInt("user_Id");
+                String dbusername = resultSet.getString("username");
+                String password = resultSet.getString("password");
+                BigDecimal hsClassic = resultSet.getBigDecimal("hs_Classic");
+                BigDecimal hsTime = resultSet.getBigDecimal("hs_Time");
+                BigDecimal hsInfinity = resultSet.getBigDecimal("hs_Infinity");
+                int gamesPlayed = resultSet.getInt("gamesPlayed");
+                BigDecimal timePlayed = resultSet.getBigDecimal("timePlayed");
+                System.out.println(userId + dbusername + password + hsClassic + hsTime + hsInfinity + gamesPlayed + timePlayed);
+            }
+
+            statement.close();
+
+        } catch (SQLException e) {
+            Main.errorAlert("DataBase.java");
+            e.printStackTrace();
+        }
+    }
+
+
 
 }
