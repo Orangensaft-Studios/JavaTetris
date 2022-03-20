@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
@@ -99,5 +101,25 @@
             <Font size="18.0" />
          </font>
       </Text>
+      <HBox layoutX="5.0" layoutY="362.0" prefHeight="49.0" prefWidth="418.0" spacing="10.0">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Logged in as:">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <HBox.margin>
+                  <Insets top="10.0" />
+               </HBox.margin>
+            </Text>
+            <Text fx:id="loggedInAs" strokeType="OUTSIDE" strokeWidth="0.0" text="NO_USER_LOGGED_IN">
+               <HBox.margin>
+                  <Insets top="10.0" />
+               </HBox.margin>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+         </children>
+      </HBox>
    </children>
 </Pane>

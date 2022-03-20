@@ -65,7 +65,7 @@ public class Account {
             setUsernamePasswordAccountTypeInSettings(username, password, "online");
             //Settings.setNewValue("accountType", "online", "settings");
 
-            //TODO missing: also load the data from database
+            //load data from DataBase for user
             try {
                 DataBase.loadOnlineUserData(DataBase.getConnection(), username);
             } catch (SQLException e) {

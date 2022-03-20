@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -16,6 +17,10 @@ import java.io.IOException;
  * @author Severin Rosner
  */
 public class SettingsGUI {
+
+    private double musicVolumeSettings = Double.parseDouble(Settings.searchSettings("musicVolume"));
+
+    private double musicVolume;
 
     /**
      * start method to load settings.fxml
@@ -32,6 +37,29 @@ public class SettingsGUI {
         }
     }
 
+    /** language dropdown */
+    @FXML
+    private ChoiceBox languageDrpdwn;
+
+    @FXML
+    private Slider musicVolumeSlider;
+
+    @FXML
+    private Text volumeText;
+
+    /** on load, set slider to volume from config and start event listener */
+    @FXML
+    public void initialize() {
+        musicVolumeSlider.setValue(musicVolumeSettings * 100);
+        volumeText.setText((int)(musicVolumeSettings * 100) + "");
+
+        musicVolumeSlider.valueProperty().addListener(observable -> {
+            musicVolume = musicVolumeSlider.getValue() / 100;
+            Music.getMediaPlayer().setVolume(musicVolume);
+            volumeText.setText((int)(musicVolume * 100) + "");
+        });
+    }
+
     /**
      * on arrow back click, load MenuGUI
      * @param e mouseclick on image
@@ -40,10 +68,6 @@ public class SettingsGUI {
     private void buttonBack(MouseEvent e) {
         MenuGUI.start();
     }
-
-    /** language dropdown */
-    @FXML
-    private ChoiceBox languageDrpdwn;
 
     /**
      * open controls gui when clicked
@@ -60,8 +84,11 @@ public class SettingsGUI {
      */
     @FXML
     private void setSettings(ActionEvent actionEvent) {
+        //set music
+        Settings.setNewValue("musicVolume", musicVolume + "", "settings");
+
         //set language
-        String selectedLanguage = (String)languageDrpdwn.getValue();
+        String selectedLanguage = (String) languageDrpdwn.getValue();
         if (selectedLanguage.equals("English") || selectedLanguage.equals("Englisch")) {
             System.out.println("SettingsGUI.java: Ausgewählte Sprache: eng");
             Settings.setNewValue("locale", "en", "settings");
@@ -71,8 +98,6 @@ public class SettingsGUI {
             Settings.setNewValue("locale", "de", "settings");
             start();
         }
-        //set music
-        //TODO music
     }
 
     /**
@@ -81,10 +106,7 @@ public class SettingsGUI {
      */
     @FXML
     private void resetSettings(ActionEvent actionEvent) {
-
-        System.out.println("SettingsGUI.java: Sprache: " + Language.get());
-
-        //PopUp Alert if you really want to close the game
+        //PopUp Alert if you really want to reset the settings
         Alert alert = Main.alertBuilder(Alert.AlertType.CONFIRMATION, "resetSettingsTitle", "resetSettingsHeader", "resetSettingsContent", false);
         ButtonType yesButton = new ButtonType(Language.getPhrase("yes"), ButtonBar.ButtonData.YES);
         ButtonType noButton = new ButtonType(Language.getPhrase("no"), ButtonBar.ButtonData.NO);
@@ -101,12 +123,5 @@ public class SettingsGUI {
                 }
             }
         });
-
-
     }
-
-
-
-
-
 }

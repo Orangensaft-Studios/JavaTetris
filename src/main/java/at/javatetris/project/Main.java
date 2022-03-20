@@ -4,14 +4,15 @@ import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
 
 /**
  * Main class with mainStage
  * @author Severin Rosner
  */
 public class Main extends Application {
+
     /** the main stage for the GUIs except GameStage */
     private static Stage mainStage;
 
@@ -28,7 +29,7 @@ public class Main extends Application {
         //check if setting and controls Files are available and then load from it
         Settings.checkFile();
 
-        //login with in config stored user = last logged in user
+        //login with in config stored user = last logged-in user
         String accountType = Settings.searchSettings("accountType");
         String username = Settings.searchSettings("username");
         String password = Settings.searchSettings("password");
@@ -51,6 +52,9 @@ public class Main extends Application {
         } else {
             System.out.println("Main.java: JDBC Driver couldn't be loaded");
         }
+
+        //start music with volume from settings
+        Music.startMusic(Double.parseDouble(Settings.searchSettings("musicVolume")));
 
         //call MenuGUI
         MenuGUI.start();
