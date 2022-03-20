@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -84,6 +85,11 @@ public class Main extends Application {
         ButtonType okButton = new ButtonType("Ok", ButtonBar.ButtonData.OK_DONE);
         errorAlert.getButtonTypes().setAll(okButton);
         errorAlert.show();
+    }
+
+    public static void notImplementedAlert() {
+        Alert alert = Main.alertBuilder(Alert.AlertType.INFORMATION, "notImplementedTitle", "notImplementedHeader", "notImplementedContent", true);
+        alert.show();
     }
 
     /**

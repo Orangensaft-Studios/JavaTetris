@@ -4,21 +4,45 @@ import java.math.BigDecimal;
 import java.sql.*;
 
 /**
- * class to interact with a MariaDB database hosted on a RPI
+ * class to interact with a MariaDB database
  * @author Severin Rosner
  */
 public class DataBase {
 
-    /** url to connect to database */
-    //private final static String URL = "jdbc:mysql://eporqep6b4b8ql12.chr7pe7iynqr.eu-west-1.rds.amazonaws.com/yzt9k662l77hxtvp";
-    private final static String URL = "jdbc:mysql://f80b6byii2vwv8cx.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/d0wqm1nk4cd7grbp";
-    /** username to log into database */
-    //private final static String USER = "o7ns5btnilp7rnsz";
-    private final static String USER = "p3bs7tr9owwcbhai";
+    /*
+        CREATE TABLE `UserData` (
+        `user_id` INT NOT NULL AUTO_INCREMENT,
+        `username` VARCHAR(15),
+        `password` TEXT,
+        `hs_classic` BIGINT DEFAULT NULL,
+        `hs_time` BIGINT DEFAULT NULL,
+        `hs_infinity` BIGINT DEFAULT NULL,
+        `gamesPlayed` INT DEFAULT NULL,
+        `timePlayed` INT DEFAULT NULL,
+         PRIMARY KEY (`user_id`)
+         );
+     */
 
+    /** test db url **/
+    private final static String TESTDB_URL = "f80b6byii2vwv8cx.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/d0wqm1nk4cd7grbp";
+    /** test db user */
+    private final static String TESTDB_USER = "p3bs7tr9owwcbhai";
+    /** test db pass */
+    private final static String TESTDB_PASS = "gudg7axv72fc76j2";
+
+    /** javatetris db url */
+    private final static String JAVADB_URL = "eporqep6b4b8ql12.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/yzt9k662l77hxtvp";
+    /** javatetris db user */
+    private final static String JAVADB_USER = "o7ns5btnilp7rnsz";
+    /** javatetris db pass */
+    private final static String JAVADB_PASS = "woihlq9ng24vh2e2";
+
+    /** url to connect to database */
+    private final static String URL = TESTDB_URL;
+    /** username to log into database */
+    private final static String USER = TESTDB_USER;
     /** password to log into database */
-    //private final static String PASS = "woihlq9ng24vh2e2";
-    private final static String PASS = "gudg7axv72fc76j2";
+    private final static String PASS = TESTDB_PASS;
 
     /**
      * return if the JDBC Driver was loaded
@@ -41,7 +65,7 @@ public class DataBase {
     public static boolean checkConnection() {
         System.out.println("DataBase.java: Checking... Connecting database...");
         try {
-            Connection connection = getConnection();
+            getConnection();
             System.out.println("Database.java: Connected successfully to" + URL);
             return true;
         } catch (SQLException e) {
@@ -51,8 +75,8 @@ public class DataBase {
         }
     }
 
-    private static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASS);
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection("jdbc:mysql://" + URL, USER, PASS);
     }
 
     /**
@@ -89,6 +113,8 @@ public class DataBase {
 
             if (rowsInserted > 0) {
                 System.out.println("DataBase.java: User '" + username + "' was created successfully!");
+
+                Settings.setNewValue("accountType", "online", "settings");
                 return "AwC"; //Account was Created
             }
         } catch (SQLException e) {
@@ -128,6 +154,7 @@ public class DataBase {
 
                     //return successful login
                     System.out.println("DataBase.java: Logged in with '" + username + "'");
+                    Settings.setNewValue("accountType", "online", "settings");
                     preparedStatement.close();
                     return "loggedIn";
                 } else {
@@ -147,7 +174,7 @@ public class DataBase {
         }
     }
 
-    private static void loadOnlineUserData(Connection connection, String username) {
+    public static void loadOnlineUserData(Connection connection, String username) {
 
         try {
             String query = "SELECT * FROM UserData where username = ?";
@@ -157,12 +184,12 @@ public class DataBase {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                int userId = resultSet.getInt("userId");
+                int userId = resultSet.getInt("user_Id");
                 String dbusername = resultSet.getString("username");
                 String password = resultSet.getString("password");
-                BigDecimal hsClassic = resultSet.getBigDecimal("hsClassic");
-                BigDecimal hsTime = resultSet.getBigDecimal("hsTime");
-                BigDecimal hsInfinity = resultSet.getBigDecimal("hsInfinity");
+                BigDecimal hsClassic = resultSet.getBigDecimal("hs_Classic");
+                BigDecimal hsTime = resultSet.getBigDecimal("hs_Time");
+                BigDecimal hsInfinity = resultSet.getBigDecimal("hs_Infinity");
                 int gamesPlayed = resultSet.getInt("gamesPlayed");
                 BigDecimal timePlayed = resultSet.getBigDecimal("timePlayed");
                 System.out.println(userId + dbusername + password + hsClassic + hsTime + hsInfinity + gamesPlayed + timePlayed);

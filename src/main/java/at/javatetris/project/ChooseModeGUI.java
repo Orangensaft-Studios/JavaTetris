@@ -29,7 +29,7 @@ public class ChooseModeGUI {
         }
     }
 
-    //TODO check if you are logged in and ask if you really want to play without logged in
+    //TODO check if you are logged in and ask if you really want to play without logged in and state who is logged in
 
     /**
      * on arrow back click, load MenGUI
@@ -46,7 +46,7 @@ public class ChooseModeGUI {
      */
     @FXML
     private void startInfinityMode(MouseEvent event) {
-        System.out.println("hi");
+        Main.notImplementedAlert();
     }
 
     /**
@@ -55,6 +55,7 @@ public class ChooseModeGUI {
      */
     @FXML
     private void startTimeMode(MouseEvent event) {
+        Main.notImplementedAlert();
     }
 
     /**
@@ -63,6 +64,7 @@ public class ChooseModeGUI {
      */
     @FXML
     private void startModeTutorial(MouseEvent event) {
+        Main.notImplementedAlert();
     }
 
     /**
@@ -71,6 +73,10 @@ public class ChooseModeGUI {
      */
     @FXML
     public void startClassicMode(MouseEvent event) {
-        //GameStage.start();
+        try {
+            GameStage.start();
+        } catch (Exception e) {
+            Main.errorAlert("ChooseModeGUI.java");
+        }
     }
 }

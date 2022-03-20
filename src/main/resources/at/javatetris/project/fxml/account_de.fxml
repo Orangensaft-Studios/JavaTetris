@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
@@ -19,6 +20,9 @@
          <image>
             <Image url="@../icons/arrowBack_icon.png" />
          </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
       </ImageView>
       <Line endX="136.0" layoutX="467.0" layoutY="85.0" startX="-466.0" />
       <VBox alignment="TOP_CENTER" layoutX="70.0" layoutY="5.0" prefHeight="390.0" prefWidth="464.0">
@@ -71,11 +75,17 @@
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                   <Button mnemonicParsing="false" onAction="#registerClicked" prefHeight="50.0" prefWidth="200.0" style="-fx-background-color: black;" text="Registrieren" textFill="WHITE">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
                   </Button>
                </children>
             </HBox>

@@ -1,6 +1,6 @@
 <!-- README file mainly for GitHub -->
 
-![JavaTetris Logo](src/main/resources/at/javatetris/project/icons/jt_logo.jpg)
+![JavaTetris Logo](src/main/resources/at/javatetris/project/icons/jt_logo.png)
 
 # JavaTetris 
 #### ein SEW Projekt von 
@@ -68,3 +68,5 @@ git config --global alias.pall 'push all master'
 # dann Pushen mit
 git pall
 ```
+
+![JavaTetris Logo](src/main/resources/at/javatetris/project/icons/jt_giflogo.gif)

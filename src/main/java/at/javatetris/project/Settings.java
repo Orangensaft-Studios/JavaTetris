@@ -46,9 +46,8 @@ public class Settings {
     /** default control lines for controls files */
     private static final List<String> DEFAULT_CONTROLS = Arrays.asList(
             "pauseKey=Q",
-            "dropKey=SPACE",
-            "rotateLeftKey=W",
-            "rotateRightKey=S",
+            "dropKey=S",
+            "rotateKey=W",
             "moveLeftKey=A",
             "moveRightKey=D"
     );

@@ -29,13 +29,9 @@ public class ControlsGUI {
     @FXML
     private Text dropKey;
 
-    /** rotateLeftKey text */
+    /** rotateKey text */
     @FXML
-    private Text rotateLeftKey;
-
-    /** rotateRightKey text */
-    @FXML
-    private Text rotateRightKey;
+    private Text rotateKey;
 
     /** moveLeftKey text */
     @FXML
@@ -81,15 +77,12 @@ public class ControlsGUI {
     //TODO funktional machen, checken ob zwei den gleichen KEY haben,
     // usw., Felder vlt bissl größer machen damit sich auch SPACE ausgeht, set ne
 
-    //TODO nach unten ist nicht space, und man kann nur mit w drehen, ach schreiben das man mit pfeiltasten spielen kann
-
     /** on load, set key texts to in controls saved keys */
     @FXML
     public void initialize() {
         pauseKey.setText(Settings.searchControls("pauseKey"));
         dropKey.setText(Settings.searchControls("dropKey"));
-        rotateLeftKey.setText(Settings.searchControls("rotateLeftKey"));
-        rotateRightKey.setText(Settings.searchControls("rotateRightKey"));
+        rotateKey.setText(Settings.searchControls("rotateKey"));
         moveLeftKey.setText(Settings.searchControls("moveLeftKey"));
         moveRightKey.setText(Settings.searchControls("moveRightKey"));
     }
@@ -97,7 +90,7 @@ public class ControlsGUI {
 
     private EventHandler<KeyEvent> keyHandler;
 
-    public void setKey(Text fieldName) {
+    private void setKey(Text fieldName) {
         getScene().addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
             fieldName.setText(key.getCode().getName());
             try {
@@ -109,38 +102,37 @@ public class ControlsGUI {
     }
 
     @FXML
-    public void pauseField(MouseEvent mouseEvent) {
+    private void pauseField(MouseEvent mouseEvent) {
         System.out.println("ControlsGUI.java: pauseField clicked");
         setKey(pauseKey);
     }
 
     @FXML
-    public void dropField(MouseEvent mouseEvent) {
+    private void dropField(MouseEvent mouseEvent) {
         System.out.println("ControlsGUI.java: dropField clicked");
         setKey(dropKey);
     }
 
-    public void rotateLeftField(MouseEvent mouseEvent) {
-        System.out.println("ControlsGUI.java: rotateLeftField clicked");
-        setKey(rotateLeftKey);
+    @FXML
+    private void rotateField(MouseEvent mouseEvent) {
+        System.out.println("ControlsGUI.java: rotateField clicked");
+        setKey(rotateKey);
     }
 
-    public void rotateRightField(MouseEvent mouseEvent) {
-        System.out.println("ControlsGUI.java: rotateRightField clicked");
-        setKey(rotateRightKey);
-    }
-
-    public void moveLeftField(MouseEvent mouseEvent) {
+    @FXML
+    private void moveLeftField(MouseEvent mouseEvent) {
         System.out.println("ControlsGUI.java: moveLeftField clicked");
         setKey(moveLeftKey);
     }
 
-    public void moveRightField(MouseEvent mouseEvent) {
+    @FXML
+    private void moveRightField(MouseEvent mouseEvent) {
         System.out.println("ControlsGUI.java: moveRightField clicked");
         setKey(moveRightKey);
     }
 
-    public void resetControls(ActionEvent actionEvent) throws Exception {
+    @FXML
+    private void resetControls(ActionEvent actionEvent) {
         //TODO: Alert ob wirklich zurücksetzen
         System.out.println("ControlsGUI.java: resetControls clicked");
         Settings.setControlsToDefault();

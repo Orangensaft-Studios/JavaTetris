@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import org.controlsfx.control.action.Action;
 
 import java.io.IOException;
 
@@ -36,7 +37,7 @@ public class MenuGUI {
      * @param e mouse click event on close button
      */
     @FXML
-    public void closeJavaTetris(MouseEvent e) {
+    private void closeJavaTetris(MouseEvent e) {
         //PopUp Alert if you really want to close the game
         Alert alert = Main.alertBuilder(Alert.AlertType.CONFIRMATION, "closeGameTitle", "closeGameHeader", "closeGameContent", false);
         ButtonType yesButton = new ButtonType(Language.getPhrase("yes"), ButtonBar.ButtonData.YES);
@@ -83,5 +84,14 @@ public class MenuGUI {
     @FXML
     public void accountClicked(MouseEvent e) {
         AccountGUI.start();
+    }
+
+    /**
+     *
+     * @param actionEvent
+     */
+    @FXML
+    private void leaderboardClicked(ActionEvent actionEvent) {
+        Main.notImplementedAlert();
     }
 }

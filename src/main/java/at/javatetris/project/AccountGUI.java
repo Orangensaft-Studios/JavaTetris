@@ -25,7 +25,7 @@ public class AccountGUI {
      */
     public static void start() {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(MenuGUI.class.getResource("fxml/account_" + Language.get() + ".fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(AccountGUI.class.getResource("fxml/account_" + Language.get() + ".fxml"));
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = Main.getStage();
             stage.setScene(scene);
@@ -50,7 +50,7 @@ public class AccountGUI {
     /** on load, display username from config as loggedIn */
     @FXML
     public void initialize() {
-        loggedInAs.setText(Settings.searchSettings("username"));
+        loggedInAs.setText(Settings.searchSettings("username") + " (" + Settings.searchSettings("accountType") + ")");
     }
 
     /**
@@ -64,8 +64,9 @@ public class AccountGUI {
 
     /**
      * on login button clicked
-     * @param actionEvent
+     * @param actionEvent mouseclick on login button
      */
+    @FXML
     private void loginClicked(ActionEvent actionEvent) {
         String username = usernameField.getText();
         String password = passwordField.getText();
@@ -76,8 +77,8 @@ public class AccountGUI {
             Account.login(username, bytesToHex(password));
         }
 
-        //display username
-        loggedInAs.setText(Settings.searchSettings("username"));
+        //display current username + accountType
+        initialize();
     }
 
     /**
@@ -102,8 +103,8 @@ public class AccountGUI {
         //ty creating Account
         Account.create(username, password);
 
-        //set logged in text to username
-        loggedInAs.setText(Settings.searchSettings("username"));
+        //display current username + accountType
+        initialize();
     }
 
     /**

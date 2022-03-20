@@ -7,6 +7,7 @@ import javafx.scene.control.ButtonType;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -61,10 +62,16 @@ public class Account {
         //compare return value to check if user alr exists, was created, or couldn't be created
         if (createUser.equals("AwC")) { //Account was created
             //set local username in config file
-            Settings.setNewValue("username", username, "settings");
-            Settings.setNewValue("password", password, "settings");
+            setUsernamePasswordAccountTypeInSettings(username, password, "online");
+            //Settings.setNewValue("accountType", "online", "settings");
 
             //TODO missing: also load the data from database
+            try {
+                DataBase.loadOnlineUserData(DataBase.getConnection(), username);
+            } catch (SQLException e) {
+                System.out.println("Account.java: createOnline");
+                Main.errorAlert("Account.java");
+            }
 
             //PopUp Alert account created
             Alert alert = Main.alertBuilder(Alert.AlertType.INFORMATION, "accountCreatedTitle", "accountCreatedHeader", "accountCreatedContent", true);
@@ -133,7 +140,7 @@ public class Account {
         Files.write(Paths.get(Settings.JAVATETRIS_USR_DATA_DIR_PATH + playerDataFile), userDataTemplate, StandardCharsets.UTF_8);
 
         //set username, password and accountType in config/settings file
-        setUsernameAndPasswordInSettings(username, password);
+        setUsernamePasswordAccountTypeInSettings(username, password, "local");
 
         //load user data template to user data properties
         UserData.load(username);
@@ -210,8 +217,7 @@ public class Account {
      */
     private static void loggedIn(String username, String password, String accountType) {
         loggedInAlert(username);
-        setUsernameAndPasswordInSettings(username, password);
-        Settings.setNewValue("accountType", accountType, "settings");
+        setUsernamePasswordAccountTypeInSettings(username, password, accountType);
     }
 
     /**
@@ -242,14 +248,10 @@ public class Account {
      * @param username to set
      * @param password to set
      */
-    private static void setUsernameAndPasswordInSettings(String username, String password) {
-        try {
-            Settings.setNewValue("username", username, "settings");
-            Settings.setNewValue("password", password, "settings");
-        } catch (Exception e) {
-            Main.errorAlert("Account.java");
-            e.printStackTrace();
-        }
+    private static void setUsernamePasswordAccountTypeInSettings(String username, String password, String accountType) {
+        Settings.setNewValue("username", username, "settings");
+        Settings.setNewValue("password", password, "settings");
+        Settings.setNewValue("accountType", accountType, "settings");
     }
 
     /**
