@@ -16,6 +16,7 @@ public class Settings {
     /** user home path + AppData\Local\JavaTetris\ */
     private final static String JAVATETRIS_DIR_PATH = System.getProperty("user.home") + "\\AppData\\Local\\JavaTetris\\";
 
+    /** path as string to userData directory in JavaTetris directory */
     public final static String JAVATETRIS_USR_DATA_DIR_PATH = JAVATETRIS_DIR_PATH + "\\userData\\";
 
     /** location of setting properties file */
@@ -38,9 +39,11 @@ public class Settings {
             "locale = de",
             "gameVersion = alpha (0.4)",
             "username=",
-            "password="
+            "password=",
+            "accountType="
     );
 
+    /** default control lines for controls files */
     private static final List<String> DEFAULT_CONTROLS = Arrays.asList(
             "pauseKey=Q",
             "dropKey=SPACE",
@@ -66,99 +69,124 @@ public class Settings {
         return controls;
     }
 
+    // TODO if version numbers (program and config) dont match, check files,
+    // oder sogar immer checken ob alles mit dem voll ist was drin sein sollte
 
     /**
      * check if setting file is here, else create directory and file with defaultConfig
-     * @throws Exception e
      * */
-    public static void checkFile() throws Exception {
-        Files.createDirectories(Paths.get(JAVATETRIS_DIR_PATH));
-        Files.createDirectories(Paths.get(JAVATETRIS_USR_DATA_DIR_PATH));
+    public static void checkFile() {
 
-        System.out.println("Settings.java: Directory: " + JAVATETRIS_DIR_PATH);
+        //TODO check if file contains everything
 
-        File settingFile = new File(SETTING_FILE_PATH);
-        File controlsFile = new File(CONTROLS_FILE_PATH);
-        File allUsernames = new File(ALL_USERNAMES_FILE_PATH);
+        try {
+            //Files.createDirectories(Paths.get(JAVATETRIS_DIR_PATH));
+            Files.createDirectories(Paths.get(JAVATETRIS_USR_DATA_DIR_PATH));
 
-        if (!settingFile.exists()) {
-            //write the config lines in the new created config.properties file
-            Files.write(Paths.get(SETTING_FILE_PATH), DEFAULT_CONFIG, StandardCharsets.UTF_8);
+            System.out.println("Settings.java: Directory: " + JAVATETRIS_DIR_PATH);
 
-            System.out.println("Settings.java: Setting File was created here: " + settingFile.getAbsolutePath());
+            File settingFile = new File(SETTING_FILE_PATH);
+            File controlsFile = new File(CONTROLS_FILE_PATH);
+            File allUsernames = new File(ALL_USERNAMES_FILE_PATH);
+
+            if (!settingFile.exists()) {
+                //write the config lines in the new created config.properties file
+                Files.write(Paths.get(SETTING_FILE_PATH), DEFAULT_CONFIG, StandardCharsets.UTF_8);
+
+                System.out.println("Settings.java: Setting File was created here: " + settingFile.getAbsolutePath());
+            }
+
+            if (!controlsFile.exists()) {
+                //write the controls lines in the new created controls.properties file
+                Files.write(Paths.get(CONTROLS_FILE_PATH), DEFAULT_CONTROLS, StandardCharsets.UTF_8);
+
+                System.out.println("Settings.java: Controls File was created here: " + controlsFile.getAbsolutePath());
+            }
+
+            if (!allUsernames.exists()) {
+                //create all usernames file (for Account.java)
+                Files.createFile(Paths.get(ALL_USERNAMES_FILE_PATH));
+
+                System.out.println("Settings.java: allUserNamesFile created her: " + allUsernames.getAbsolutePath());
+            }
+
+            load();
+        } catch (IOException e) {
+            Main.errorAlert("Settings.java");
+            e.printStackTrace();
         }
-
-        if (!controlsFile.exists()) {
-            //write the controls lines in the new created controls.properties file
-            Files.write(Paths.get(CONTROLS_FILE_PATH), DEFAULT_CONTROLS, StandardCharsets.UTF_8);
-
-            System.out.println("Settings.java: Controls File was created here: " + controlsFile.getAbsolutePath());
-        }
-
-        if (!allUsernames.exists()) {
-            //create all usernames file (for Account.java)
-            Files.createFile(Paths.get(ALL_USERNAMES_FILE_PATH));
-
-            System.out.println("Settings,java: allUserNamesFile created her: " + allUsernames.getAbsolutePath());
-        }
-
-        load();
     }
 
     /**
      * load the settings
-     * @throws Exception e
      * */
-    public static void load() throws Exception {
+    public static void load() {
 
-        //load config file
-        settings = new Properties();
-        InputStream settingsInputStream = new FileInputStream(SETTING_FILE_PATH);
-        settings.load(settingsInputStream);
+        try {
+            //load config file
+            settings = new Properties();
+            InputStream settingsInputStream = new FileInputStream(SETTING_FILE_PATH);
+            settings.load(settingsInputStream);
 
-        //update language
-        Language.updateLanguageFromConfig();
+            //update language
+            Language.updateLanguageFromConfig();
 
-        //load control file
-        controls = new Properties();
-        InputStream controlsInputStream = new FileInputStream(CONTROLS_FILE_PATH);
-        controls.load(controlsInputStream);
+            //load control file
+            controls = new Properties();
+            InputStream controlsInputStream = new FileInputStream(CONTROLS_FILE_PATH);
+            controls.load(controlsInputStream);
+
+        } catch (IOException e) {
+            Main.errorAlert("Settings.java");
+            e.printStackTrace();
+        }
     }
 
     /**
      * reset config
      * delete content of config and rewrite with defaultConfig
-     * @throws Exception e
      * */
-    public static void setConfigToDefault() throws Exception {
-        //delete content of config
-        new FileWriter(SETTING_FILE_PATH, false).close();
+    public static void setConfigToDefault() {
+        try {
+            //delete content of config
+            new FileWriter(SETTING_FILE_PATH, false).close();
 
-        //fill with default config data
-        Files.write(Paths.get(SETTING_FILE_PATH), DEFAULT_CONFIG, StandardCharsets.UTF_8);
-        load();
+            //fill with default config data
+            Files.write(Paths.get(SETTING_FILE_PATH), DEFAULT_CONFIG, StandardCharsets.UTF_8);
+            load();
+        } catch (IOException e) {
+            Main.errorAlert("Settings.java");
+            e.printStackTrace();
+        }
     }
 
     /**
      * reset controls
      * delete content of controls and rewrite with default controls
      */
-    public static void setControlsToDefault() throws Exception {
-        //delete content of controls
-        new FileWriter(CONTROLS_FILE_PATH, false).close();
+    public static void setControlsToDefault() {
+        try {
 
-        //fill with default controls
-        Files.write(Paths.get(CONTROLS_FILE_PATH), DEFAULT_CONTROLS, StandardCharsets.UTF_8);
-        load();
+            //delete content of controls
+            new FileWriter(CONTROLS_FILE_PATH, false).close();
+
+            //fill with default controls
+            Files.write(Paths.get(CONTROLS_FILE_PATH), DEFAULT_CONTROLS, StandardCharsets.UTF_8);
+            load();
+        } catch (IOException e) {
+            Main.errorAlert("Settings.java");
+            e.printStackTrace();
+        }
     }
 
     /**
      * set to a key a value (Settings)
      * @param key key in settings properties (e.g. locale)
      * @param value value in settings properties (e.g. en)
-     * @throws Exception e
+     * @param fileName the file(=property) to search in (settings (config) or controls)
+     * @throws IllegalArgumentException when filename call isn't settings or controls
      * */
-    public static void setNewValue(String key, String value, String fileName) throws Exception {
+    public static void setNewValue(String key, String value, String fileName) {
         String path;
         Properties file;
 
@@ -169,26 +197,32 @@ public class Settings {
             path = CONTROLS_FILE_PATH;
             file = getControls();
         } else {
-            throw new IllegalArgumentException("Settings.java: Beim Aufrufen " +
-                    "der setNewValue Methode wurde kein richtiger String (settings oder controls) übergeben");
+            throw new IllegalArgumentException("Settings.java: Beim Aufrufen "
+                   + "der setNewValue Methode wurde kein richtiger String (settings oder controls) übergeben");
         }
 
-        OutputStream outputStream = new FileOutputStream(path);
+        try {
+            OutputStream outputStream = new FileOutputStream(path);
 
-        //set given key to new given value
-        file.setProperty(key, value);
+            //set given key to new given value
+            file.setProperty(key, value);
 
-        //store and reload
-        file.store(outputStream, null);
+            //store and reload
+            file.store(outputStream, null);
 
-        load();
+            load();
 
-        //debug
-        //System.out.println("Settings.java: Sprache setzen auf: " + value);
-        System.out.println("Settings.java: Config File: " + settings);
-        System.out.println("Settings.java: Controls FIle: " + controls);
+            //debug
+            //System.out.println("Settings.java: Sprache setzen auf: " + value);
+            System.out.println("Settings.java: Config File: " + settings);
+            System.out.println("Settings.java: Controls File: " + controls);
+        } catch (IOException e) {
+            Main.errorAlert("Settings.java");
+            e.printStackTrace();
+        }
+
+
     }
-
 
     /**
      * search for a setting

@@ -3,7 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Line?>
@@ -52,16 +51,12 @@
                   <Font size="20.0" />
                </font>
             </Text>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Music by Kiyan">
-                     <font>
-                        <Font size="21.0" />
-                     </font>
-                  </Text>
-               </children>
-            </HBox>
-            <Text fx:id="versionTxt" strokeType="OUTSIDE" strokeWidth="0.0" text="">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Music by Kiyan">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Text>
+            <Text fx:id="versionTxt" strokeType="OUTSIDE" strokeWidth="0.0" text="VERSION_NOT_LOADED">
                <VBox.margin>
                   <Insets top="30.0" />
                </VBox.margin>

@@ -15,72 +15,119 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 /**
- * class for AccountGUI
+ * class to load AccountGUI and listen to clicks
  * @author Severin Rosner
  */
 public class AccountGUI {
 
     /**
-     * start method to load account.fxml
-     * @throws IOException
+     * start method to load account fxml file
      */
-    public static void start() throws IOException {
-
-        FXMLLoader fxmlLoader = new FXMLLoader(MenuGUI.class.getResource("fxml/account_" + Language.get() + ".fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = Main.getStage();
-        stage.setScene(scene);
+    public static void start() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(MenuGUI.class.getResource("fxml/account_" + Language.get() + ".fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = Main.getStage();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            Main.errorAlert("AccountGUI.java");
+            e.printStackTrace();
+        }
     }
 
+    /** username field */
     @FXML
     private TextField usernameField;
 
+    /** password field */
     @FXML
     private PasswordField passwordField;
 
+    /** username logged in with text */
     @FXML
     private Text loggedInAs;
 
+    /** on load, display username from config as loggedIn */
     @FXML
     public void initialize() {
         loggedInAs.setText(Settings.searchSettings("username"));
     }
 
-    public void buttonBack(MouseEvent event) throws IOException {
+    /**
+     * on arrow back click, load MenGUI
+     * @param event mouseclick on arrow back image
+     */
+    @FXML
+    private void buttonBack(MouseEvent event) {
         MenuGUI.start();
     }
 
-    public void loginClicked(ActionEvent actionEvent) throws Exception {
+    /**
+     * on login button clicked
+     * @param actionEvent
+     */
+    private void loginClicked(ActionEvent actionEvent) {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        //TODO: check if empty, maybe extract method from registerClicked
+        if(isCredentialNotValid(username, password)) {
+            return;
+        } else {
+            Account.login(username, bytesToHex(password));
+        }
 
-        Account.login(username, bytesToHex(password));
-
-
+        //display username
         loggedInAs.setText(Settings.searchSettings("username"));
     }
 
-    public void registerClicked(ActionEvent actionEvent) throws Exception {
+    /**
+     * on register button click
+     * @param actionEvent mouse click on register button
+     */
+    public void registerClicked(ActionEvent actionEvent) {
+        //get username and password from fields
         final String username = usernameField.getText();
         String password = passwordField.getText();
 
+        //check if the values are valid
+        if (isCredentialNotValid(username, password)) {
+            return;
+        } else {
+            password = bytesToHex(password);
+            if (password.equals("couldn'tLoadAlgorithm")) {
+                return;
+            }
+        }
+
+        //ty creating Account
+        Account.create(username, password);
+
+        //set logged in text to username
+        loggedInAs.setText(Settings.searchSettings("username"));
+    }
+
+    /**
+     * check if the entered credentials arent empty and if the username has between 3 and 15 letters
+     * @param username to check for
+     * @param password to check if empty
+     * @return if it is empty
+     */
+    private static boolean isCredentialNotValid(String username, String password) {
         //if username text field is empty
         if (username == null || username.trim().isEmpty()) {
             System.out.println("AccountGUI.java: Username empty");
             //PopUp Alert empty username
             Alert alert = Main.alertBuilder(Alert.AlertType.WARNING, "usernameEmptyTitle", "usernameEmptyHeader", "checkAndTryAgain", true);
             alert.show();
-            return;
+            return true;
         } else {
             if (!username.matches("^[\\Da-zA-Z]{3,15}")) { //no number, a-z A-Z, min. 3 max. 15 letters
                 //PopUp Alert empty username
                 Alert alert = Main.alertBuilder(Alert.AlertType.WARNING, "notValidUserNameTitle", "notValidUserNameHeader", "notValidUserNameContent", true);
                 alert.show();
-                return;
-            } else {
-                //TODO: not defined error occured, Alert in main oder so machen
+                return true;
+            } else if (username.matches("^[\\Da-zA-Z]{3,15}")) {
+                return false;
             }
         }
 
@@ -90,33 +137,38 @@ public class AccountGUI {
             //PopUp Alert empty passwort
             Alert alert = Main.alertBuilder(Alert.AlertType.WARNING, "passwordEmptyTitle", "passwordEmptyHeader", "checkAndTryAgain", true);
             alert.show();
-            return;
+            return true;
         } else {
-            password = bytesToHex(password);
+            return false;
         }
-
-        //create Account
-        Account.create(username, password);
-
-        //set logged in text to username
-        loggedInAs.setText(Settings.searchSettings("username"));
     }
 
+    /**
+     * encrypt password
+     * @param password to encrypt
+     * @return encrypted password
+     */
+    private static String bytesToHex(String password) {
+        try {
+            final int convertValue = 0xff;
+            final MessageDigest digest = MessageDigest.getInstance("SHA3-256");
+            final byte[] hash = digest.digest(
+                    password.getBytes(StandardCharsets.UTF_8));
 
-    private static String bytesToHex(String password) throws NoSuchAlgorithmException {
-        final MessageDigest digest = MessageDigest.getInstance("SHA3-256");
-        final byte[] hash = digest.digest(
-                password.getBytes(StandardCharsets.UTF_8));
-
-        StringBuilder hexString = new StringBuilder(2 * hash.length);
-        for (int i = 0; i < hash.length; i++) {
-            String hex = Integer.toHexString(0xff & hash[i]);
-            if(hex.length() == 1) {
-                hexString.append('0');
+            StringBuilder hexString = new StringBuilder(2 * hash.length);
+            for (int i = 0; i < hash.length; i++) {
+                String hex = Integer.toHexString(convertValue & hash[i]);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
             }
-            hexString.append(hex);
+            return hexString.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            Main.errorAlert("AccountGUI.java");
+            return "couldn'tLoadAlgorithm";
         }
-        return hexString.toString();
     }
 
 }

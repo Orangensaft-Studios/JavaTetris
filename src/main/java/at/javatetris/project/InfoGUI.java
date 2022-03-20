@@ -15,24 +15,26 @@ import java.io.IOException;
  */
 public class InfoGUI {
     /**
-     * start method to load info.fxml
-     * @throws IOException
+     * start method to load info fxml file
      */
-    public static void start() throws IOException {
-
-        FXMLLoader fxmlLoader = new FXMLLoader(InfoGUI.class.getResource("fxml/info_" + Language.get() + ".fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = Main.getStage();
-        stage.setScene(scene);
+    public static void start() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(InfoGUI.class.getResource("fxml/info_" + Language.get() + ".fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = Main.getStage();
+            stage.setScene(scene);
+        } catch (IOException e) {
+            Main.errorAlert("InfoGUI.java");
+            e.printStackTrace();
+        }
     }
 
     /**
      * when Button ButtonBack clicked, open MenuGUI
      * @param e event when Button clicked
-     * @throws IOException exception
      */
     @FXML
-    public void buttonBack(MouseEvent e) throws IOException {
+    public void buttonBack(MouseEvent e) {
         MenuGUI.start();
     }
 

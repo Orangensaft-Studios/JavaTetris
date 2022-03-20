@@ -16,15 +16,19 @@ import java.io.IOException;
  */
 public class MenuGUI {
     /**
-     * main Menu
-     * @throws IOException
+     * start method to load Menu GUI fxml file
      */
-    public static void start() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(MenuGUI.class.getResource("fxml/menu_" + Language.get() + ".fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
-        Stage stage = Main.getStage();
-        stage.setScene(scene);
-        stage.show();
+    public static void start() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(MenuGUI.class.getResource("fxml/menu_" + Language.get() + ".fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = Main.getStage();
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            Main.errorAlert("MenuGUI.java");
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -35,13 +39,6 @@ public class MenuGUI {
     public void closeJavaTetris(MouseEvent e) {
         //PopUp Alert if you really want to close the game
         Alert alert = Main.alertBuilder(Alert.AlertType.CONFIRMATION, "closeGameTitle", "closeGameHeader", "closeGameContent", false);
-        /*
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(Language.getPhrase("closeGameTitle"));
-        alert.setHeaderText(Language.getPhrase("closeGameHeader"));
-        alert.setContentText(Language.getPhrase("closeGameContent"));
-
-         */
         ButtonType yesButton = new ButtonType(Language.getPhrase("yes"), ButtonBar.ButtonData.YES);
         ButtonType noButton = new ButtonType(Language.getPhrase("no"), ButtonBar.ButtonData.NO);
         alert.getButtonTypes().setAll(yesButton, noButton);
@@ -52,37 +49,39 @@ public class MenuGUI {
         });
     }
 
-    public void chooseModeClicked(ActionEvent actionEvent) throws IOException {
+    /**
+     * when choose mode clicked, start ChooseModeGUI
+     * @param actionEvent mouseclick on chooseMode button
+     */
+    @FXML
+    private void chooseModeClicked(ActionEvent actionEvent) {
         ChooseModeGUI.start();
     }
 
     /**
      * when info icon clicked, start InfoGUI
      * @param e mouse click event on info icon
-     * @throws IOException
      */
     @FXML
-    public void infoClicked(MouseEvent e) throws IOException {
+    public void infoClicked(MouseEvent e) {
         InfoGUI.start();
     }
 
     /**
      * when settings icon clicked, start SettingsGUI
      * @param e mouse click event on settings icon
-     * @throws IOException
      */
     @FXML
-    public void settingsClicked(MouseEvent e) throws IOException {
+    public void settingsClicked(MouseEvent e) {
         SettingsGUI.start();
     }
 
     /**
      * when account clicked, start AccountGUI
      * @param e mouse click event on account icon
-     * @throws IOException
      */
     @FXML
-    public void accountClicked(MouseEvent e) throws IOException {
+    public void accountClicked(MouseEvent e) {
         AccountGUI.start();
     }
 }
