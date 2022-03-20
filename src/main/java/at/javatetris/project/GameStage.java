@@ -300,65 +300,36 @@ public class GameStage extends Application {
                 break;
             case "Tetromino_s" :
                 switch (tBlock.getRotation()) {
-                    case 1:
+                    case 1 , 3:
                         if (RotateCube(tBlock.c1, -2 * SIZE,0)  &&  RotateCube(tBlock.c4,SIZE,SIZE)){
                             SetCubeCoordiantes(tBlock.c1, -2 * SIZE,0);
                             SetCubeCoordiantes(tBlock.c2,-SIZE,SIZE);
                             SetCubeCoordiantes(tBlock.c4,SIZE,SIZE);
                         }
                         break;
-                    case 2:
+                    case 2 , 4:
                         System.out.println(2);
                         if (RotateCube(tBlock.c1, 2 * SIZE,0) &&  RotateCube(tBlock.c2,SIZE,-SIZE)){
                             SetCubeCoordiantes(tBlock.c1, 2 * SIZE,0);
                             SetCubeCoordiantes(tBlock.c2,SIZE,-SIZE);
                             SetCubeCoordiantes(tBlock.c4,-SIZE,-SIZE);
                         }
-                        break;
-                    case 3:
-                        if (RotateCube(tBlock.c1, -2 * SIZE,0)  &&  RotateCube(tBlock.c4,SIZE,SIZE)){
-                            SetCubeCoordiantes(tBlock.c1, -2 * SIZE,0);
-                            SetCubeCoordiantes(tBlock.c2,-SIZE,SIZE);
-                            SetCubeCoordiantes(tBlock.c4,SIZE,SIZE);
-                        }
-                        break;
-                    case 4:
-                        if (RotateCube(tBlock.c1, 2 * SIZE,0) &&  RotateCube(tBlock.c2,SIZE,-SIZE)){
-                            SetCubeCoordiantes(tBlock.c1, 2 * SIZE,0);
-                            SetCubeCoordiantes(tBlock.c2,SIZE,-SIZE);
-                            SetCubeCoordiantes(tBlock.c4,-SIZE,-SIZE);
-                        }
-                        break;
                 }
                 break;
             case "Tetromino_z" :
                 switch (tBlock.getRotation()) {
-                    case 1:
+                    case 1 , 3:
                         if (RotateCube(tBlock.c1, 2 * SIZE,0) &&  RotateCube(tBlock.c4,-SIZE,SIZE)){
                             SetCubeCoordiantes(tBlock.c1, 2 * SIZE,0);
                             SetCubeCoordiantes(tBlock.c2,SIZE,SIZE);
                             SetCubeCoordiantes(tBlock.c4,-SIZE,SIZE);
                         }
                         break;
-                    case 2:
-                        if (RotateCube(tBlock.c1, 0,2 * SIZE) &&  RotateCube(tBlock.c2,SIZE,SIZE) &&  RotateCube(tBlock.c4,-SIZE,-SIZE)){
-                            SetCubeCoordiantes(tBlock.c1, 0,2 * SIZE);
-                            SetCubeCoordiantes(tBlock.c2,SIZE,SIZE);
-                            SetCubeCoordiantes(tBlock.c4,-SIZE,-SIZE);
-                        }
-                        break;
-                    case 3:
-                        if (RotateCube(tBlock.c1, -2 * SIZE,0) &&  RotateCube(tBlock.c2,-SIZE,SIZE) &&  RotateCube(tBlock.c4,SIZE,-SIZE)){
+                    case 2 , 4:
+                        if (RotateCube(tBlock.c1, -2 * SIZE,0) &&  RotateCube(tBlock.c2,-SIZE,-SIZE)){
                             SetCubeCoordiantes(tBlock.c1, -2 * SIZE,0);
-                            SetCubeCoordiantes(tBlock.c2,-SIZE,SIZE);
-                            SetCubeCoordiantes(tBlock.c4,SIZE,-SIZE);
-                        }
-                        break;
-                    case 4:
-                        if (RotateCube(tBlock.c1, 0,-2 * SIZE) &&  RotateCube(tBlock.c2,-SIZE,-SIZE) &&  RotateCube(tBlock.c4,SIZE,SIZE)){
-                            SetCubeCoordiantes(tBlock.c1, 0,-2 * SIZE);
                             SetCubeCoordiantes(tBlock.c2,-SIZE,-SIZE);
-                            SetCubeCoordiantes(tBlock.c4,SIZE,SIZE);
+                            SetCubeCoordiantes(tBlock.c4,SIZE,-SIZE);
                         }
                         break;
                 }

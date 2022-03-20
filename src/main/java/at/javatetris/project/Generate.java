@@ -87,7 +87,6 @@ public class Generate {
         Random rand = new Random();
         colorPick = rand.nextInt(COLORS.length);
         form = rand.nextInt(7) + 1;
-
         System.out.println(form);
 
         if (form == 1) {
