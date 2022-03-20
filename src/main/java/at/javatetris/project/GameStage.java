@@ -14,6 +14,7 @@ import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
+import java.lang.invoke.LambdaConversionException;
 import java.text.Normalizer;
 import java.util.Arrays;
 import java.util.Timer;
@@ -31,7 +32,7 @@ import static at.javatetris.project.TetrisBlock.getY1;
  */
 
 
-public class GameStage extends Application {
+public class GameStage {
 
     /**
      * the current score of the player
@@ -79,40 +80,65 @@ public class GameStage extends Application {
      */
     private static int numBlocks = 0;
 
-    Scene scene = new Scene(all, WIDTH, HEIGHT);
+    private static int lines = 0;
 
-    Text pause = new Text("");
+    private static int seconds = 0;
+
+    private static int minutes = 0;
+
+    private static int hours = 0;
+
+    private static Scene scene = new Scene(all, WIDTH, HEIGHT);
+
+    private static Text pause = new Text("");
 
     private static int points = 0;
 
-    OneCube[][] everyCube = new OneCube[PLAY_AREA
+    static OneCube[][] everyCube = new OneCube[PLAY_AREA
             / GameStage.SIZE][(getHeight() / GameStage.SIZE) + 1];
 
-    Group group = new Group();
+    private static Group group = new Group();
 
-    private int top = 0;
+    private static int top = 0;
+
 
     /**
      * the start mehthod, like main
      */
 
-    @Override
 
-    public  void  start(Stage stage) throws Exception {
+    //@Override
 
+    public static void  start() throws Exception {
 
-
+        Stage stage = Main.getStage();
+        stage.setScene(scene);
+        Text linesCleared = new Text(Language.getPhrase("lines"));
+        linesCleared.setStyle("-fx-font: 20 arial;");
+        linesCleared.setY(200);
+        linesCleared.setX(PLAY_AREA + 3);
         Line line = new Line(PLAY_AREA - SIZE, 0, PLAY_AREA - SIZE, HEIGHT);
-        Text score = new Text("Score : ");
+        Text score = new Text("");
         score.setStyle("-fx-font: 20 arial;");
-        score.setY(100);
+        score.setY(240);
         score.setX(PLAY_AREA + 3);
-
+        Text playTime = new Text("");
+        playTime.setStyle("-fx-font: 20 arial;");
+        playTime.setY(280);
+        playTime.setX(PLAY_AREA + 3);
+        Text time = new Text("");
+        time.setStyle("-fx-font: 20 arial;");
+        time.setY(310);
+        time.setX(PLAY_AREA + 20);
+        Text nextBLocks = new Text(Language.getPhrase("nextBlock"));
+        nextBLocks.setStyle("-fx-font: 20 arial;");
+        nextBLocks.setX(PLAY_AREA + 3);
+        nextBLocks.setY(30);
         pause.setStyle("-fx-font: 150 arial;");
         pause.setY(HEIGHT * 0.5);
         pause.setX(WIDTH * 0.065);
         points += 20;
-        all.getChildren().addAll(line,score,group);
+        all.getChildren().addAll(line,score,playTime,time,nextBLocks,linesCleared,group);
         // add additional columns and a row at the bottom to create a border for the playground
         for (int i = 0; i < fieldStatus.length ; i++) {
             fieldStatus[i][(getHeight() / SIZE)] = 1;
@@ -132,7 +158,16 @@ public class GameStage extends Application {
         KeyPressed(currentBlock);
         block = currentBlock;
         nextBLock = Generate.generateBlock();
-        all.getChildren().addAll(nextBLock);
+        all.getChildren().addAll(nextBLock.c1,nextBLock.c2,nextBLock.c3,nextBLock.c4);
+        nextBLock.c1.setTranslateX(200);
+        nextBLock.c2.setTranslateX(200);
+        nextBLock.c3.setTranslateX(200);
+        nextBLock.c4.setTranslateX(200);
+        nextBLock.c1.setTranslateY(70);
+        nextBLock.c2.setTranslateY(70);
+        nextBLock.c3.setTranslateY(70);
+        nextBLock.c4.setTranslateY(70);
+
         stage.setTitle("JavaTetris");
 
 
@@ -150,18 +185,18 @@ public class GameStage extends Application {
         stage.show();
 
         Timer fall = new Timer();
-        TimerTask task = new TimerTask() {
+        TimerTask main = new TimerTask() {
             public void run() {
                 Platform.runLater(new Runnable() {
                     public void run() {
 
-                        if (block.c1.getY() == 0 || block.c2.getY() == 0 || block.c3.getY() == 0
-                                || block.c4.getY() == 0)
+                        if (block.c1.getY() <= 20 || block.c2.getY() <= 20 || block.c3.getY() <= 20
+                                || block.c4.getY() <= 2)
                             top++;
                         else
                             top = 0;
 
-                        if (top == 2) {
+                        if (top == 6) {
 
                             Text over = new Text("GAME OVER");
                             over.setFill(Color.RED);
@@ -178,8 +213,16 @@ public class GameStage extends Application {
 
                         if (play) {
                             pause.setText("");
-                            MoveDown(block);
-                            score.setText("Score : " + points);
+                           playTime.setText(Language.getPhrase("playTime"));
+                           linesCleared.setText(Language.getPhrase("lines") + " " + lines);
+                            if (hours > 0){
+                                time.setText(hours + "h " + minutes + "m " + seconds + "s" );
+                            }else{
+                                time.setText(minutes + "m " + seconds + "s" );
+                            }
+                            MoveDown(block, top <= 0);
+
+                           score.setText(Language.getPhrase("score") + points);
                         } else {
                             pause.setText("Pause");
                         }
@@ -187,12 +230,33 @@ public class GameStage extends Application {
                 });
             }
         };
-        fall.schedule(task, 0, 300);
+        fall.schedule(main, 0, 300);
+
+        Timer fall2 = new Timer();
+        TimerTask secondsPassed = new TimerTask() {
+            public void run() {
+                Platform.runLater(new Runnable() {
+                    public void run() {
+                    seconds++ ;
+                if (seconds == 60){
+                    seconds = 0;
+                    minutes ++;
+                }
+
+                if (minutes == 60){
+                    minutes = 0;
+                    hours++;
+                }
+                    }
+                });
+            }
+        };
+        fall.schedule(secondsPassed, 0, 1000);
 
 
     }
 
-    private  void KeyPressed(TetrisBlock tBlock){
+    private static void KeyPressed(TetrisBlock tBlock){
         scene.setOnKeyPressed(e -> {
             switch (e.getCode()) {
                 case A , LEFT:
@@ -212,11 +276,11 @@ public class GameStage extends Application {
                     break;
                 case S , DOWN:
                     if (play){
-                        MoveDown(block);
+                        MoveDown(block, top <= 0);
                     }
                     break;
                 case ESCAPE:
-                    if (play == false){
+                    if (!play){
                         play = true;
                         all.getChildren().remove(pause);
                     }else{
@@ -227,7 +291,7 @@ public class GameStage extends Application {
         });
     }
 
-    private void RotateBlock(TetrisBlock tBlock){
+    private static void RotateBlock(TetrisBlock tBlock){
         switch (tBlock.getName()){
             case "Tetromino_j" :
                 switch (tBlock.getRotation()) {
@@ -236,6 +300,7 @@ public class GameStage extends Application {
                             SetCubeCoordiantes(tBlock.c1, 2 * SIZE,0);
                             SetCubeCoordiantes(tBlock.c2,SIZE,-SIZE);
                             SetCubeCoordiantes(tBlock.c4,-SIZE,SIZE);
+                            tBlock.rotate();
                         }
                         break;
                     case 2:
@@ -243,6 +308,7 @@ public class GameStage extends Application {
                             SetCubeCoordiantes(tBlock.c1, 0,2 * SIZE);
                             SetCubeCoordiantes(tBlock.c2,SIZE,SIZE);
                             SetCubeCoordiantes(tBlock.c4,-SIZE,-SIZE);
+                            tBlock.rotate();
                         }
                         break;
                     case 3:
@@ -250,6 +316,7 @@ public class GameStage extends Application {
                             SetCubeCoordiantes(tBlock.c1, -2 * SIZE,0);
                             SetCubeCoordiantes(tBlock.c2,-SIZE,SIZE);
                             SetCubeCoordiantes(tBlock.c4,SIZE,-SIZE);
+                            tBlock.rotate();
                         }
                         break;
                     case 4:
@@ -257,6 +324,7 @@ public class GameStage extends Application {
                             SetCubeCoordiantes(tBlock.c1, 0,-2 * SIZE);
                             SetCubeCoordiantes(tBlock.c2,-SIZE,-SIZE);
                             SetCubeCoordiantes(tBlock.c4,SIZE,SIZE);
+                            tBlock.rotate();
                         }
                         break;
                 }
@@ -269,6 +337,7 @@ public class GameStage extends Application {
                             SetCubeCoordiantes(tBlock.c1, 0,2 * SIZE);
                             SetCubeCoordiantes(tBlock.c2,-SIZE,SIZE);
                             SetCubeCoordiantes(tBlock.c4,SIZE,-SIZE);
+                            tBlock.rotate();
                         }
                         break;
                     case 2:
@@ -276,6 +345,7 @@ public class GameStage extends Application {
                             SetCubeCoordiantes(tBlock.c1, -2 * SIZE,0);
                             SetCubeCoordiantes(tBlock.c2,-SIZE,-SIZE);
                             SetCubeCoordiantes(tBlock.c4,SIZE,SIZE);
+                            tBlock.rotate();
                         }
                         break;
                     case 3:
@@ -283,6 +353,7 @@ public class GameStage extends Application {
                             SetCubeCoordiantes(tBlock.c1, 0,-2 * SIZE);
                             SetCubeCoordiantes(tBlock.c2,SIZE,-SIZE);
                             SetCubeCoordiantes(tBlock.c4,-SIZE,SIZE);
+                            tBlock.rotate();
                         }
                         break;
                     case 4:
@@ -290,6 +361,7 @@ public class GameStage extends Application {
                             SetCubeCoordiantes(tBlock.c1, 2 * SIZE,0);
                             SetCubeCoordiantes(tBlock.c2,SIZE,SIZE);
                             SetCubeCoordiantes(tBlock.c4,-SIZE,-SIZE);
+                            tBlock.rotate();
                         }
                         break;
                 }
@@ -305,6 +377,7 @@ public class GameStage extends Application {
                             SetCubeCoordiantes(tBlock.c1, -2 * SIZE,0);
                             SetCubeCoordiantes(tBlock.c2,-SIZE,SIZE);
                             SetCubeCoordiantes(tBlock.c4,SIZE,SIZE);
+                            tBlock.rotate();
                         }
                         break;
                     case 2:
@@ -313,6 +386,7 @@ public class GameStage extends Application {
                             SetCubeCoordiantes(tBlock.c1, 2 * SIZE,0);
                             SetCubeCoordiantes(tBlock.c2,SIZE,-SIZE);
                             SetCubeCoordiantes(tBlock.c4,-SIZE,-SIZE);
+                            tBlock.rotate();
                         }
                         break;
                     case 3:
@@ -320,6 +394,7 @@ public class GameStage extends Application {
                             SetCubeCoordiantes(tBlock.c1, -2 * SIZE,0);
                             SetCubeCoordiantes(tBlock.c2,-SIZE,SIZE);
                             SetCubeCoordiantes(tBlock.c4,SIZE,SIZE);
+                            tBlock.rotate();
                         }
                         break;
                     case 4:
@@ -327,38 +402,27 @@ public class GameStage extends Application {
                             SetCubeCoordiantes(tBlock.c1, 2 * SIZE,0);
                             SetCubeCoordiantes(tBlock.c2,SIZE,-SIZE);
                             SetCubeCoordiantes(tBlock.c4,-SIZE,-SIZE);
+                            tBlock.rotate();
                         }
                         break;
                 }
                 break;
             case "Tetromino_z" :
                 switch (tBlock.getRotation()) {
-                    case 1:
-                        if (RotateCube(tBlock.c1, 2 * SIZE,0) &&  RotateCube(tBlock.c4,-SIZE,SIZE)){
-                            SetCubeCoordiantes(tBlock.c1, 2 * SIZE,0);
-                            SetCubeCoordiantes(tBlock.c2,SIZE,SIZE);
-                            SetCubeCoordiantes(tBlock.c4,-SIZE,SIZE);
+                    case 1, 3:
+                        if (RotateCube(tBlock.c1, 2 * SIZE, 0) && RotateCube(tBlock.c4, -SIZE, SIZE)) {
+                            SetCubeCoordiantes(tBlock.c1, 2 * SIZE, 0);
+                            SetCubeCoordiantes(tBlock.c2, SIZE, SIZE);
+                            SetCubeCoordiantes(tBlock.c4, -SIZE, SIZE);
+                            tBlock.rotate();
                         }
                         break;
-                    case 2:
-                        if (RotateCube(tBlock.c1, 0,2 * SIZE) &&  RotateCube(tBlock.c2,SIZE,SIZE) &&  RotateCube(tBlock.c4,-SIZE,-SIZE)){
-                            SetCubeCoordiantes(tBlock.c1, 0,2 * SIZE);
-                            SetCubeCoordiantes(tBlock.c2,SIZE,SIZE);
-                            SetCubeCoordiantes(tBlock.c4,-SIZE,-SIZE);
-                        }
-                        break;
-                    case 3:
-                        if (RotateCube(tBlock.c1, -2 * SIZE,0) &&  RotateCube(tBlock.c2,-SIZE,SIZE) &&  RotateCube(tBlock.c4,SIZE,-SIZE)){
-                            SetCubeCoordiantes(tBlock.c1, -2 * SIZE,0);
-                            SetCubeCoordiantes(tBlock.c2,-SIZE,SIZE);
-                            SetCubeCoordiantes(tBlock.c4,SIZE,-SIZE);
-                        }
-                        break;
-                    case 4:
-                        if (RotateCube(tBlock.c1, 0,-2 * SIZE) &&  RotateCube(tBlock.c2,-SIZE,-SIZE) &&  RotateCube(tBlock.c4,SIZE,SIZE)){
-                            SetCubeCoordiantes(tBlock.c1, 0,-2 * SIZE);
-                            SetCubeCoordiantes(tBlock.c2,-SIZE,-SIZE);
-                            SetCubeCoordiantes(tBlock.c4,SIZE,SIZE);
+                    case 2, 4:
+                        if (RotateCube(tBlock.c1, -2 * SIZE, 0) && RotateCube(tBlock.c2, -SIZE, -SIZE) && RotateCube(tBlock.c4, SIZE, -SIZE)) {
+                            SetCubeCoordiantes(tBlock.c1, -2 * SIZE, 0);
+                            SetCubeCoordiantes(tBlock.c2, -SIZE, -SIZE);
+                            SetCubeCoordiantes(tBlock.c4, SIZE, -SIZE);
+                            tBlock.rotate();
                         }
                         break;
                 }
@@ -366,90 +430,83 @@ public class GameStage extends Application {
             case "Tetromino_t" :
                 switch (tBlock.getRotation()) {
                     case 1:
-                        if (RotateCube(tBlock.c1, 2 * SIZE,0) &&  RotateCube(tBlock.c2,SIZE,-SIZE) &&  RotateCube(tBlock.c4,-SIZE,SIZE)){
-                            SetCubeCoordiantes(tBlock.c1, 2 * SIZE,0);
-                            SetCubeCoordiantes(tBlock.c2,SIZE,-SIZE);
-                            SetCubeCoordiantes(tBlock.c4,-SIZE,SIZE);
+                        if (RotateCube(tBlock.c2, 0,- 2 * SIZE) &&  RotateCube(tBlock.c3,-SIZE,-SIZE) &&  RotateCube(tBlock.c4,- 2 * SIZE,0)){
+                            SetCubeCoordiantes(tBlock.c2, 0,- 2 * SIZE);
+                            SetCubeCoordiantes(tBlock.c3,-SIZE,-SIZE);
+                            SetCubeCoordiantes(tBlock.c4,- 2 * SIZE,0);
+                            tBlock.rotate();
                         }
                         break;
                     case 2:
-                        if (RotateCube(tBlock.c1, 0,2 * SIZE) &&  RotateCube(tBlock.c2,SIZE,SIZE) &&  RotateCube(tBlock.c4,-SIZE,-SIZE)){
-                            SetCubeCoordiantes(tBlock.c1, 0,2 * SIZE);
-                            SetCubeCoordiantes(tBlock.c2,SIZE,SIZE);
-                            SetCubeCoordiantes(tBlock.c4,-SIZE,-SIZE);
+                        if (RotateCube(tBlock.c2, 2 * SIZE,0) &&  RotateCube(tBlock.c3,SIZE,-SIZE) &&  RotateCube(tBlock.c4,0,-2 * SIZE)){
+                            SetCubeCoordiantes(tBlock.c2, 2 * SIZE,0);
+                            SetCubeCoordiantes(tBlock.c3,SIZE,-SIZE);
+                            SetCubeCoordiantes(tBlock.c4,0,-2 * SIZE);
+                            tBlock.rotate();
                         }
                         break;
                     case 3:
-                        if (RotateCube(tBlock.c1, -2 * SIZE,0) &&  RotateCube(tBlock.c2,-SIZE,SIZE) &&  RotateCube(tBlock.c4,SIZE,-SIZE)){
-                            SetCubeCoordiantes(tBlock.c1, -2 * SIZE,0);
-                            SetCubeCoordiantes(tBlock.c2,-SIZE,SIZE);
-                            SetCubeCoordiantes(tBlock.c4,SIZE,-SIZE);
+                        if (RotateCube(tBlock.c2, 0,2 * SIZE) &&  RotateCube(tBlock.c3,SIZE,SIZE) &&  RotateCube(tBlock.c4,2 * SIZE,0)){
+                            SetCubeCoordiantes(tBlock.c2, 0,2 * SIZE);
+                            SetCubeCoordiantes(tBlock.c3,SIZE,SIZE);
+                            SetCubeCoordiantes(tBlock.c4,2 * SIZE,0);
+                            tBlock.rotate();
                         }
                         break;
                     case 4:
-                        if (RotateCube(tBlock.c1, 0,-2 * SIZE) &&  RotateCube(tBlock.c2,-SIZE,-SIZE) &&  RotateCube(tBlock.c4,SIZE,SIZE)){
-                            SetCubeCoordiantes(tBlock.c1, 0,-2 * SIZE);
-                            SetCubeCoordiantes(tBlock.c2,-SIZE,-SIZE);
-                            SetCubeCoordiantes(tBlock.c4,SIZE,SIZE);
+                        if (RotateCube(tBlock.c2, -2 * SIZE,0) &&  RotateCube(tBlock.c3,-SIZE,SIZE) &&  RotateCube(tBlock.c4,0,2 * SIZE)){
+                            SetCubeCoordiantes(tBlock.c2, -2 * SIZE,0);
+                            SetCubeCoordiantes(tBlock.c3,-SIZE,SIZE);
+                            SetCubeCoordiantes(tBlock.c4,0,2 * SIZE);
+                            tBlock.rotate();
                         }
                         break;
                 }
                 break;
             case "Tetromino_i" :
                 switch (tBlock.getRotation()) {
-                    case 1:
-                        if (RotateCube(tBlock.c1, 2 * SIZE,0) &&  RotateCube(tBlock.c2,SIZE,-SIZE) &&  RotateCube(tBlock.c4,-SIZE,SIZE)){
-                            SetCubeCoordiantes(tBlock.c1, 2 * SIZE,0);
+                    case 1 , 3:
+                        if (RotateCube(tBlock.c1, 2 * SIZE,-2 * SIZE) &&  RotateCube(tBlock.c2,SIZE,-SIZE) &&  RotateCube(tBlock.c4,-SIZE,SIZE)){
+                            SetCubeCoordiantes(tBlock.c1, 2 * SIZE,-2 * SIZE);
                             SetCubeCoordiantes(tBlock.c2,SIZE,-SIZE);
                             SetCubeCoordiantes(tBlock.c4,-SIZE,SIZE);
+                            tBlock.rotate();
                         }
                         break;
-                    case 2:
-                        if (RotateCube(tBlock.c1, 0,2 * SIZE) &&  RotateCube(tBlock.c2,SIZE,SIZE) &&  RotateCube(tBlock.c4,-SIZE,-SIZE)){
-                            SetCubeCoordiantes(tBlock.c1, 0,2 * SIZE);
-                            SetCubeCoordiantes(tBlock.c2,SIZE,SIZE);
-                            SetCubeCoordiantes(tBlock.c4,-SIZE,-SIZE);
-                        }
-                        break;
-                    case 3:
-                        if (RotateCube(tBlock.c1, -2 * SIZE,0) &&  RotateCube(tBlock.c2,-SIZE,SIZE) &&  RotateCube(tBlock.c4,SIZE,-SIZE)){
-                            SetCubeCoordiantes(tBlock.c1, -2 * SIZE,0);
+                    case 2 , 4:
+                        if (RotateCube(tBlock.c1, -2 * SIZE,2 * SIZE) &&  RotateCube(tBlock.c2,-SIZE,SIZE) &&  RotateCube(tBlock.c4,SIZE,-SIZE)){
+                            SetCubeCoordiantes(tBlock.c1, -2 * SIZE,2 * SIZE);
                             SetCubeCoordiantes(tBlock.c2,-SIZE,SIZE);
                             SetCubeCoordiantes(tBlock.c4,SIZE,-SIZE);
+                            tBlock.rotate();
                         }
                         break;
-                    case 4:
-                        if (RotateCube(tBlock.c1, 0,-2 * SIZE) &&  RotateCube(tBlock.c2,-SIZE,-SIZE) &&  RotateCube(tBlock.c4,SIZE,SIZE)){
-                            SetCubeCoordiantes(tBlock.c1, 0,-2 * SIZE);
-                            SetCubeCoordiantes(tBlock.c2,-SIZE,-SIZE);
-                            SetCubeCoordiantes(tBlock.c4,SIZE,SIZE);
-                        }
-                        break;
+
                 }
                 break;
         }
-
-        tBlock.rotate();
     }
-    private boolean RotateCube(OneCube cube,int xMove, int yMove){
-        if (fieldStatus[(int) cube.getX() / SIZE + xMove / SIZE][((int) cube.getY() / SIZE) + yMove / SIZE] == 0){
-            return true;
-        }
-        return false;
+    private static boolean RotateCube(OneCube cube,int xMove, int yMove){
+        return fieldStatus[(int) cube.getX() / SIZE + xMove / SIZE][((int) cube.getY() / SIZE) + yMove / SIZE] == 0
+                &&cube.getX()  + xMove <= PLAY_AREA && cube.getX() + xMove >= 0 && cube.getY() + yMove < getHeight();
     }
 
-    private void SetCubeCoordiantes(OneCube cube,int xMove, int yMove){
+    private static void SetCubeCoordiantes(OneCube cube,int xMove, int yMove){
         cube.setY(cube.getY() + yMove);
         cube.setX(cube.getX() + xMove);
     }
+
 
     /**
      * to launch start
      * @param args
      */
+    /*
     public static void main(String[] args) {
         launch(args);
     }
+
+     */
 
     /**
      * getter for width
@@ -485,12 +542,11 @@ public class GameStage extends Application {
     }
 
 
-    public void MoveDown(TetrisBlock TBlock){
+    public static void MoveDown(TetrisBlock TBlock,boolean spawn){
         //checks if bottom is reached or collision with another Tetromino occurs
-        if (CheckMoveDown(TBlock)){
+        if (CheckMoveDown(TBlock) && spawn){
             group = new Group();
             System.out.println(Arrays.deepToString(group.getChildren().toArray(new Node[0])) +"group");
-
 
             all.getChildren().remove(nextBLock.c1);
             all.getChildren().remove(nextBLock.c2);
@@ -516,12 +572,12 @@ public class GameStage extends Application {
             all.getChildren().remove(block.c4);
             System.out.println(Arrays.deepToString(all.getChildren().toArray(new Node[0])));
             if (firstRound == 1){
-                for (int i = 2; i < 4; i++) {
-                    all.getChildren().remove(2);
+                for (int i = 2; i < 3; i++) {
+                    all.getChildren().remove(6);
                 }
             } else {
                 for (int i = 2; i < 3; i++) {
-                    all.getChildren().remove(2);
+                    all.getChildren().remove(6);
                 }
             }
 
@@ -529,7 +585,14 @@ public class GameStage extends Application {
             group = SaveArrayToGroup(group,everyCube);
 
             all.getChildren().add(group);
-
+            nextBLock.c1.setTranslateX(0);
+            nextBLock.c2.setTranslateX(0);
+            nextBLock.c3.setTranslateX(0);
+            nextBLock.c4.setTranslateX(0);
+            nextBLock.c1.setTranslateY(0);
+            nextBLock.c2.setTranslateY(0);
+            nextBLock.c3.setTranslateY(0);
+            nextBLock.c4.setTranslateY(0);
             TetrisBlock currentBlock = nextBLock;
             nextBLock = Generate.generateBlock();
             block = currentBlock;
@@ -540,7 +603,17 @@ public class GameStage extends Application {
 
             all.getChildren().addAll( nextBLock.c1,nextBLock.c2,nextBLock.c3,nextBLock.c4);
             firstRound = 0;
-        } else {
+
+            nextBLock.c1.setTranslateX(200);
+            nextBLock.c2.setTranslateX(200);
+            nextBLock.c3.setTranslateX(200);
+            nextBLock.c4.setTranslateX(200);
+            nextBLock.c1.setTranslateY(70);
+            nextBLock.c2.setTranslateY(70);
+            nextBLock.c3.setTranslateY(70);
+            nextBLock.c4.setTranslateY(70);
+
+        } else if(!CheckMoveDown(TBlock)) {
             TBlock.c1.setY(TBlock.c1.getY() + SIZE);
             TBlock.c2.setY(TBlock.c2.getY() + SIZE);
             TBlock.c3.setY(TBlock.c3.getY() + SIZE);
@@ -562,5 +635,13 @@ public class GameStage extends Application {
 
     public static int getPoints() {
         return points;
+    }
+
+    public static int getLines() {
+        return lines;
+    }
+
+    public static void setLines(int lines) {
+        GameStage.lines = lines;
     }
 }

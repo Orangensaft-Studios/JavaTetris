@@ -32,7 +32,7 @@ public class ChooseModeGUI {
     public void startModeTutorial(MouseEvent event) {
     }
 
-    public void startClassicMode(MouseEvent event) {
-        //GameStage.start();
+    public void startClassicMode(MouseEvent event) throws Exception {
+        GameStage.start();
     }
 }
