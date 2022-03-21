@@ -1,9 +1,15 @@
 package at.javatetris.project;
 
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
+
 import java.io.*;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
@@ -20,7 +26,7 @@ public class Settings {
     public final static String JAVATETRIS_USR_DATA_DIR_PATH = JAVATETRIS_DIR_PATH + "\\userData\\";
 
     /** location of setting properties file */
-    private final static String SETTING_FILE_PATH = JAVATETRIS_DIR_PATH + "config.properties";
+    public final static String SETTING_FILE_PATH = JAVATETRIS_DIR_PATH + "config.properties";
 
     /** location of controls properties file */
     private final static String CONTROLS_FILE_PATH = JAVATETRIS_DIR_PATH + "controls.properties";
@@ -34,13 +40,17 @@ public class Settings {
     /** controls properties */
     private static Properties controls;
 
+    /** version number */
+    private static final String version = "0.4.2";
+
     /** default lines for config, add config values here */
     private static final List<String> DEFAULT_CONFIG = Arrays.asList(
             "locale = de",
-            "gameVersion = alpha (0.4)",
+            "gameVersion = " + version,
             "username=",
             "password=",
-            "accountType="
+            "accountType=",
+            "musicVolume=0.02592593034108478"
     );
 
     /** default control lines for controls files */
@@ -68,15 +78,10 @@ public class Settings {
         return controls;
     }
 
-    // TODO if version numbers (program and config) dont match, check files,
-    // oder sogar immer checken ob alles mit dem voll ist was drin sein sollte
-
-    /**
-     * check if setting file is here, else create directory and file with defaultConfig
-     * */
+    /** check if setting file is here, else create directory and file with defaultConfig */
     public static void checkFile() {
 
-        //TODO check if file contains everything
+        //TODO maybe check if file contains everything
 
         try {
             //Files.createDirectories(Paths.get(JAVATETRIS_DIR_PATH));
@@ -140,6 +145,7 @@ public class Settings {
             e.printStackTrace();
         }
     }
+
 
     /**
      * reset config
@@ -243,6 +249,4 @@ public class Settings {
     public static String searchControls(String key) {
         return getControls().getProperty(key);
     }
-
-
 }

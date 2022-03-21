@@ -5,6 +5,9 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
@@ -133,9 +136,22 @@ public class ControlsGUI {
 
     @FXML
     private void resetControls(ActionEvent actionEvent) {
-        //TODO: Alert ob wirklich zurücksetzen
-        System.out.println("ControlsGUI.java: resetControls clicked");
-        Settings.setControlsToDefault();
-        initialize();
+        //PopUp Alert if you really want to reset controls
+        Alert alert = Main.alertBuilder(Alert.AlertType.CONFIRMATION, "resetControlsTitle", "resetControlsHeader", "resetControlsContent", false);
+        ButtonType yesButton = new ButtonType(Language.getPhrase("yes"), ButtonBar.ButtonData.YES);
+        ButtonType noButton = new ButtonType(Language.getPhrase("no"), ButtonBar.ButtonData.NO);
+        alert.getButtonTypes().setAll(yesButton, noButton);
+        alert.showAndWait().ifPresent(type -> {
+            if (type == yesButton) {
+                try {
+                    Settings.setControlsToDefault();
+                    System.out.println("ControlsGUI.java: Controls zurückgesetzt");
+                    initialize();
+                } catch (Exception e) {
+                    Main.errorAlert("SettingsGUI.java");
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }

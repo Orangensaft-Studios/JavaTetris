@@ -3,7 +3,9 @@ package at.javatetris.project;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -30,6 +32,16 @@ public class ChooseModeGUI {
     }
 
     //TODO check if you are logged in and ask if you really want to play without logged in and state who is logged in
+
+    /** username logged in with text */
+    @FXML
+    private Text loggedInAs;
+
+    /** on load, display username from config as loggedIn */
+    @FXML
+    public void initialize() {
+        loggedInAs.setText(Settings.searchSettings("username") + " (" + Settings.searchSettings("accountType") + ")");
+    }
 
     /**
      * on arrow back click, load MenGUI
@@ -77,10 +89,26 @@ public class ChooseModeGUI {
      */
     @FXML
     public void startClassicMode(MouseEvent event) {
-        try {
-            GameStage.start("");
-        } catch (Exception e) {
-            Main.errorAlert("ChooseModeGUI.java");
+        if (someoneIsLoggedInCheck()) {
+            try {
+                GameStage.start("");
+            } catch (Exception e) {
+                Main.errorAlert("ChooseModeGUI.java");
+            }
+        }
+    }
+
+    /**
+     * check if there is someone logged in
+     * @return if there is someone logged in
+     */
+    private static boolean someoneIsLoggedInCheck() {
+        if (!Settings.searchSettings("username").equals("")) {
+            return true;
+        } else {
+            Alert alert = Main.alertBuilder(Alert.AlertType.WARNING, "nobodyLoggedInTitle", "nobodyLoggedInHeader", "nobodyLoggedInContent", true);
+            alert.show();
+            return false;
         }
     }
 }

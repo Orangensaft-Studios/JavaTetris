@@ -10,6 +10,8 @@ import java.sql.*;
 public class DataBase {
 
     /*
+    Database table SQL:
+
         CREATE TABLE `UserData` (
         `user_id` INT NOT NULL AUTO_INCREMENT,
         `username` VARCHAR(15),
@@ -43,6 +45,7 @@ public class DataBase {
     private final static String USER = TESTDB_USER;
     /** password to log into database */
     private final static String PASS = TESTDB_PASS;
+
 
     /**
      * return if the JDBC Driver was loaded
