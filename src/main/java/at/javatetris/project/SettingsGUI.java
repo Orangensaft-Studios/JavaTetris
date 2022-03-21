@@ -13,13 +13,12 @@ import java.io.IOException;
 
 
 /**
- * class for SettingGUI
+ * class for SettingGUI, set/reset settings, slide music volume
  * @author Severin Rosner
  */
 public class SettingsGUI {
 
-    private double musicVolumeSettings = Double.parseDouble(Settings.searchSettings("musicVolume"));
-
+    /** variable for music volume */
     private double musicVolume;
 
     /**
@@ -41,22 +40,27 @@ public class SettingsGUI {
     @FXML
     private ChoiceBox languageDrpdwn;
 
+    /** volume slider */
     @FXML
     private Slider musicVolumeSlider;
 
+    /** text that shows the volume next to slider */
     @FXML
     private Text volumeText;
 
     /** on load, set slider to volume from config and start event listener */
     @FXML
     public void initialize() {
-        musicVolumeSlider.setValue(musicVolumeSettings * 100);
-        volumeText.setText((int)(musicVolumeSettings * 100) + "");
+        final int converter = 100;
+        double musicVolumeSettings = Double.parseDouble(Settings.searchSettings("musicVolume")) * converter;
+
+        musicVolumeSlider.setValue(musicVolumeSettings);
+        volumeText.setText((int)(musicVolumeSettings) + "");
 
         musicVolumeSlider.valueProperty().addListener(observable -> {
-            musicVolume = musicVolumeSlider.getValue() / 100;
+            musicVolume = musicVolumeSlider.getValue() / converter;
             Music.getMediaPlayer().setVolume(musicVolume);
-            volumeText.setText((int)(musicVolume * 100) + "");
+            volumeText.setText((int)(musicVolume * converter) + "");
         });
     }
 

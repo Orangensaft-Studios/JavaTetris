@@ -1,0 +1,14 @@
+Change Request #1 | Projekt 02 JavaTetris
+
+Sehr geehrter Herr Prof. Hölzl,
+
+Roman und ich würden wenn möglich zwei Punkte in unserem Projekt "JavaTetris" jeweils dem Anderen zuweisen.
+
+Derzeit ist Roman der Punkt "Leaderboard/Statistik Seite" und mir "Spiel (Modus: Tutorial)" zugewiesen. Gerne würden wir diese Punkte
+jedoch tauschen wollen da jeweils der Andere sich besser mit der Materie auskennt und die Arbeit die davor war besser kennt und einbinden
+kann und so ein besseres Ergebnis liefern kann.
+
+Falls dies möglich wäre, würden wir uns freuen.
+
+Mit freundlichen Grüßen,
+Severin Rosner

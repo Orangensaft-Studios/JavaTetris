@@ -4,7 +4,9 @@ import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import java.util.Objects;
 
 
 /**
@@ -29,6 +31,13 @@ public class Main extends Application {
         //check if setting and controls Files are available and then load from it
         Settings.checkFile();
 
+        //load JDBC Driver to enable DataBase actions
+        if (DataBase.loadJDBCDriver()) {
+            System.out.println("Main.java: JDBC Driver loaded successfully");
+        } else {
+            System.out.println("Main.java: JDBC Driver couldn't be loaded");
+        }
+
         //login with in config stored user = last logged-in user
         String accountType = Settings.searchSettings("accountType");
         String username = Settings.searchSettings("username");
@@ -43,15 +52,9 @@ public class Main extends Application {
 
         //set the mainStage
         mainStage.setResizable(false);
+        mainStage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResource("icons/jt_icon48x48_no_bg.png")).toURI().toString()));
         mainStage.setTitle("JavaTetris | Version: " + Settings.searchSettings("gameVersion"));
         Main.mainStage = mainStage;
-
-        //load JDBC Driver to enable DataBase actions
-        if (DataBase.loadJDBCDriver()) {
-            System.out.println("Main.java: JDBC Driver loaded successfully");
-        } else {
-            System.out.println("Main.java: JDBC Driver couldn't be loaded");
-        }
 
         //start music with volume from settings
         Music.startMusic(Double.parseDouble(Settings.searchSettings("musicVolume")));
@@ -81,6 +84,10 @@ public class Main extends Application {
         return alert;
     }
 
+    /**
+     * show an error alert
+     * @param className to look for
+     */
     public static void errorAlert(String className) {
         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
         errorAlert.setTitle(Language.getPhrase("error"));
@@ -91,6 +98,9 @@ public class Main extends Application {
         errorAlert.show();
     }
 
+    /**
+     * alert for not implemented things
+     */
     public static void notImplementedAlert() {
         Alert alert = Main.alertBuilder(Alert.AlertType.INFORMATION, "notImplementedTitle", "notImplementedHeader", "notImplementedContent", true);
         alert.show();

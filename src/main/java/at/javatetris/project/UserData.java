@@ -10,7 +10,7 @@ import java.util.Properties;
 
 public class UserData {
     /** path where file is located */
-    private static String usernameFile = Settings.JAVATETRIS_USR_DATA_DIR_PATH;
+    private static final String USERNAME_FILE = Settings.JAVATETRIS_USR_DATA_DIR_PATH;
 
     /** the current logged-in user */
     private static String currentUsername;
@@ -32,7 +32,7 @@ public class UserData {
      * @return path as string
      */
     private static String getUsernameFile() {
-        return usernameFile + currentUsername + ".properties";
+        return USERNAME_FILE + currentUsername + ".properties";
     }
 
     /**

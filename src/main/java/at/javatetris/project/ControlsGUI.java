@@ -94,6 +94,7 @@ public class ControlsGUI {
     private EventHandler<KeyEvent> keyHandler;
 
     private void setKey(Text fieldName) {
+        /*
         getScene().addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
             fieldName.setText(key.getCode().getName());
             try {
@@ -102,6 +103,8 @@ public class ControlsGUI {
                 e.printStackTrace();
             }
         });
+
+         */
     }
 
     @FXML

@@ -247,6 +247,7 @@ public class Account {
      * set username and password to setting file
      * @param username to set
      * @param password to set
+     * @param accountType local or online
      */
     private static void setUsernamePasswordAccountTypeInSettings(String username, String password, String accountType) {
         Settings.setNewValue("username", username, "settings");

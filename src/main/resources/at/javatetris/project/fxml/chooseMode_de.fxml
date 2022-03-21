@@ -17,7 +17,7 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Rectangle>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="114.0" layoutX="188.0" layoutY="102.0" onMouseClicked="#startTimeMode" opacity="0.3" stroke="BLACK" strokeType="INSIDE" width="166.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="114.0" layoutX="188.0" layoutY="102.0" onMouseClicked="#startTimeMode" stroke="BLACK" strokeType="INSIDE" width="166.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Rectangle>
@@ -67,7 +67,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <ImageView fitHeight="104.0" fitWidth="153.0" layoutX="195.0" layoutY="108.0" onMouseClicked="#startTimeMode" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="104.0" fitWidth="153.0" layoutX="195.0" layoutY="108.0" onMouseClicked="#startTimeMode" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../icons/mode_time_icon.png" />
          </image>
@@ -80,7 +80,7 @@
             <Font size="21.0" />
          </font>
       </Text>
-      <Text layoutX="205.0" layoutY="124.0" onMouseClicked="#startTimeMode" opacity="0.3" strokeType="OUTSIDE" strokeWidth="0.0" text="Gegen die Uhr">
+      <Text layoutX="205.0" layoutY="124.0" onMouseClicked="#startTimeMode" strokeType="OUTSIDE" strokeWidth="0.0" text="Gegen die Uhr">
          <font>
             <Font size="21.0" />
          </font>
