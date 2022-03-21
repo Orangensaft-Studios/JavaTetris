@@ -111,6 +111,7 @@ class Move extends TimerTask {
             }
             if (full){
                 setPoints(getPoints() + 100);
+                setEndTimer(getEndTimer() + 10);
                 setLines(getLines() + 1);
                 for (int y2 = y; y2 > 0; y2--) {
                     for (int x = 0; x < fieldStatus.length; x++) {

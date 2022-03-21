@@ -3,10 +3,15 @@ package at.javatetris.project;
 import com.dlsc.formsfx.model.structure.Form;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -14,6 +19,7 @@ import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.lang.invoke.LambdaConversionException;
 import java.text.Normalizer;
 import java.util.Arrays;
@@ -82,6 +88,8 @@ public class GameStage {
 
     private static int lines = 0;
 
+    private static int endTimer = 60;
+
     private static int seconds = 0;
 
     private static int minutes = 0;
@@ -101,6 +109,11 @@ public class GameStage {
 
     private static int top = 0;
 
+    private static boolean timeMode = false;
+
+    private static boolean tutorial = false;
+
+    private static boolean endless = false;
 
     /**
      * the start mehthod, like main
@@ -109,8 +122,12 @@ public class GameStage {
 
     //@Override
 
-    public static void  start() throws Exception {
+    public static void  start(String mode) throws Exception {
 
+        Text endTime = new Text("Time left");
+        endTime.setStyle("-fx-font: 20 arial;");
+        endTime.setY(150);
+        endTime.setX(PLAY_AREA + 3);
         Stage stage = Main.getStage();
         stage.setScene(scene);
         Text linesCleared = new Text(Language.getPhrase("lines"));
@@ -138,7 +155,21 @@ public class GameStage {
         pause.setY(HEIGHT * 0.5);
         pause.setX(WIDTH * 0.065);
         points += 20;
-        all.getChildren().addAll(line,score,playTime,time,nextBLocks,linesCleared,group);
+
+        if (mode.equals("Time")) {
+            timeMode = true;
+        } else if (mode.equals("Tutorial")){
+            tutorial = true;
+        } else if(mode.equals("Endless")){
+            endless = true;
+        }
+
+
+        if (timeMode){
+            all.getChildren().addAll(line,score,playTime,time,nextBLocks,endTime ,linesCleared,group);
+        } else {
+            all.getChildren().addAll(line,score,playTime,time,nextBLocks,linesCleared,group);
+        }
         // add additional columns and a row at the bottom to create a border for the playground
         for (int i = 0; i < fieldStatus.length ; i++) {
             fieldStatus[i][(getHeight() / SIZE)] = 1;
@@ -148,9 +179,6 @@ public class GameStage {
 
             fieldStatus[fieldStatus.length - 1][i] = 1;
         }
-
-
-
 
         TetrisBlock currentBlock = nextBLock;
         all.getChildren().addAll(currentBlock.c1, currentBlock.c2, currentBlock.c3,currentBlock.c4);
@@ -196,7 +224,7 @@ public class GameStage {
                         else
                             top = 0;
 
-                        if (top == 6) {
+                        if (top == 6 || endTimer < 0) {
 
                             Text over = new Text("GAME OVER");
                             over.setFill(Color.RED);
@@ -215,6 +243,14 @@ public class GameStage {
                             pause.setText("");
                            playTime.setText(Language.getPhrase("playTime"));
                            linesCleared.setText(Language.getPhrase("lines") + " " + lines);
+                           if (timeMode){
+                               if(endTimer < 10){
+                                   endTime.setFill(Color.web("#DC1B00"));
+                               } else {
+                                   endTime.setFill(Color.web("#000000"));
+                               }
+                               endTime.setText("Time left: " + endTimer);
+                           }
                             if (hours > 0){
                                 time.setText(hours + "h " + minutes + "m " + seconds + "s" );
                             }else{
@@ -224,7 +260,7 @@ public class GameStage {
 
                            score.setText(Language.getPhrase("score") + points);
                         } else {
-                            pause.setText("Pause");
+                            //pause.setText("Pause");
                         }
                     }
                 });
@@ -238,6 +274,9 @@ public class GameStage {
                 Platform.runLater(new Runnable() {
                     public void run() {
                     seconds++ ;
+                    if (timeMode){
+                        endTimer--;
+                    }
                 if (seconds == 60){
                     seconds = 0;
                     minutes ++;
@@ -280,13 +319,8 @@ public class GameStage {
                     }
                     break;
                 case ESCAPE:
-                    if (!play){
-                        play = true;
-                        all.getChildren().remove(pause);
-                    }else{
-                        play = false;
-                        all.getChildren().add(pause);
-                    }
+                    play = false;
+                    PauseGUI.handle(e);
             }
         });
     }
@@ -574,9 +608,9 @@ public class GameStage {
             all.getChildren().remove(block.c3);
             all.getChildren().remove(block.c4);
 
-            if (firstRound == 1){
+            if (timeMode){
                 for (int i = 2; i < 3; i++) {
-                    all.getChildren().remove(6);
+                    all.getChildren().remove(7);
                 }
             } else {
                 for (int i = 2; i < 3; i++) {
@@ -646,5 +680,18 @@ public class GameStage {
 
     public static void setLines(int lines) {
         GameStage.lines = lines;
+    }
+
+    public static void setPlay(boolean play) {
+        GameStage.play = play;
+    }
+
+
+    public static int getEndTimer() {
+        return endTimer;
+    }
+
+    public static void setEndTimer(int endTimer) {
+        GameStage.endTimer = endTimer;
     }
 }
