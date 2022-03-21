@@ -67,7 +67,11 @@ public class ChooseModeGUI {
      */
     @FXML
     private void startTimeMode(MouseEvent event) {
-        Main.notImplementedAlert();
+        try {
+            TimeMode.start();
+        } catch (Exception e) {
+            Main.errorAlert("ChooseModeGUI.java");
+        }
     }
 
     /**
@@ -87,7 +91,7 @@ public class ChooseModeGUI {
     public void startClassicMode(MouseEvent event) {
         if (someoneIsLoggedInCheck()) {
             try {
-                GameStage.start();
+                GameStage.start("");
             } catch (Exception e) {
                 Main.errorAlert("ChooseModeGUI.java");
             }
