@@ -36,7 +36,7 @@ public class Settings {
     private static Properties controls;
 
     /** version number */
-    private static final String VERSION = "0.4.2";
+    private static final String VERSION = "0.5";
 
     /** default lines for config, add config values here */
     private static final List<String> DEFAULT_CONFIG = Arrays.asList(
