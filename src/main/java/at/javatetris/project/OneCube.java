@@ -6,6 +6,7 @@ import javafx.scene.shape.StrokeType;
 
 /**
  * One Square of the Tetromino
+ *
  * @author Roman Krebs
  */
 public class OneCube extends Rectangle {
@@ -14,7 +15,13 @@ public class OneCube extends Rectangle {
      */
     private int position;
 
+    /**
+     * the postion of the OneCube before x
+     */
     public static int blockPosX;
+    /**
+     * the postion of the OneCube before y
+     */
     public static int blockPosY;
     /**
      * the size of the Tetromino
@@ -37,17 +44,22 @@ public class OneCube extends Rectangle {
      */
     private static double newX = GameStage.getHeight() / 2; //half
     /**
-     *the Y-Coordinate of the right top corner of the Square after calculating the extra shift
+     * 5 Percent
      */
-    private static double newY = GameStage.getHeight() / 20; //5 percent
+    final static int PERCENTAGE = 20;
+    /**
+     * the Y-Coordinate of the right top corner of the Square after calculating the extra shift
+     */
+    private static double newY = GameStage.getHeight() / PERCENTAGE; //5 percent
 
     /**
      * method for Generating the Cube
+     *
      * @param position where the Block will be positioned
      * @param prevPosX where the block before was in X Coordinate
      * @param prevPosY where the block before was in Y Coordinate
      */
-    public OneCube(int position,int prevPosX, int prevPosY) {
+    public OneCube(int position, int prevPosX, int prevPosY) {
         setHeight(SIZE);
         setWidth(SIZE);
         setX(X + prevPosX);
@@ -59,11 +71,11 @@ public class OneCube extends Rectangle {
             setX(newX + (SIZE + 2 * STROKE));
         } else if (position == 2) {
             setX(newX - (SIZE + 2 * STROKE));
-        } else if (position == 3) {
+        } else if (position == (2 + 1)) {
             setY(newY + (SIZE + 2 * STROKE));
-        } else if (position == 4) {
+        } else if (position == (2 + 2)) {
             setY(newY - (SIZE + 2 * STROKE));
-        } else if( position == 0){
+        } else if (position == 0) {
             blockPosX = 0;
             blockPosY = 0;
         }
@@ -74,22 +86,27 @@ public class OneCube extends Rectangle {
         switch (position) {
             case 1 -> blockPosX += (SIZE + 2 * STROKE);
             case 2 -> blockPosX -= (SIZE + 2 * STROKE);
-            case 3 -> blockPosY += (SIZE + 2 * STROKE);
-            case 4 -> blockPosY -= (SIZE + 2 * STROKE);
+            case (2 + 1) -> blockPosY += (SIZE + 2 * STROKE);
+            case (2 + 2) -> blockPosY -= (SIZE + 2 * STROKE);
 
         }
 
     }
 
-    public OneCube(int x, int y){
+    /**
+     * constructor for OneCubes
+     * @param x the X-Coordinate
+     * @param y the Y-Coordinate
+     */
+    public OneCube(int x, int y) {
         setX(this.X + x);
         setY(this.Y + y);
     }
 
 
-
     /**
      * Setting One Cube from another One Cube
+     *
      * @param cube
      */
     public OneCube(OneCube cube) {
@@ -102,6 +119,7 @@ public class OneCube extends Rectangle {
 
     /**
      * getter for position
+     *
      * @return position
      */
     public int getPosition() {
@@ -110,6 +128,7 @@ public class OneCube extends Rectangle {
 
     /**
      * getter for size
+     *
      * @return size of the Square
      */
     public static int getSize() {
@@ -118,6 +137,7 @@ public class OneCube extends Rectangle {
 
     /**
      * getter for stroke
+     *
      * @return the stroke of the Square
      */
     public static int get_stroke() {
@@ -127,6 +147,7 @@ public class OneCube extends Rectangle {
 
     /**
      * getter for X
+     *
      * @return the X-Coordinate of the right top corner of the Square
      */
     public static double getX1() {
@@ -135,6 +156,7 @@ public class OneCube extends Rectangle {
 
     /**
      * getter for Y
+     *
      * @return the Y-Coordinate of the right top corner of the Square
      */
     public static double getY1() {
