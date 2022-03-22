@@ -71,7 +71,7 @@ public class AccountGUI {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        if(isCredentialNotValid(username, password)) {
+        if (isCredentialNotValid(username, password)) {
             return;
         } else {
             Account.login(username, bytesToHex(password));

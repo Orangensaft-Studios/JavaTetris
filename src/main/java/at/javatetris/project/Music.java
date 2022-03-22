@@ -6,16 +6,27 @@ import javafx.util.Duration;
 
 import java.net.URISyntaxException;
 
+/**
+ * class to start and get media player
+ * @author Severin Rosner
+ */
 public class Music {
-
+    /** background music media player */
     private static MediaPlayer mediaPlayer;
 
+    /**
+     * getter for media player
+     * @return the media player
+     */
     public static MediaPlayer getMediaPlayer() {
         return mediaPlayer;
     }
 
+    /**
+     * start the media music
+     * @param musicVolume double value music volume
+     */
     public static void startMusic(double musicVolume) {
-        System.out.println("Music.java " + musicVolume);
         try {
             Media media = new Media(Settings.class.getResource("original_tetris_soundtrack.mp3").toURI().toString());
             mediaPlayer = new MediaPlayer(media);

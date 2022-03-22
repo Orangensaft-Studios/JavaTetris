@@ -1,5 +1,6 @@
 package at.javatetris.project;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import java.math.BigDecimal;
 import java.sql.*;
 
@@ -25,19 +26,22 @@ public class DataBase {
          );
      */
 
+    /** load .env file */
+    static Dotenv dotenv = Dotenv.configure().load();
+
     /** test db url **/
-    private final static String TESTDB_URL = "f80b6byii2vwv8cx.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/d0wqm1nk4cd7grbp";
+    private final static String TESTDB_URL = dotenv.get("TEST_DB_URL");
     /** test db user */
-    private final static String TESTDB_USER = "p3bs7tr9owwcbhai";
+    private final static String TESTDB_USER = dotenv.get("TEST_DB_USER");
     /** test db pass */
-    private final static String TESTDB_PASS = "gudg7axv72fc76j2";
+    private final static String TESTDB_PASS = dotenv.get("TEST_DB_PW");
 
     /** javatetris db url */
-    private final static String JAVADB_URL = "eporqep6b4b8ql12.chr7pe7iynqr.eu-west-1.rds.amazonaws.com:3306/yzt9k662l77hxtvp";
+    private final static String JAVADB_URL = dotenv.get("DATABASE_URL");
     /** javatetris db user */
-    private final static String JAVADB_USER = "o7ns5btnilp7rnsz";
+    private final static String JAVADB_USER = dotenv.get("DATABASE_USER");
     /** javatetris db pass */
-    private final static String JAVADB_PASS = "woihlq9ng24vh2e2";
+    private final static String JAVADB_PASS = dotenv.get("DATABASE_PW");
 
     /** url to connect to database */
     private final static String URL = TESTDB_URL;
@@ -78,8 +82,19 @@ public class DataBase {
         }
     }
 
+    /**
+     * get a connection
+     * @return connection to database
+     * @throws SQLException sql exception
+     */
     public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection("jdbc:mysql://" + URL, USER, PASS);
+        try {
+            return DriverManager.getConnection("jdbc:mysql://" + URL, USER, PASS);
+        } catch (SQLException e) {
+            Main.errorAlert("DataBase.java");
+            e.printStackTrace();
+            throw new SQLException("SQL Exception");
+        }
     }
 
     /**
@@ -177,6 +192,11 @@ public class DataBase {
         }
     }
 
+    /**
+     * load the data for a specific user from database
+     * @param connection to database
+     * @param username user to load data for
+     */
     public static void loadOnlineUserData(Connection connection, String username) {
 
         try {
@@ -195,7 +215,8 @@ public class DataBase {
                 BigDecimal hsInfinity = resultSet.getBigDecimal("hs_Infinity");
                 int gamesPlayed = resultSet.getInt("gamesPlayed");
                 BigDecimal timePlayed = resultSet.getBigDecimal("timePlayed");
-                System.out.println(userId + dbusername + password + hsClassic + hsTime + hsInfinity + gamesPlayed + timePlayed);
+
+                System.out.println("DataBase.java: Online UserData from '" + username + "': " + "ID: " + userId + " Username: " + dbusername + " Password: " + password + " HSClassic: " + hsClassic + " HSTime: " + hsTime + " HSInfinity: " + hsInfinity + " GamesPlayed: " + gamesPlayed + " TimePlayed: " + timePlayed);
             }
 
             statement.close();

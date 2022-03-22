@@ -1,11 +1,6 @@
 package at.javatetris.project;
 
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.util.Duration;
-
 import java.io.*;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -41,12 +36,12 @@ public class Settings {
     private static Properties controls;
 
     /** version number */
-    private static final String version = "0.4.2";
+    private static final String VERSION = "0.5";
 
     /** default lines for config, add config values here */
     private static final List<String> DEFAULT_CONFIG = Arrays.asList(
             "locale = de",
-            "gameVersion = " + version,
+            "gameVersion = " + VERSION,
             "username=",
             "password=",
             "accountType=",
