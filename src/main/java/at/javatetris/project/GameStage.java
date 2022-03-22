@@ -155,6 +155,7 @@ public class GameStage {
         final int secondsPerMinute = 60;
         final int minutesPerHour = 60;
         final int second = 1000;
+        final int topBeforeLosing = 6;
 
 
 
@@ -258,7 +259,7 @@ public class GameStage {
                         } else {
                             top = 0;
                         }
-                        if (top == 2 || endTimer < 0) {
+                        if (top == topBeforeLosing || endTimer < 0) {
 
                             Text over = new Text("GAME OVER");
                             over.setFill(Color.RED);
@@ -333,7 +334,7 @@ public class GameStage {
             switch (e.getCode()) {
                 case A, LEFT:
                     if (play) {
-                        MoveLeft(block);
+                        moveLeft(block);
                     }
                     break;
                 case D, RIGHT:
@@ -354,6 +355,9 @@ public class GameStage {
                 case ESCAPE:
                     play = false;
                     PauseGUI.handle(e);
+                    break;
+                default:
+                    break;
             }
         });
     }
@@ -405,6 +409,8 @@ public class GameStage {
                             tBlock.rotate();
                         }
                         break;
+                    default:
+                        break;
                 }
                 break;
 
@@ -449,6 +455,8 @@ public class GameStage {
                             tBlock.rotate();
                         }
                         break;
+                    default:
+                        break;
                 }
                 break;
 
@@ -476,6 +484,8 @@ public class GameStage {
                             tBlock.rotate();
                         }
                         break;
+                    default:
+                        break;
                 }
                 break;
             case "Tetromino_z":
@@ -498,6 +508,8 @@ public class GameStage {
                             setCubeCoordiantes(tBlock.c4, SIZE, -SIZE);
                             tBlock.rotate();
                         }
+                        break;
+                    default:
                         break;
                 }
                 break;
@@ -541,6 +553,8 @@ public class GameStage {
                             tBlock.rotate();
                         }
                         break;
+                    default:
+                        break;
                 }
                 break;
             case "Tetromino_i":
@@ -565,8 +579,12 @@ public class GameStage {
                             tBlock.rotate();
                         }
                         break;
+                    default:
+                        break;
 
                 }
+                break;
+            default:
                 break;
         }
     }
@@ -635,7 +653,7 @@ public class GameStage {
         final int indexToDelete2 = 7;
         final int pointsToAdd = 20;
         //checks if bottom is reached or collision with another Tetromino occurs
-        if (checkMoveDown(tBlock) && spawn) {
+        if (checkMoveDown(tBlock) && spawn && endTimer > 0) {
             group = new Group();
 
 
