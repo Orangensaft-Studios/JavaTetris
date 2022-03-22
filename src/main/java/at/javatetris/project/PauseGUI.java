@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
@@ -39,7 +40,8 @@ public class PauseGUI {
 
     @FXML
     private void forfeitClicked(ActionEvent actionEvent) throws Exception {
-        GameStage.start(gameMode);
+        GameOverGUI.start(gameMode);
+        newWindow.close();
     }
 
 

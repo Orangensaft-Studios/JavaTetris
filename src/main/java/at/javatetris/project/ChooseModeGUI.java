@@ -15,10 +15,14 @@ import java.io.IOException;
  * @author Severin Rosner
  */
 public class ChooseModeGUI {
+
+    private static boolean resetGame = false;
+
     /**
      * start method to load chooseMode fxml file
      */
-    public static void start() {
+    public static void start(boolean reset) {
+        resetGame = reset;
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MenuGUI.class.getResource("fxml/chooseMode_" + Language.get() + ".fxml"));
             Scene scene = new Scene(fxmlLoader.load());
@@ -67,10 +71,13 @@ public class ChooseModeGUI {
      */
     @FXML
     private void startTimeMode(MouseEvent event) {
-        try {
-            TimeMode.start();
-        } catch (Exception e) {
-            Main.errorAlert("ChooseModeGUI.java");
+        if (someoneIsLoggedInCheck()) {
+            try {
+                TimeMode.start(resetGame);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Main.errorAlert("ChooseModeGUI.java");
+            }
         }
     }
 
@@ -91,9 +98,10 @@ public class ChooseModeGUI {
     public void startClassicMode(MouseEvent event) {
         if (someoneIsLoggedInCheck()) {
             try {
-                GameStage.start("");
+                GameStage.start("",resetGame);
             } catch (Exception e) {
                 Main.errorAlert("ChooseModeGUI.java");
+                e.printStackTrace();
             }
         }
     }

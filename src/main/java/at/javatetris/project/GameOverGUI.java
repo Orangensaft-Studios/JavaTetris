@@ -18,7 +18,7 @@ public class GameOverGUI {
 
     static Stage newWindow = new Stage();
 
-    public static void handle(KeyEvent event, String mode) {
+    public static void start(String mode) {
         gameMode = mode;
 
         newWindow.setTitle("Game Over");
@@ -58,11 +58,13 @@ public class GameOverGUI {
 
     @FXML
     private void retryClicked(ActionEvent actionEvent) throws Exception {
-        GameStage.start(gameMode);
+        GameStage.start(gameMode,true);
+        newWindow.close();
     }
 
     @FXML
     private void chooseModeClicked(ActionEvent actionEvent) {
-        ChooseModeGUI.start();
+        ChooseModeGUI.start(true);
+        newWindow.close();
     }
 }

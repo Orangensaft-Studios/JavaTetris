@@ -137,8 +137,30 @@ public class GameStage {
      * @param mode the game Mode
      * @throws Exception to handle Exceptions
      */
-    public static void start(String mode) throws Exception {
-        all = new TetrisBlock();
+    public static void start(String mode, Boolean reset) throws Exception {
+        System.out.println(reset);
+        if (reset){
+            System.out.println(all);
+            System.out.println(block);
+            System.out.println(nextBLock);
+            all = new TetrisBlock();
+
+            score = 0;
+            top = 0;
+            group = new Group();
+            everyCube = new OneCube[PLAY_AREA
+                    / GameStage.SIZE][(getHeight() / GameStage.SIZE) + 1];
+            points = 0;
+            scene = new Scene(all, WIDTH, HEIGHT);
+            seconds = 0;
+            minutes = 0;
+            hours = 0;
+            endTimer = CONSTANT;
+            lines = 0;
+            play = true;
+            block = new TetrisBlock();
+            nextBLock = Generate.generateBlock();
+        }
 
         final int yCoordinate = 150;
         final int yCoordinate2 = 200;

@@ -55,7 +55,7 @@ public class MenuGUI {
      */
     @FXML
     private void chooseModeClicked(ActionEvent actionEvent) {
-        ChooseModeGUI.start();
+        ChooseModeGUI.start(false);
     }
 
     /**
