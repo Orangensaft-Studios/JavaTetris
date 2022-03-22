@@ -14,6 +14,11 @@ import java.io.IOException;
 
 import static at.javatetris.project.GameStage.*;
 
+/**
+ * class to display pause window and perform actions
+ * @author Roman Krebs & Severin Rosner
+ */
+
 public class PauseGUI {
 
     static Stage newWindow = new Stage();
@@ -24,6 +29,8 @@ public class PauseGUI {
     @FXML
     private Text highscore;
 
+    private static String gameMode;
+
     @FXML
     private void continueClicked(ActionEvent actionEvent) {
         setPlay(true);
@@ -31,12 +38,14 @@ public class PauseGUI {
     }
 
     @FXML
-    private void forfeitClicked(ActionEvent actionEvent) {
-
+    private void forfeitClicked(ActionEvent actionEvent) throws Exception {
+        GameStage.start(gameMode);
     }
 
 
-    public static void handle(KeyEvent event) {
+    public static void handle(KeyEvent event, String mode) {
+        gameMode = mode;
+
         newWindow.setTitle("Pause");
         newWindow.setResizable(false);
         newWindow.setAlwaysOnTop(true);
@@ -53,7 +62,7 @@ public class PauseGUI {
 
     }
 
-    /** on load, display username from config as loggedIn */
+
     @FXML
     public void initialize() {
         score.setText(getPoints() + "");

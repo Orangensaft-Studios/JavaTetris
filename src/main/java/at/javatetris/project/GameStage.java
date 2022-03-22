@@ -129,6 +129,8 @@ public class GameStage {
      */
     private static boolean endless = false;
 
+    private static String gameMode;
+
     /**
      * the start mehthod, like main
      *
@@ -136,6 +138,8 @@ public class GameStage {
      * @throws Exception to handle Exceptions
      */
     public static void start(String mode) throws Exception {
+        all = new TetrisBlock();
+
         final int yCoordinate = 150;
         final int yCoordinate2 = 200;
         final int yCoordinate3 = 240;
@@ -157,7 +161,7 @@ public class GameStage {
         final int second = 1000;
         final int topBeforeLosing = 6;
 
-
+        gameMode = mode;
 
         Text endTime = new Text(Language.getPhrase("timeLeft"));
         endTime.setStyle("-fx-font: 20 arial;");
@@ -354,7 +358,7 @@ public class GameStage {
                     break;
                 case ESCAPE:
                     play = false;
-                    PauseGUI.handle(e);
+                    PauseGUI.handle(e, gameMode);
                     break;
                 default:
                     break;
