@@ -110,7 +110,6 @@ public class Generate {
             rounds = new int[DIFFERENT_SHAPES];
         }
         System.out.println(form);
-
         if (form == 1) {
             c1 = new OneCube(0, 0, 0);
             blockPosY = GameStage.SIZE;

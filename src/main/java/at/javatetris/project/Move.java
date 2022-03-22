@@ -78,6 +78,7 @@ class Move extends TimerTask {
     public static OneCube[][] deleteRow(OneCube[][] cubes) {
         final int addPoints = 100;
         final int addSeconds = 10;
+        int multiplier = 0;
         boolean full = true;
         for (int y = (getHeight() / SIZE) - 1; y >= 0; y--) {
             full = true;
@@ -89,8 +90,17 @@ class Move extends TimerTask {
 
             }
             if (full) {
-                setPoints(getPoints() + addPoints);
-                setEndTimer(getEndTimer() + addSeconds);
+                if (multiplier == 3){
+                    setPoints(getPoints() + addPoints + 200);
+                    setEndTimer(getEndTimer() + addSeconds + 20);
+                } else if(multiplier > 0){
+                    setPoints(getPoints() + addPoints + 100);
+                    setEndTimer(getEndTimer() + addSeconds + 10);
+                } else{
+                    setPoints(getPoints() + addPoints);
+                    setEndTimer(getEndTimer() + addSeconds);
+                }
+                multiplier++;
                 setLines(getLines() + 1);
                 for (int y2 = y; y2 > 0; y2--) {
                     for (int x = 0; x < fieldStatus.length; x++) {

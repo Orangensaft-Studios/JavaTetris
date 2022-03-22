@@ -159,7 +159,7 @@ public class GameStage {
 
 
 
-        Text endTime = new Text("Time left");
+        Text endTime = new Text(Language.getPhrase("timeLeft"));
         endTime.setStyle("-fx-font: 20 arial;");
         endTime.setY(yCoordinate);
         endTime.setX(PLAY_AREA + xCoordinate);
@@ -283,7 +283,7 @@ public class GameStage {
                                 } else {
                                     endTime.setFill(Color.web("#000000"));
                                 }
-                                endTime.setText("Time left: " + endTimer);
+                                endTime.setText(Language.getPhrase("timeLeft") + endTimer);
                             }
                             if (hours > 0) {
                                 time.setText(hours + "h " + minutes + "m " + seconds + "s");
