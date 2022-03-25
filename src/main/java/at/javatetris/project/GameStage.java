@@ -25,11 +25,7 @@ import static at.javatetris.project.OneCube.*;
 
 public class GameStage {
 
-    /**
-     * the current score of the player
-     */
-    private static int score = 0;
-
+    private static Boolean spaceCooldown = false;
     /**
      * the Size of oen Block of a Tetromino
      */
@@ -59,18 +55,10 @@ public class GameStage {
      */
     private static TetrisBlock all = new TetrisBlock();
     /**
-     * block saved as a array
-     */
-    private static OneCube[] prevBlock;
-    /**
      * if the block is falling or not
      */
     private static boolean play = true;
 
-    /**
-     * the number of Blocks fallen
-     */
-    private static int numBlocks = 0;
     /**
      * Number of lines cleared
      */
@@ -78,7 +66,7 @@ public class GameStage {
     /**
      * constant for endTimer
      */
-    private static final int CONSTANT = 60;
+    private static final int CONSTANT = 90;
     /**
      * the Time for the Time Mode
      */
@@ -130,6 +118,9 @@ public class GameStage {
     private static boolean endless = false;
 
     private static String gameMode;
+    private static TimerTask secondsPassed;
+    private static TimerTask main;
+    private static boolean spawn;
 
     /**
      * the start mehthod, like main
@@ -137,15 +128,22 @@ public class GameStage {
      * @param mode the game Mode
      * @throws Exception to handle Exceptions
      */
-    public static void start(String mode, Boolean reset) throws Exception {
+    public static void start(String mode, Boolean reset,Boolean resetEndless) throws Exception {
         System.out.println(reset);
-        if (reset){
-            System.out.println(all);
-            System.out.println(block);
-            System.out.println(nextBLock);
-            all = new TetrisBlock();
+        Timer fall = new Timer();
 
-            score = 0;
+        Timer fall2 = new Timer();
+
+        if (reset){
+            fall.cancel();
+            secondsPassed.cancel();
+            main.cancel();
+            fall2.cancel();
+            all = new TetrisBlock();
+            fieldStatus = new int[PLAY_AREA
+                     / GameStage.SIZE][(getHeight() / GameStage.SIZE) + 1];
+
+
             top = 0;
             group = new Group();
             everyCube = new OneCube[PLAY_AREA
@@ -160,8 +158,38 @@ public class GameStage {
             play = true;
             block = new TetrisBlock();
             nextBLock = Generate.generateBlock();
-        }
 
+            main.cancel();
+            secondsPassed.cancel();
+            timeMode = false;
+            tutorial = false;
+            endless = false;
+        }
+        if (resetEndless){
+            fall.cancel();
+            secondsPassed.cancel();
+            main.cancel();
+            fall2.cancel();
+            System.out.println(all);
+            System.out.println(block);
+            System.out.println(nextBLock);
+            all = new TetrisBlock();
+            fieldStatus = new int[PLAY_AREA
+                    / GameStage.SIZE][(getHeight() / GameStage.SIZE) + 1];
+
+            top = 0;
+            group = new Group();
+            everyCube = new OneCube[PLAY_AREA
+                    / GameStage.SIZE][(getHeight() / GameStage.SIZE) + 1];
+            scene = new Scene(all, WIDTH, HEIGHT);
+            endTimer = CONSTANT;
+            play = true;
+            block = new TetrisBlock();
+            nextBLock = Generate.generateBlock();
+
+            main.cancel();
+            secondsPassed.cancel();
+        }
         final int yCoordinate = 150;
         final int yCoordinate2 = 200;
         final int yCoordinate3 = 240;
@@ -181,10 +209,39 @@ public class GameStage {
         final int secondsPerMinute = 60;
         final int minutesPerHour = 60;
         final int second = 1000;
-        final int topBeforeLosing = 6;
+        final int topBeforeLosing = 12;
+
 
         gameMode = mode;
+        switch (mode) {
+            case "Time" -> timeMode = true;
+            case "Tutorial" -> tutorial = true;
+            case "Endless" -> endless = true;
+        }
 
+        Text info;
+        if (timeMode){
+            info = new Text("1 Line : 100 & 10s \n2 Lines : 300 & 30s \n3 Lines : 500 & 50s \n4 Lines : 800 & 80s");
+        } else {
+            info = new Text("1 Line : 100 \n2 Lines : 300 \n3 Lines : 500 \n4 Lines : 800");
+        }
+
+        if (tutorial) {
+            Text blockInfo = new Text ("This is a Tetromino");
+            Text blockInfo2 = new Text("It falls down");
+            Text blockinfo3 = new Text("It has different shapes");
+            Text blockinfo4 = new Text(("Your goal is to Move and Rotate them so the Blocks do not reach the top"));
+
+            Text lineClear = new Text(("To clear a line you have to fill a line with Tetrominos"));
+
+            Text move = new Text("To move the Block, you have to press " +  Settings.searchControls("moveLeftKey")
+            + "to move it to the left and " +Settings.searchControls("moveRightKey") + "to move it to the right.");
+
+            Text rotate = new Text("To rotate the Tetromino press " + Settings.searchControls("rotateKey"));
+        }
+        info.setStyle("-fx-font: 15 arial;");
+        info.setY(yCoordinate + 380);
+        info.setX(PLAY_AREA + xCoordinate);
         Text endTime = new Text(Language.getPhrase("timeLeft"));
         endTime.setStyle("-fx-font: 20 arial;");
         endTime.setY(yCoordinate);
@@ -214,20 +271,11 @@ public class GameStage {
         nextBLocks.setY(yCoordinate6);
         points += xCoordinate2;
 
-        if (mode.equals("Time")) {
-            timeMode = true;
-        } else if (mode.equals("Tutorial")) {
-            tutorial = true;
-        } else if (mode.equals("Endless")) {
-            endless = true;
-        }
-
-
         if (timeMode) {
-            all.getChildren().addAll(line, score
+            all.getChildren().addAll(line, score, info
                     , playTime, time, nextBLocks, endTime, linesCleared, group);
         } else {
-            all.getChildren().addAll(line, score, playTime, time, nextBLocks, linesCleared, group);
+            all.getChildren().addAll(line, info, score, playTime, time, nextBLocks, linesCleared, group);
         }
         // add additional columns and a row at the bottom to create a border for the playground
         for (int i = 0; i < fieldStatus.length; i++) {
@@ -272,33 +320,40 @@ public class GameStage {
 
         stage.show();
 
-        Timer fall = new Timer();
-        TimerTask main = new TimerTask() {
+
+        fall = new Timer();
+         main = new TimerTask() {
             public void run() {
                 Platform.runLater(new Runnable() {
                     public void run() {
 
-                        if (block.c1.getY() <= SIZE
-                                || block.c2.getY() <= SIZE || block.c3.getY() <= SIZE
-                                || block.c4.getY() <= 2) {
-                            top++;
-                        } else {
-                            top = 0;
-                        }
-                        if (top == topBeforeLosing || endTimer < 0) {
+                        if (play){
+                            if (block.c1.getY() <= SIZE
+                                    || block.c2.getY() <= SIZE || block.c3.getY() <= SIZE
+                                    || block.c4.getY() <= SIZE) {
+                                top++;
+                                spawn = false;
+                            } else {
+                                top = 0;
+                                spawn = true;
+                            }
 
-                            Text over = new Text("GAME OVER");
-                            over.setFill(Color.RED);
-                            over.setStyle("-fx-font: 70 arial;");
-                            over.setY(yCoordinate8);
-                            over.setX(xCoordinate4);
-                            group.getChildren().add(over);
-                            play = false;
+                            if (top == topBeforeLosing || endTimer < 0) {
+                                if (endless){
+                                    try {
+                                        GameStage.start(mode,false,true);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                        Main.errorAlert("ChooseModeGUI.java");
+                                    }
+                                }else {
+                                    GameOverGUI.start(gameMode);
+                                    play = false;
+                                }
+
+                            }
                         }
 
-                        if (top == seconds15) {
-                            System.exit(0);
-                        }
 
                         if (play) {
                             playTime.setText(Language.getPhrase("playTime"));
@@ -316,7 +371,7 @@ public class GameStage {
                             } else {
                                 time.setText(minutes + "m " + seconds + "s");
                             }
-                            moveDown(block, top <= 0);
+                            moveDown(block, spawn,false);
 
                             score.setText(Language.getPhrase("score") + points);
                         } else {
@@ -328,12 +383,15 @@ public class GameStage {
         };
         fall.schedule(main, 0, thirdSecond);
 
-        Timer fall2 = new Timer();
-        TimerTask secondsPassed = new TimerTask() {
+        fall2 = new Timer();
+         secondsPassed = new TimerTask() {
             public void run() {
                 Platform.runLater(new Runnable() {
                     public void run() {
                         seconds++;
+                        if (!spaceCooldown){
+                            spaceCooldown = true;
+                        }
                         if (timeMode) {
                             endTimer--;
                         }
@@ -350,7 +408,7 @@ public class GameStage {
                 });
             }
         };
-        fall.schedule(secondsPassed, 0, second);
+        fall2.schedule(secondsPassed, 0, second);
 
 
     }
@@ -375,12 +433,19 @@ public class GameStage {
                     break;
                 case S, DOWN:
                     if (play) {
-                        moveDown(block, top <= 0);
+                        moveDown(block, block.c1.getY() > SIZE
+                                || block.c2.getY() > SIZE || block.c3.getY() > SIZE
+                                || block.c4.getY() > SIZE,false);
                     }
                     break;
                 case ESCAPE:
                     play = false;
                     PauseGUI.handle(e, gameMode);
+                    break;
+                case SPACE:
+                    if (play && spaceCooldown && top < 3) {
+                        moveDown(block, true,true);
+                    }
                     break;
                 default:
                     break;
@@ -672,88 +737,176 @@ public class GameStage {
      * @param tBlock the Tetromino
      * @param spawn if spawing of a new BLock is enabled
      */
-    public static void moveDown(TetrisBlock tBlock, boolean spawn) {
+    public static void moveDown(TetrisBlock tBlock, boolean spawn, boolean toBottom) {
         final int xCoordinate = 200;
         final int yCoordinate = 70;
-        final int indexToDelete = 6;
-        final int indexToDelete2 = 7;
+        final int indexToDelete = 7;
+        final int indexToDelete2 = 8;
         final int pointsToAdd = 20;
+        Boolean end = false;
+
         //checks if bottom is reached or collision with another Tetromino occurs
-        if (checkMoveDown(tBlock) && spawn && endTimer > 0) {
-            group = new Group();
+        if (toBottom){
+            do{
+
+                if (checkMoveDown(tBlock)  &&  endTimer > 0 && spaceCooldown) {
+                    spaceCooldown = false;
+                    group = new Group();
+                    end = true;
+
+                    all.getChildren().remove(nextBLock.c1);
+                    all.getChildren().remove(nextBLock.c2);
+                    all.getChildren().remove(nextBLock.c3);
+                    all.getChildren().remove(nextBLock.c4);
+                    everyCube[(int) tBlock.c1.getX() / SIZE][(int) tBlock.c1.getY() / SIZE] = tBlock.c1;
+                    everyCube[(int) tBlock.c2.getX() / SIZE][(int) tBlock.c2.getY() / SIZE] = tBlock.c2;
+                    everyCube[(int) tBlock.c3.getX() / SIZE][(int) tBlock.c3.getY() / SIZE] = tBlock.c3;
+                    everyCube[(int) tBlock.c4.getX() / SIZE][(int) tBlock.c4.getY() / SIZE] = tBlock.c4;
+
+                    fieldStatus[(int) tBlock.c1.getX() / SIZE][(int) tBlock.c1.getY() / SIZE] = 1;
+                    fieldStatus[(int) tBlock.c2.getX() / SIZE][(int) tBlock.c2.getY() / SIZE] = 1;
+                    fieldStatus[(int) tBlock.c3.getX() / SIZE][(int) tBlock.c3.getY() / SIZE] = 1;
+                    fieldStatus[(int) tBlock.c4.getX() / SIZE][(int) tBlock.c4.getY() / SIZE] = 1;
 
 
-            all.getChildren().remove(nextBLock.c1);
-            all.getChildren().remove(nextBLock.c2);
-            all.getChildren().remove(nextBLock.c3);
-            all.getChildren().remove(nextBLock.c4);
-            everyCube[(int) tBlock.c1.getX() / SIZE][(int) tBlock.c1.getY() / SIZE] = tBlock.c1;
-            everyCube[(int) tBlock.c2.getX() / SIZE][(int) tBlock.c2.getY() / SIZE] = tBlock.c2;
-            everyCube[(int) tBlock.c3.getX() / SIZE][(int) tBlock.c3.getY() / SIZE] = tBlock.c3;
-            everyCube[(int) tBlock.c4.getX() / SIZE][(int) tBlock.c4.getY() / SIZE] = tBlock.c4;
-
-            fieldStatus[(int) tBlock.c1.getX() / SIZE][(int) tBlock.c1.getY() / SIZE] = 1;
-            fieldStatus[(int) tBlock.c2.getX() / SIZE][(int) tBlock.c2.getY() / SIZE] = 1;
-            fieldStatus[(int) tBlock.c3.getX() / SIZE][(int) tBlock.c3.getY() / SIZE] = 1;
-            fieldStatus[(int) tBlock.c4.getX() / SIZE][(int) tBlock.c4.getY() / SIZE] = 1;
+                    everyCube = deleteRow(everyCube);
 
 
-            everyCube = deleteRow(everyCube);
+                    all.getChildren().remove(block.c1);
+                    all.getChildren().remove(block.c2);
+                    all.getChildren().remove(block.c3);
+                    all.getChildren().remove(block.c4);
+
+                    if (timeMode) {
+                        for (int i = 0; i < 1; i++) {
+                            all.getChildren().remove(indexToDelete2);
+                        }
+                    } else {
+                        for (int i = 0; i < 1; i++) {
+                            all.getChildren().remove(indexToDelete);
+                        }
+                    }
 
 
-            all.getChildren().remove(block.c1);
-            all.getChildren().remove(block.c2);
-            all.getChildren().remove(block.c3);
-            all.getChildren().remove(block.c4);
+                    group = saveArrayToGroup(group, everyCube);
 
-            if (timeMode) {
-                for (int i = 0; i < 1; i++) {
-                    all.getChildren().remove(indexToDelete2);
+                    all.getChildren().add(group);
+                    nextBLock.c1.setTranslateX(0);
+                    nextBLock.c2.setTranslateX(0);
+                    nextBLock.c3.setTranslateX(0);
+                    nextBLock.c4.setTranslateX(0);
+                    nextBLock.c1.setTranslateY(0);
+                    nextBLock.c2.setTranslateY(0);
+                    nextBLock.c3.setTranslateY(0);
+                    nextBLock.c4.setTranslateY(0);
+                    TetrisBlock currentBlock = nextBLock;
+                    nextBLock = Generate.generateBlock();
+                    block = currentBlock;
+                    all.getChildren().addAll(currentBlock.c1,
+                            currentBlock.c2, currentBlock.c3, currentBlock.c4);
+                    keyPressed(currentBlock);
+                    points += pointsToAdd;
+
+
+                    all.getChildren().addAll(nextBLock.c1, nextBLock.c2, nextBLock.c3, nextBLock.c4);
+
+                    nextBLock.c1.setTranslateX(xCoordinate);
+                    nextBLock.c2.setTranslateX(xCoordinate);
+                    nextBLock.c3.setTranslateX(xCoordinate);
+                    nextBLock.c4.setTranslateX(xCoordinate);
+                    nextBLock.c1.setTranslateY(yCoordinate);
+                    nextBLock.c2.setTranslateY(yCoordinate);
+                    nextBLock.c3.setTranslateY(yCoordinate);
+                    nextBLock.c4.setTranslateY(yCoordinate);
+
+                } else if (!checkMoveDown(tBlock)) {
+                    tBlock.c1.setY(tBlock.c1.getY() + SIZE);
+                    tBlock.c2.setY(tBlock.c2.getY() + SIZE);
+                    tBlock.c3.setY(tBlock.c3.getY() + SIZE);
+                    tBlock.c4.setY(tBlock.c4.getY() + SIZE);
                 }
-            } else {
-                for (int i = 0; i < 1; i++) {
-                    all.getChildren().remove(indexToDelete);
+                System.out.println(end);
+                System.out.println(spaceCooldown);
+            } while(!end);
+
+        } else {
+            if (checkMoveDown(tBlock) && spawn && endTimer > 0) {
+                group = new Group();
+                end = true;
+
+                all.getChildren().remove(nextBLock.c1);
+                all.getChildren().remove(nextBLock.c2);
+                all.getChildren().remove(nextBLock.c3);
+                all.getChildren().remove(nextBLock.c4);
+                everyCube[(int) tBlock.c1.getX() / SIZE][(int) tBlock.c1.getY() / SIZE] = tBlock.c1;
+                everyCube[(int) tBlock.c2.getX() / SIZE][(int) tBlock.c2.getY() / SIZE] = tBlock.c2;
+                everyCube[(int) tBlock.c3.getX() / SIZE][(int) tBlock.c3.getY() / SIZE] = tBlock.c3;
+                everyCube[(int) tBlock.c4.getX() / SIZE][(int) tBlock.c4.getY() / SIZE] = tBlock.c4;
+
+                fieldStatus[(int) tBlock.c1.getX() / SIZE][(int) tBlock.c1.getY() / SIZE] = 1;
+                fieldStatus[(int) tBlock.c2.getX() / SIZE][(int) tBlock.c2.getY() / SIZE] = 1;
+                fieldStatus[(int) tBlock.c3.getX() / SIZE][(int) tBlock.c3.getY() / SIZE] = 1;
+                fieldStatus[(int) tBlock.c4.getX() / SIZE][(int) tBlock.c4.getY() / SIZE] = 1;
+
+
+                everyCube = deleteRow(everyCube);
+
+
+                all.getChildren().remove(block.c1);
+                all.getChildren().remove(block.c2);
+                all.getChildren().remove(block.c3);
+                all.getChildren().remove(block.c4);
+
+                if (timeMode) {
+                    for (int i = 0; i < 1; i++) {
+                        all.getChildren().remove(indexToDelete2);
+                    }
+                } else {
+                    for (int i = 0; i < 1; i++) {
+                        all.getChildren().remove(indexToDelete);
+                    }
                 }
+
+
+                group = saveArrayToGroup(group, everyCube);
+
+                all.getChildren().add(group);
+                nextBLock.c1.setTranslateX(0);
+                nextBLock.c2.setTranslateX(0);
+                nextBLock.c3.setTranslateX(0);
+                nextBLock.c4.setTranslateX(0);
+                nextBLock.c1.setTranslateY(0);
+                nextBLock.c2.setTranslateY(0);
+                nextBLock.c3.setTranslateY(0);
+                nextBLock.c4.setTranslateY(0);
+                TetrisBlock currentBlock = nextBLock;
+                nextBLock = Generate.generateBlock();
+                block = currentBlock;
+                all.getChildren().addAll(currentBlock.c1,
+                        currentBlock.c2, currentBlock.c3, currentBlock.c4);
+                keyPressed(currentBlock);
+                points += pointsToAdd;
+
+
+                all.getChildren().addAll(nextBLock.c1, nextBLock.c2, nextBLock.c3, nextBLock.c4);
+
+                nextBLock.c1.setTranslateX(xCoordinate);
+                nextBLock.c2.setTranslateX(xCoordinate);
+                nextBLock.c3.setTranslateX(xCoordinate);
+                nextBLock.c4.setTranslateX(xCoordinate);
+                nextBLock.c1.setTranslateY(yCoordinate);
+                nextBLock.c2.setTranslateY(yCoordinate);
+                nextBLock.c3.setTranslateY(yCoordinate);
+                nextBLock.c4.setTranslateY(yCoordinate);
+
+            } else if (!checkMoveDown(tBlock)) {
+                tBlock.c1.setY(tBlock.c1.getY() + SIZE);
+                tBlock.c2.setY(tBlock.c2.getY() + SIZE);
+                tBlock.c3.setY(tBlock.c3.getY() + SIZE);
+                tBlock.c4.setY(tBlock.c4.getY() + SIZE);
             }
-
-
-            group = saveArrayToGroup(group, everyCube);
-
-            all.getChildren().add(group);
-            nextBLock.c1.setTranslateX(0);
-            nextBLock.c2.setTranslateX(0);
-            nextBLock.c3.setTranslateX(0);
-            nextBLock.c4.setTranslateX(0);
-            nextBLock.c1.setTranslateY(0);
-            nextBLock.c2.setTranslateY(0);
-            nextBLock.c3.setTranslateY(0);
-            nextBLock.c4.setTranslateY(0);
-            TetrisBlock currentBlock = nextBLock;
-            nextBLock = Generate.generateBlock();
-            block = currentBlock;
-            all.getChildren().addAll(currentBlock.c1,
-                    currentBlock.c2, currentBlock.c3, currentBlock.c4);
-            keyPressed(currentBlock);
-            points += pointsToAdd;
-
-
-            all.getChildren().addAll(nextBLock.c1, nextBLock.c2, nextBLock.c3, nextBLock.c4);
-
-            nextBLock.c1.setTranslateX(xCoordinate);
-            nextBLock.c2.setTranslateX(xCoordinate);
-            nextBLock.c3.setTranslateX(xCoordinate);
-            nextBLock.c4.setTranslateX(xCoordinate);
-            nextBLock.c1.setTranslateY(yCoordinate);
-            nextBLock.c2.setTranslateY(yCoordinate);
-            nextBLock.c3.setTranslateY(yCoordinate);
-            nextBLock.c4.setTranslateY(yCoordinate);
-
-        } else if (!checkMoveDown(tBlock)) {
-            tBlock.c1.setY(tBlock.c1.getY() + SIZE);
-            tBlock.c2.setY(tBlock.c2.getY() + SIZE);
-            tBlock.c3.setY(tBlock.c3.getY() + SIZE);
-            tBlock.c4.setY(tBlock.c4.getY() + SIZE);
         }
+
     }
 
     private static boolean checkMoveDown(TetrisBlock tBlock) {

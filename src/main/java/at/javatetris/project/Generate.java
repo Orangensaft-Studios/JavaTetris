@@ -92,7 +92,6 @@ public class Generate {
         OneCube c4 = new OneCube(0, 0);
         int stroke = get_stroke();
         Random rand = new Random();
-        colorPick = rand.nextInt(COLORS.length);
         form = rand.nextInt(DIFFERENT_SHAPES) + 1;
         for (int i = 0; i < rounds.length; i++) {
             if (rounds[i] == form) {
@@ -117,36 +116,42 @@ public class Generate {
             c3 = new OneCube(1, blockPosX, blockPosY);
             c4 = new OneCube(1, blockPosX, blockPosY);
             name = "Tetromino_t";
+            colorPick = 6;
         } else if (form == 2) {
             c1 = new OneCube(0, 0, 0);
             c2 = new OneCube(1, blockPosX, blockPosY);
             c3 = new OneCube(1, blockPosX, blockPosY);
             c4 = new OneCube(1, blockPosX, blockPosY);
             name = "Tetromino_i";
+            colorPick = 0;
         } else if (form == (2 + 1)) {
             c1 = new OneCube(0, 0, 0);
             c2 = new OneCube(position3, blockPosX, blockPosY);
             c3 = new OneCube(2, blockPosX, blockPosY);
             c4 = new OneCube(2, blockPosX, blockPosY);
             name = "Tetromino_l";
+            colorPick = 3;
         } else if (form == (2 + 2)) {
             c1 = new OneCube(0, 0, 0);
             c2 = new OneCube(position3, blockPosX, blockPosY);
             c3 = new OneCube(1, blockPosX, blockPosY);
             c4 = new OneCube(1, blockPosX, blockPosY);
             name = "Tetromino_j";
+            colorPick = 1;
         } else if (form == (DIFFERENT_SHAPES - 2)) {
             c1 = new OneCube(0, 0, 0);
             c2 = new OneCube(1, blockPosX, blockPosY);
             c3 = new OneCube(position3, blockPosX, blockPosY);
             c4 = new OneCube(2, blockPosX, blockPosY);
             name = "Tetromino_o";
+            colorPick = 4;
         } else if (form == (DIFFERENT_SHAPES - 1)) {
             c1 = new OneCube(0, 0, 0);
             c2 = new OneCube(1, blockPosX, blockPosY);
             c3 = new OneCube(position3, blockPosX, blockPosY);
             c4 = new OneCube(1, blockPosX, blockPosY);
             name = "Tetromino_z";
+            colorPick = 2;
         } else if (form == DIFFERENT_SHAPES) {
             c1 = new OneCube(0, 0, 0);
             c2 = new OneCube(2, blockPosX, blockPosY);
@@ -155,6 +160,7 @@ public class Generate {
             c4.setFill(Color.web(COLORS[colorPick]));
 
             name = "Tetromino_s";
+            colorPick = 5;
         }
 
         return new TetrisBlock(c1, c2, c3, c4, name, (COLORS[colorPick]));

@@ -1,7 +1,7 @@
 package at.javatetris.project;
 
-public class TimeMode {
+public class Endless {
     public static void start(boolean resetGame) throws Exception{
-        GameStage.start("Time", resetGame,false);
+        GameStage.start("Endless", resetGame,false);
     }
 }

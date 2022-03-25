@@ -58,7 +58,7 @@ public class GameOverGUI {
 
     @FXML
     private void retryClicked(ActionEvent actionEvent) throws Exception {
-        GameStage.start(gameMode,true);
+        GameStage.start(gameMode,true,false);
         newWindow.close();
     }
 

@@ -12,9 +12,11 @@ import java.io.IOException;
 
 /**
  * class to load ChooseMode GUI and start the modes after clicks
+ *
  * @author Severin Rosner
  */
 public class ChooseModeGUI {
+    private static int count =0;
 
     private static boolean resetGame = false;
 
@@ -23,6 +25,9 @@ public class ChooseModeGUI {
      */
     public static void start(boolean reset) {
         resetGame = reset;
+        if (count > 0){
+            resetGame = true;
+        }
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(MenuGUI.class.getResource("fxml/chooseMode_" + Language.get() + ".fxml"));
             Scene scene = new Scene(fxmlLoader.load());
@@ -37,11 +42,15 @@ public class ChooseModeGUI {
 
     //TODO check if you are logged in and ask if you really want to play without logged in and state who is logged in
 
-    /** username logged in with text */
+    /**
+     * username logged in with text
+     */
     @FXML
     private Text loggedInAs;
 
-    /** on load, display username from config as loggedIn */
+    /**
+     * on load, display username from config as loggedIn
+     */
     @FXML
     public void initialize() {
         loggedInAs.setText(Settings.searchSettings("username") + " (" + Settings.searchSettings("accountType") + ")");
@@ -49,6 +58,7 @@ public class ChooseModeGUI {
 
     /**
      * on arrow back click, load MenGUI
+     *
      * @param event mouseclick on arrow back image
      */
     @FXML
@@ -58,15 +68,25 @@ public class ChooseModeGUI {
 
     /**
      * start infinity mode when clicked
+     *
      * @param event mouseclick on image
      */
     @FXML
     private void startInfinityMode(MouseEvent event) {
-        Main.notImplementedAlert();
+        if (someoneIsLoggedInCheck()) {
+            try {
+                Endless.start(resetGame);
+                count++;
+            } catch (Exception e) {
+                e.printStackTrace();
+                Main.errorAlert("ChooseModeGUI.java");
+            }
+        }
     }
 
     /**
      * start time mode when clicked
+     *
      * @param event mouseclick on image
      */
     @FXML
@@ -74,6 +94,7 @@ public class ChooseModeGUI {
         if (someoneIsLoggedInCheck()) {
             try {
                 TimeMode.start(resetGame);
+                count++;
             } catch (Exception e) {
                 e.printStackTrace();
                 Main.errorAlert("ChooseModeGUI.java");
@@ -83,22 +104,33 @@ public class ChooseModeGUI {
 
     /**
      * start tutorial when clicked
+     *
      * @param event mouseclick on image
      */
     @FXML
     private void startModeTutorial(MouseEvent event) {
-        Main.notImplementedAlert();
+        if (someoneIsLoggedInCheck()) {
+            try {
+                Tutorial.start(resetGame);
+                count++;
+            } catch (Exception e) {
+                Main.errorAlert("ChooseModeGUI.java");
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
      * start classic mode when clicked
+     *
      * @param event mouseclick on image
      */
     @FXML
     public void startClassicMode(MouseEvent event) {
         if (someoneIsLoggedInCheck()) {
             try {
-                GameStage.start("",resetGame);
+                GameStage.start("", resetGame,false);
+                count++;
             } catch (Exception e) {
                 Main.errorAlert("ChooseModeGUI.java");
                 e.printStackTrace();
@@ -108,6 +140,7 @@ public class ChooseModeGUI {
 
     /**
      * check if there is someone logged in
+     *
      * @return if there is someone logged in
      */
     private static boolean someoneIsLoggedInCheck() {
