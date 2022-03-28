@@ -54,7 +54,8 @@ public class Settings {
             "dropKey=S",
             "rotateKey=W",
             "moveLeftKey=A",
-            "moveRightKey=D"
+            "moveRightKey=D",
+            "hardDrop=SPACE"
     );
 
     /**
