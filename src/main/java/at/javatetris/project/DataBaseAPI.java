@@ -1,7 +1,7 @@
 package at.javatetris.project;
 
+import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Scanner;
@@ -11,7 +11,7 @@ public class DataBaseAPI {
     public static boolean checkConnection() {
         try {
             URL url = new URL("https://80275.wayscript.io/checkConnection");
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
 
             conn.connect();
             int responseCode = conn.getResponseCode();
@@ -33,7 +33,7 @@ public class DataBaseAPI {
         System.out.println("DataBaseAPI.java: Trying to create user '" + username + "'");
         try {
             URL url = new URL("https://80122.wayscript.io/createUser?username=" + username + "&password=" + password);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
 
             conn.setRequestMethod("POST");
             conn.connect();
@@ -70,7 +70,7 @@ public class DataBaseAPI {
     public static String onlineLogin(String username, String password) {
         try {
             URL url = new URL("https://80269.wayscript.io/login?username=" + username + "&password=" + password);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
 
             conn.setRequestMethod("GET");
             conn.connect();
@@ -112,7 +112,7 @@ public class DataBaseAPI {
 
         try {
             URL url = new URL("https://80114.wayscript.io/getUserData?username=" + username);
-            HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+            HttpsURLConnection conn = (HttpsURLConnection)url.openConnection();
 
             conn.setRequestMethod("GET");
             conn.connect();

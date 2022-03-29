@@ -40,7 +40,7 @@ public class Settings {
     private static Properties controls;
 
     /** version number */
-    private static final String VERSION = "0.6";
+    private static final String VERSION = "0.6.1";
 
     /** default lines for config, add config values here */
     private static final List<String> DEFAULT_CONFIG = Arrays.asList(
@@ -248,6 +248,7 @@ public class Settings {
         return getControls().getProperty(key);
     }
 
+    //TODO dont show again for this version
     /** check if version in code is same as in local stored config file */
     public static void checkIfVersionUpToDate() {
         if (!VERSION.equals(searchSettings("gameVersion"))) {

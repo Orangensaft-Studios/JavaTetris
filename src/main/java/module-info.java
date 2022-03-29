@@ -7,9 +7,7 @@ module at.javatetris.project {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires java.sql;
-    requires mysql.connector.java;
     requires javafx.media;
-    requires dotenv.java;
 
     opens at.javatetris.project to javafx.fxml;
     exports at.javatetris.project;
