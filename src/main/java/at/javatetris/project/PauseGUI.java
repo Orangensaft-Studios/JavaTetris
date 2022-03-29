@@ -34,7 +34,7 @@ public class PauseGUI {
 
     @FXML
     private void continueClicked(ActionEvent actionEvent) {
-        setPlay(true);
+        setPlay(!"Tutorial".equals(gameMode));
         newWindow.close();
     }
 

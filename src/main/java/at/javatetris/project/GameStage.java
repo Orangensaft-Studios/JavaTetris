@@ -120,7 +120,11 @@ public class GameStage {
     private static String gameMode;
     private static TimerTask secondsPassed;
     private static TimerTask main;
+    private static TimerTask tutorialTimer;
     private static boolean spawn;
+    private static float timing = 0;
+    private static boolean otherPlay = false;
+    private static float opacity = 0;
 
     /**
      * the start mehthod, like main
@@ -128,21 +132,28 @@ public class GameStage {
      * @param mode the game Mode
      * @throws Exception to handle Exceptions
      */
-    public static void start(String mode, Boolean reset,Boolean resetEndless) throws Exception {
+    public static void start(String mode, Boolean reset, Boolean resetEndless) throws Exception {
         System.out.println(reset);
         Timer fall = new Timer();
-
         Timer fall2 = new Timer();
+        Timer fall3 = new Timer();
 
-        if (reset){
+        if (reset) {
+            opacity = 0;
+            otherPlay = false;
             fall.cancel();
             secondsPassed.cancel();
             main.cancel();
             fall2.cancel();
+            fall3.cancel();
             all = new TetrisBlock();
             fieldStatus = new int[PLAY_AREA
-                     / GameStage.SIZE][(getHeight() / GameStage.SIZE) + 1];
+                    / GameStage.SIZE][(getHeight() / GameStage.SIZE) + 1];
 
+            if ("Tutorial".equals(gameMode)) {
+                tutorialTimer.cancel();
+                timing = 0;
+            }
 
             top = 0;
             group = new Group();
@@ -165,7 +176,7 @@ public class GameStage {
             tutorial = false;
             endless = false;
         }
-        if (resetEndless){
+        if (resetEndless) {
             fall.cancel();
             secondsPassed.cancel();
             main.cancel();
@@ -202,6 +213,7 @@ public class GameStage {
         final int xCoordinate2 = 20;
         final int xCoordinate3 = 200;
         final int xCoordinate4 = 10;
+        final int xCoordinate5 = 80;
         final int timer1 = 100;
         final int seconds15 = 15;
         final int seconds10 = 10;
@@ -220,24 +232,84 @@ public class GameStage {
         }
 
         Text info;
-        if (timeMode){
+        if (timeMode) {
             info = new Text("1 Line : 100 & 10s \n2 Lines : 300 & 30s \n3 Lines : 500 & 50s \n4 Lines : 800 & 80s");
         } else {
             info = new Text("1 Line : 100 \n2 Lines : 300 \n3 Lines : 500 \n4 Lines : 800");
         }
 
+        final Text blockInfo = new Text("This is a Tetromino.");
+        final Text blockInfo2 = new Text("It falls down.");
+        final Text blockInfo3 = new Text("It has different shapes.");
+        final Text blockInfo4 = new Text("Your goal is to move \nand rotate them");
+        final Text blockInfo5 = new Text("so the blocks do \nnot reach the top.");
+        final Text lineClear = new Text(("To clear a line you have to fill a line with Tetrominos"));
+
+        final Text move = new Text("To move the Block, you have to press " + Settings.searchControls("moveLeftKey")
+                + "to move it to the left and " + Settings.searchControls("moveRightKey") + "to move it to the right.");
+
+        final Text rotate = new Text("To rotate the Tetromino press " + Settings.searchControls("rotateKey"));
+
+        final Text hardDrop = new Text("To let your Tetromino instantly fall down press "
+                + Settings.searchControls("hardDrop"));
+
+        final Text multiplier = new Text(" You get more Points if you clear more lines at once");
         if (tutorial) {
-            Text blockInfo = new Text ("This is a Tetromino");
-            Text blockInfo2 = new Text("It falls down");
-            Text blockinfo3 = new Text("It has different shapes");
-            Text blockinfo4 = new Text(("Your goal is to Move and Rotate them so the Blocks do not reach the top"));
+            blockInfo.setStyle("-fx-font: 20 arial;");
+            blockInfo.setY(yCoordinate);
+            blockInfo.setX(xCoordinate5);
+            blockInfo.setOpacity(0);
 
-            Text lineClear = new Text(("To clear a line you have to fill a line with Tetrominos"));
+            blockInfo2.setStyle("-fx-font: 20 arial;");
+            blockInfo2.setY(yCoordinate);
+            blockInfo2.setX(xCoordinate5);
+            blockInfo2.setOpacity(0);
 
-            Text move = new Text("To move the Block, you have to press " +  Settings.searchControls("moveLeftKey")
-            + "to move it to the left and " +Settings.searchControls("moveRightKey") + "to move it to the right.");
+            blockInfo3.setStyle("-fx-font: 20 arial;");
+            blockInfo3.setY(yCoordinate);
+            blockInfo3.setX(xCoordinate5);
+            blockInfo3.setOpacity(0);
 
-            Text rotate = new Text("To rotate the Tetromino press " + Settings.searchControls("rotateKey"));
+            blockInfo4.setStyle("-fx-font: 20 arial;");
+            blockInfo4.setY(yCoordinate);
+            blockInfo4.setX(xCoordinate5);
+            blockInfo4.setOpacity(0);
+
+            blockInfo5.setStyle("-fx-font: 20 arial;");
+            blockInfo5.setY(yCoordinate);
+            blockInfo5.setX(xCoordinate5);
+            blockInfo5.setOpacity(0);
+
+            lineClear.setStyle("-fx-font: 20 arial;");
+            lineClear.setY(yCoordinate);
+            lineClear.setX(xCoordinate5);
+            lineClear.setOpacity(0);
+
+            move.setStyle("-fx-font: 20 arial;");
+            move.setY(yCoordinate);
+            move.setX(xCoordinate5);
+            move.setOpacity(0);
+
+            rotate.setStyle("-fx-font: 20 arial;");
+            rotate.setY(yCoordinate);
+            rotate.setX(xCoordinate5);
+            rotate.setOpacity(0);
+
+            hardDrop.setStyle("-fx-font: 20 arial;");
+            hardDrop.setY(yCoordinate);
+            hardDrop.setX(xCoordinate5);
+            hardDrop.setOpacity(0);
+
+            multiplier.setStyle("-fx-font: 20 arial;");
+            multiplier.setY(yCoordinate);
+            multiplier.setX(xCoordinate5);
+            multiplier.setOpacity(0);
+
+
+
+
+
+
         }
         info.setStyle("-fx-font: 15 arial;");
         info.setY(yCoordinate + 380);
@@ -248,7 +320,7 @@ public class GameStage {
         endTime.setX(PLAY_AREA + xCoordinate);
         Stage stage = Main.getStage();
         stage.setScene(scene);
-        Text linesCleared = new Text(Language.getPhrase("lines"));
+        Text linesCleared = new Text("");
         linesCleared.setStyle("-fx-font: 20 arial;");
         linesCleared.setY(yCoordinate2);
         linesCleared.setX(PLAY_AREA + xCoordinate);
@@ -274,7 +346,10 @@ public class GameStage {
         if (timeMode) {
             all.getChildren().addAll(line, score, info
                     , playTime, time, nextBLocks, endTime, linesCleared, group);
-        } else {
+        } else if (tutorial) {
+            all.getChildren().addAll(line, info, score, playTime, time, nextBLocks, linesCleared, group
+            , blockInfo, blockInfo2, blockInfo3, blockInfo4,blockInfo5, lineClear, move, rotate, hardDrop, multiplier);
+        }else{
             all.getChildren().addAll(line, info, score, playTime, time, nextBLocks, linesCleared, group);
         }
         // add additional columns and a row at the bottom to create a border for the playground
@@ -320,14 +395,70 @@ public class GameStage {
 
         stage.show();
 
+        if (tutorial) {
+            moveDown(block,true,false);
+
+
+
+            fall3 = new Timer();
+            tutorialTimer = new TimerTask() {
+                public void run() {
+                    Platform.runLater(new Runnable() {
+                        public void run() {
+                            play = false;
+                            timing += 0.1;
+                            otherPlay = timing < 2.4;
+                            if (timing > 2.4 && timing < 5){
+                                blockInfo.setOpacity((float)timing / 5);
+                            }
+                            if (timing > 5 && timing < 7.5){
+                                blockInfo.setOpacity(0);
+                                blockInfo2.setOpacity(opacity);
+                                opacity += 0.2;
+                            }
+                            if ((timing - 7.5) < 0.1 && timing > 7.4){
+                                opacity = 0;
+                            }
+                            if (timing > 7.5 && timing < 10){
+                                blockInfo2.setOpacity(0);
+                                blockInfo3.setOpacity(opacity);
+                                opacity += 0.2;
+                            }
+                            if ((timing - 10) < 0.1 && timing > 9.9){
+                                opacity = 0;
+                            }
+                            if (timing > 10 && timing < 12.5){
+                                blockInfo3.setOpacity(0);
+                                blockInfo4.setOpacity(opacity);
+                                opacity += 0.2;
+                            }
+                            if ((timing - 12.5) < 0.1 && timing > 12.4){
+                                opacity = 0;
+                            }
+                            if (timing > 12.5 && timing < 15){
+                                blockInfo4.setOpacity(0);
+                                blockInfo5.setOpacity(opacity);
+                                opacity += 0.2;
+                            }
+                        }
+                    });
+                }
+            };
+            fall3.schedule(tutorialTimer, 0, 100);
+        }
+
 
         fall = new Timer();
-         main = new TimerTask() {
+        main = new TimerTask() {
             public void run() {
                 Platform.runLater(new Runnable() {
                     public void run() {
 
-                        if (play){
+                        if (otherPlay){
+                            moveDown(block, true, false);
+                        }
+
+                        if (play) {
                             if (block.c1.getY() <= SIZE
                                     || block.c2.getY() <= SIZE || block.c3.getY() <= SIZE
                                     || block.c4.getY() <= SIZE) {
@@ -339,14 +470,14 @@ public class GameStage {
                             }
 
                             if (top == topBeforeLosing || endTimer < 0) {
-                                if (endless){
+                                if (endless) {
                                     try {
-                                        GameStage.start(mode,false,true);
+                                        GameStage.start(mode, false, true);
                                     } catch (Exception e) {
                                         e.printStackTrace();
                                         Main.errorAlert("ChooseModeGUI.java");
                                     }
-                                }else {
+                                } else {
                                     GameOverGUI.start(gameMode);
                                     play = false;
                                 }
@@ -371,7 +502,7 @@ public class GameStage {
                             } else {
                                 time.setText(minutes + "m " + seconds + "s");
                             }
-                            moveDown(block, spawn,false);
+                            moveDown(block, spawn, false);
 
                             score.setText(Language.getPhrase("score") + points);
                         } else {
@@ -384,25 +515,27 @@ public class GameStage {
         fall.schedule(main, 0, thirdSecond);
 
         fall2 = new Timer();
-         secondsPassed = new TimerTask() {
+        secondsPassed = new TimerTask() {
             public void run() {
                 Platform.runLater(new Runnable() {
                     public void run() {
-                        seconds++;
-                        if (!spaceCooldown){
-                            spaceCooldown = true;
-                        }
-                        if (timeMode) {
-                            endTimer--;
-                        }
-                        if (seconds == secondsPerMinute) {
-                            seconds = 0;
-                            minutes++;
-                        }
+                        if (play) {
+                            seconds++;
+                            if (!spaceCooldown) {
+                                spaceCooldown = true;
+                            }
+                            if (timeMode) {
+                                endTimer--;
+                            }
+                            if (seconds == secondsPerMinute) {
+                                seconds = 0;
+                                minutes++;
+                            }
 
-                        if (minutes == minutesPerHour) {
-                            minutes = 0;
-                            hours++;
+                            if (minutes == minutesPerHour) {
+                                minutes = 0;
+                                hours++;
+                            }
                         }
                     }
                 });
@@ -435,7 +568,7 @@ public class GameStage {
                     if (play) {
                         moveDown(block, block.c1.getY() > SIZE
                                 || block.c2.getY() > SIZE || block.c3.getY() > SIZE
-                                || block.c4.getY() > SIZE,false);
+                                || block.c4.getY() > SIZE, false);
                     }
                     break;
                 case ESCAPE:
@@ -444,7 +577,7 @@ public class GameStage {
                     break;
                 case SPACE:
                     if (play && spaceCooldown && top < 3) {
-                        moveDown(block, true,true);
+                        moveDown(block, true, true);
                     }
                     break;
                 default:
@@ -556,7 +689,7 @@ public class GameStage {
                 break;
             case "Tetromino_s":
                 switch (tBlock.getRotation()) {
-                    case 1,case3:
+                    case 1, case3:
                         if (rotateCube(tBlock.c1, negativeTwo * SIZE, 0)
                                 && rotateCube(tBlock.c4, SIZE, SIZE)) {
                             setCubeCoordiantes(tBlock.c1, negativeTwo * SIZE, 0);
@@ -565,7 +698,7 @@ public class GameStage {
                             tBlock.rotate();
                         }
                         break;
-                    case 2,case4:
+                    case 2, case4:
 
                         if (rotateCube(tBlock.c1, 2 * SIZE, 0)
                                 && rotateCube(tBlock.c2, SIZE, -SIZE)) {
@@ -734,8 +867,9 @@ public class GameStage {
 
     /**
      * moves down the given Tetromino and spawns a new block if moving is not possible
+     *
      * @param tBlock the Tetromino
-     * @param spawn if spawing of a new BLock is enabled
+     * @param spawn  if spawing of a new BLock is enabled
      */
     public static void moveDown(TetrisBlock tBlock, boolean spawn, boolean toBottom) {
         final int xCoordinate = 200;
@@ -746,10 +880,10 @@ public class GameStage {
         Boolean end = false;
 
         //checks if bottom is reached or collision with another Tetromino occurs
-        if (toBottom){
-            do{
+        if (toBottom) {
+            do {
 
-                if (checkMoveDown(tBlock)  &&  endTimer > 0 && spaceCooldown) {
+                if (checkMoveDown(tBlock) && endTimer > 0 && spaceCooldown) {
                     spaceCooldown = false;
                     group = new Group();
                     end = true;
@@ -827,7 +961,7 @@ public class GameStage {
                 }
                 System.out.println(end);
                 System.out.println(spaceCooldown);
-            } while(!end);
+            } while (!end);
 
         } else {
             if (checkMoveDown(tBlock) && spawn && endTimer > 0) {
@@ -923,6 +1057,7 @@ public class GameStage {
 
     /**
      * setter for points
+     *
      * @param points new set points
      */
     public static void setPoints(int points) {
@@ -931,6 +1066,7 @@ public class GameStage {
 
     /**
      * getter for points
+     *
      * @return points
      */
     public static int getPoints() {
@@ -939,6 +1075,7 @@ public class GameStage {
 
     /**
      * getter for lines
+     *
      * @return lines
      */
     public static int getLines() {
@@ -947,6 +1084,7 @@ public class GameStage {
 
     /**
      * setter for lines
+     *
      * @param lines new set lines
      */
     public static void setLines(int lines) {
@@ -955,6 +1093,7 @@ public class GameStage {
 
     /**
      * setter for play
+     *
      * @param play new set play
      */
     public static void setPlay(boolean play) {
@@ -964,6 +1103,7 @@ public class GameStage {
 
     /**
      * getter for endTimer
+     *
      * @return endTimer
      */
     public static int getEndTimer() {
@@ -972,6 +1112,7 @@ public class GameStage {
 
     /**
      * setter for endTimer
+     *
      * @param endTimer new setEndTimer
      */
     public static void setEndTimer(int endTimer) {
