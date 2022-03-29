@@ -1,6 +1,11 @@
 package at.javatetris.project;
 
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.io.*;
+import java.math.BigDecimal;
 import java.util.Properties;
 
 /**
@@ -17,6 +22,36 @@ public class UserData {
 
     /** user data properties of current user */
     private static Properties userData;
+
+    private int id;
+    private String username;
+    private String password;
+    private BigDecimal hs_classic;
+    private BigDecimal hs_time;
+    private BigDecimal hs_infinity;
+    private int gamesPlayed;
+    private BigDecimal timePlayed;
+
+    UserData(int id, String username, String password, BigDecimal hs_classic, BigDecimal hs_time, BigDecimal hs_infinity, int gamesPlayed, BigDecimal timePlayed) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.hs_classic = hs_classic;
+        this.hs_time = hs_time;
+        this.hs_infinity = hs_infinity;
+        this.gamesPlayed = gamesPlayed;
+        this.timePlayed = timePlayed;
+    }
+
+    UserData(String username, String password, BigDecimal hs_classic, BigDecimal hs_time, BigDecimal hs_infinity, int gamesPlayed, BigDecimal timePlayed) {
+        this.username = username;
+        this.password = password;
+        this.hs_classic = hs_classic;
+        this.hs_time = hs_time;
+        this.hs_infinity = hs_infinity;
+        this.gamesPlayed = gamesPlayed;
+        this.timePlayed = timePlayed;
+    }
 
     /**
      * get user data properties
@@ -73,6 +108,7 @@ public class UserData {
             file.store(outputStream, null);
 
             load(currentUsername);
+
         } catch (IOException e) {
             Main.errorAlert("UserData.java");
             e.printStackTrace();
@@ -86,5 +122,9 @@ public class UserData {
      */
     public static String search(String key) {
         return getUserData().getProperty(key);
+    }
+
+    public static UserData createUserData() {
+        return new UserData(search("username"), search("password"), new BigDecimal(search("hs_classic")), new BigDecimal(search("hs_time")), new BigDecimal(search("hs_infinity")), Integer.parseInt(search("gamesPlayed")), new BigDecimal(search("timePlayed")));
     }
 }

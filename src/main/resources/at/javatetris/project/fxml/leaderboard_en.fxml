@@ -1,0 +1,1859 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.javatetris.project.LeaderboardGUI">
+   <children>
+      <Line endX="136.0" layoutX="465.0" layoutY="86.0" startX="-466.0" />
+      <ImageView fitHeight="85.0" fitWidth="95.0" layoutX="-1.0" onMouseClicked="#buttonBack" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/arrowBack_icon.png" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </ImageView>
+      <Text layoutX="154.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Leaderboard" wrappingWidth="291.705078125">
+         <font>
+            <Font size="52.0" />
+         </font>
+      </Text>
+      <TabPane layoutY="87.0" prefHeight="314.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" tabMinWidth="180.0">
+        <tabs>
+          <Tab fx:id="onlineTab" text="Online">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TabPane prefHeight="285.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" tabMinWidth="102.0">
+                           <tabs>
+                              <Tab fx:id="onlineClassicTab" text="Classic">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <VBox prefHeight="256.8" prefWidth="600.0">
+                                             <children>
+                                                <HBox prefHeight="44.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Place">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Highscore">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="100.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text fx:id="onlineClassicUsername1" strokeType="OUTSIDE" strokeWidth="0.0" text="username1">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text fx:id="onlineClassicHighscore1" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="2.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text fx:id="onlineClassicUsername2" strokeType="OUTSIDE" strokeWidth="0.0" text="username2">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text fx:id="onlineClassicHighscore2" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="3.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text fx:id="onlineClassicUsername3" strokeType="OUTSIDE" strokeWidth="0.0" text="username3">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text fx:id="onlineClassicHighscore3" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="4.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text fx:id="onlineClassicUsername4" strokeType="OUTSIDE" strokeWidth="0.0" text="username4">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text fx:id="onlineClassicHighscore4" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="5.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text fx:id="onlineClassicUsername5" strokeType="OUTSIDE" strokeWidth="0.0" text="username5">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text fx:id="onlineClassicHighscore5" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                              <Tab fx:id="onlineTimeTab" text="Against time">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <VBox prefHeight="256.8" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <children>
+                                                <HBox prefHeight="44.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Place">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Highscore">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="100.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text fx:id="onlineTimeUsername1" strokeType="OUTSIDE" strokeWidth="0.0" text="username1">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text fx:id="onlineTimeHighscore1" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="2.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text fx:id="onlineTimeUsername2" strokeType="OUTSIDE" strokeWidth="0.0" text="username2">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text fx:id="onlineTimeHighscore2" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="3.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text fx:id="onlineTimeUsername3" strokeType="OUTSIDE" strokeWidth="0.0" text="username3">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text fx:id="onlineTimeHighscore3" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="4.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text fx:id="onlineTimeUsername4" strokeType="OUTSIDE" strokeWidth="0.0" text="username4">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text fx:id="onlineTimeHighscore4" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="5.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text fx:id="onlineTimeUsername5" strokeType="OUTSIDE" strokeWidth="0.0" text="username5">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text fx:id="onlineTimeHighscore5" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                              <Tab fx:id="onlineInfinityTab" text="Infinity">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <VBox prefHeight="256.8" prefWidth="600.0">
+                                             <children>
+                                                <HBox prefHeight="44.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Place">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Highscore">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="100.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="username1">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="username1">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="username1">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="username1">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="username1">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                              <Tab fx:id="onlineTimePlayedTab" text="Time played">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <VBox prefHeight="256.8" prefWidth="600.0">
+                                             <children>
+                                                <HBox prefHeight="44.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Place">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Highscore">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="100.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="username1">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="username1">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="username1">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="username1">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="username1">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                              <Tab fx:id="onlineGamesPlayedTab" text="Games played">
+                                 <content>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <VBox prefHeight="256.8" prefWidth="600.0">
+                                             <children>
+                                                <HBox prefHeight="44.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Place">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Highscore">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="100.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="username1">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="username1">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="username1">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="username1">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="username1">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                 </content>
+                              </Tab>
+                           </tabs>
+                        </TabPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="localTab" text="Local">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TabPane prefHeight="285.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" tabMinWidth="102.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <tabs>
+                            <Tab fx:id="localClassicTab" text="Classic">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <VBox prefHeight="256.8" prefWidth="600.0">
+                                             <children>
+                                                <HBox prefHeight="44.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Place">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Highscore">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="100.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text fx:id="localClassicUsername1" strokeType="OUTSIDE" strokeWidth="0.0" text="username1">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text fx:id="localClassicHighscore1" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="2.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text fx:id="localClassicUsername2" strokeType="OUTSIDE" strokeWidth="0.0" text="username2">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text fx:id="localClassicHighscore2" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="3.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text fx:id="localClassicUsername3" strokeType="OUTSIDE" strokeWidth="0.0" text="username3">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text fx:id="localClassicHighscore3" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="4.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text fx:id="localClassicUsername4" strokeType="OUTSIDE" strokeWidth="0.0" text="username4">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text fx:id="localClassicHighscore4" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="5.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text fx:id="localClassicUsername5" strokeType="OUTSIDE" strokeWidth="0.0" text="username5">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text fx:id="localClassicHighscore5" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                              </content>
+                            </Tab>
+                            <Tab fx:id="localTimeTab" text="Gegen die Uhr">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <VBox prefHeight="256.8" prefWidth="600.0">
+                                             <children>
+                                                <HBox prefHeight="44.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Place">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Highscore">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="100.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text fx:id="localTimeUsername1" strokeType="OUTSIDE" strokeWidth="0.0" text="username1">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text fx:id="localTimeHighscore1" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="2.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text fx:id="localTimeUsername2" strokeType="OUTSIDE" strokeWidth="0.0" text="username2">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text fx:id="localTimeHighscore2" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="3.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text fx:id="localTimeUsername3" strokeType="OUTSIDE" strokeWidth="0.0" text="username3">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text fx:id="localTimeHighscore3" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="4.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text fx:id="localTimeUsername4" strokeType="OUTSIDE" strokeWidth="0.0" text="username4">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text fx:id="localTimeHighscore4" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="5.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text fx:id="localTimeUsername5" strokeType="OUTSIDE" strokeWidth="0.0" text="username5">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text fx:id="localTimeHighscore5" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                              </content>
+                            </Tab>
+                              <Tab fx:id="localInfinityTab" text="Endlos">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <VBox prefHeight="256.8" prefWidth="600.0">
+                                             <children>
+                                                <HBox prefHeight="44.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Place">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Highscore">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="100.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text fx:id="localInfinityUsername1" strokeType="OUTSIDE" strokeWidth="0.0" text="username1">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text fx:id="localInfinityHighscore1" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="2.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text fx:id="localInfinityUsername2" strokeType="OUTSIDE" strokeWidth="0.0" text="username2">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text fx:id="localInfinityHighscore2" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="3.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text fx:id="localInfinityUsername3" strokeType="OUTSIDE" strokeWidth="0.0" text="username3">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text fx:id="localInfinityHighscore3" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="4.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text fx:id="localInfinityUsername4" strokeType="OUTSIDE" strokeWidth="0.0" text="username4">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text fx:id="localInfinityHighscore4" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="5.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text fx:id="localInfinityUsername5" strokeType="OUTSIDE" strokeWidth="0.0" text="username5">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text fx:id="localInfinityHighscore5" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                </content>
+                              </Tab>
+                              <Tab fx:id="localTimePlayedTab" text="Spielzeit">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <VBox prefHeight="256.8" prefWidth="600.0">
+                                             <children>
+                                                <HBox prefHeight="44.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Place">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Highscore">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="100.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="username1">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="username1">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="username1">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="username1">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="username1">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                </content>
+                              </Tab>
+                              <Tab fx:id="localGamesPlayedTab" text="Gespielte Spiele">
+                                <content>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <VBox prefHeight="256.8" prefWidth="600.0">
+                                             <children>
+                                                <HBox prefHeight="44.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Place">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Highscore">
+                                                         <font>
+                                                            <Font size="20.0" />
+                                                         </font>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="100.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="username1">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="2.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="username2">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="3.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="username3">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="4.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="username4">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                                <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
+                                                   <children>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="5.">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="username5">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="25.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                                         <font>
+                                                            <Font size="19.0" />
+                                                         </font>
+                                                         <HBox.margin>
+                                                            <Insets left="10.0" />
+                                                         </HBox.margin>
+                                                      </Text>
+                                                   </children>
+                                                   <padding>
+                                                      <Insets left="110.0" top="10.0" />
+                                                   </padding>
+                                                </HBox>
+                                             </children>
+                                          </VBox>
+                                       </children>
+                                    </AnchorPane>
+                                </content>
+                              </Tab>
+                          </tabs>
+                        </TabPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab fx:id="yourStatsTab" text="Your Statistics">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="600.0">
+                           <children>
+                              <Text layoutX="14.0" layoutY="198.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Overall playtime:">
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="14.0" layoutY="243.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Played games:">
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="hours" layoutX="251.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="24">
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="minutes" layoutX="316.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="60">
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="285.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h">
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="349.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="min">
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="seconds" layoutX="406.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="60">
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="442.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="s">
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font>
+                              </Text>
+                              <Text layoutX="252.0" layoutY="243.0" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                                 <font>
+                                    <Font size="25.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </AnchorPane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</Pane>

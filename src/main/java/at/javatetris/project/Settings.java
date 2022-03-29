@@ -1,5 +1,9 @@
 package at.javatetris.project;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -36,7 +40,7 @@ public class Settings {
     private static Properties controls;
 
     /** version number */
-    private static final String VERSION = "0.5";
+    private static final String VERSION = "0.6";
 
     /** default lines for config, add config values here */
     private static final List<String> DEFAULT_CONFIG = Arrays.asList(
@@ -76,9 +80,6 @@ public class Settings {
 
     /** check if setting file is here, else create directory and file with defaultConfig */
     public static void checkFile() {
-
-        //TODO maybe check if file contains everything
-
         try {
             //Files.createDirectories(Paths.get(JAVATETRIS_DIR_PATH));
             Files.createDirectories(Paths.get(JAVATETRIS_USR_DATA_DIR_PATH));
@@ -111,6 +112,7 @@ public class Settings {
             }
 
             load();
+
         } catch (IOException e) {
             Main.errorAlert("Settings.java");
             e.printStackTrace();
@@ -245,4 +247,20 @@ public class Settings {
     public static String searchControls(String key) {
         return getControls().getProperty(key);
     }
+
+    /** check if version in code is same as in local stored config file */
+    public static void checkIfVersionUpToDate() {
+        if (!VERSION.equals(searchSettings("gameVersion"))) {
+            Alert alert = Main.alertBuilder(Alert.AlertType.WARNING, "notSameVersionTitle", "notSameVersionHeader", "notSameVersionContent", false);
+            alert.setContentText(Language.getPhrase("notSameVersionContent") + " " + SETTING_FILE_PATH);
+            ButtonType closeButton = new ButtonType(Language.getPhrase("closeGameTitle"), ButtonBar.ButtonData.OK_DONE);
+            alert.getButtonTypes().setAll(closeButton);
+            alert.showAndWait().ifPresent(type -> {
+                if (type == closeButton) {
+                    Main.getStage().close();
+                }
+            });
+        }
+    }
+
 }

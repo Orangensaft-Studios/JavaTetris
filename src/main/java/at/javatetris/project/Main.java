@@ -1,12 +1,26 @@
 package at.javatetris.project;
 
+import com.mysql.cj.jdbc.exceptions.CommunicationsException;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
+import java.io.IOError;
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Objects;
+import java.util.Set;
 
 
 /**
@@ -15,7 +29,7 @@ import java.util.Objects;
  */
 public class Main extends Application {
 
-    /** the main stage for the GUIs except GameStage */
+    /** the main stage for the GUIs */
     private static Stage mainStage;
 
     /**
@@ -32,23 +46,14 @@ public class Main extends Application {
         Settings.checkFile();
 
         //load JDBC Driver to enable DataBase actions
+        /*
         if (DataBase.loadJDBCDriver()) {
             System.out.println("Main.java: JDBC Driver loaded successfully");
         } else {
             System.out.println("Main.java: JDBC Driver couldn't be loaded");
         }
+         */
 
-        //login with in config stored user = last logged-in user
-        String accountType = Settings.searchSettings("accountType");
-        String username = Settings.searchSettings("username");
-        String password = Settings.searchSettings("password");
-        if (accountType.equals("online")) {
-            //try online login (especially to load all data from database)
-            DataBase.onlineLogin(username, password);
-        } else if (accountType.equals("local")) {
-            //load data for username
-            UserData.load(username);
-        }
 
         //set the mainStage
         mainStage.setResizable(false);
@@ -56,12 +61,36 @@ public class Main extends Application {
         mainStage.setTitle("JavaTetris | Version: " + Settings.searchSettings("gameVersion"));
         Main.mainStage = mainStage;
 
+
+
+        //login with in config stored user = last logged-in user
+        String accountType = Settings.searchSettings("accountType");
+        String username = Settings.searchSettings("username");
+        String password = Settings.searchSettings("password");
+        if (accountType.equals("online")) {
+            //if (DataBase.checkConnection()) {
+            if (DataBaseAPI.onlineLogin(username, password).equals("NoConnection")) {
+                Settings.setNewValue("username", "", "settings");
+                Settings.setNewValue("password", "", "settings");
+                Settings.setNewValue("accountType", "", "settings");
+                Alert alert = alertBuilder(Alert.AlertType.INFORMATION, "couldntLogInTitle", "couldntLogInHeader", "couldntLogInContent", true);
+                alert.show();
+            }
+        } else if (accountType.equals("local")) {
+            //load data for username
+            UserData.load(username);
+        }
+
+
         //start music with volume from settings
         Music.startMusic(Double.parseDouble(Settings.searchSettings("musicVolume")));
 
         //call MenuGUI
         MenuGUI.start();
+
+        Settings.checkIfVersionUpToDate();
     }
+
 
     /**
      * build a basic alert

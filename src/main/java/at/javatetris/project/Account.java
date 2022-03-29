@@ -1,15 +1,21 @@
 package at.javatetris.project;
 
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
+import javafx.stage.Stage;
 
 import java.io.*;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import static java.nio.file.StandardOpenOption.APPEND;
 
@@ -57,21 +63,19 @@ public class Account {
 
     private static void createOnline(String username, String password) {
         //try creating user in database and store return value
-        String createUser = DataBase.createUser(username, password);
+        //String createUser = DataBase.createUser(username, password);
+        System.out.println("Account.java: createOnline");
+
+        String createUser = DataBaseAPI.createUser(username, password);
 
         //compare return value to check if user alr exists, was created, or couldn't be created
         if (createUser.equals("AwC")) { //Account was created
             //set local username in config file
             setUsernamePasswordAccountTypeInSettings(username, password, "online");
-            //Settings.setNewValue("accountType", "online", "settings");
 
             //load data from DataBase for user
-            try {
-                DataBase.loadOnlineUserData(DataBase.getConnection(), username);
-            } catch (SQLException e) {
-                System.out.println("Account.java: createOnline");
-                Main.errorAlert("Account.java");
-            }
+            DataBaseAPI.getData(username);
+            //DataBase.loadOnlineUserData(DataBase.getConnection(), username);
 
             //PopUp Alert account created
             Alert alert = Main.alertBuilder(Alert.AlertType.INFORMATION, "accountCreatedTitle", "accountCreatedHeader", "accountCreatedContent", true);
@@ -112,6 +116,7 @@ public class Account {
     }
 
     private static void createLocal(String username, String password) throws Exception {
+
         //template and fill already with username, password and set highscores to 0
         final List<String> userDataTemplate = Arrays.asList(
                 "username=" + username,
@@ -145,6 +150,7 @@ public class Account {
         //load user data template to user data properties
         UserData.load(username);
 
+
         //local account was now created
         //PopUp Alert local account created
         Alert alertLclAccCreated = Main.alertBuilder(Alert.AlertType.INFORMATION, "localAccCreatedTitle", "localAccCreatedHeader","accountCreatedContent", true);
@@ -169,7 +175,9 @@ public class Account {
             //online login
             if (type == onlineBtn) {
                 //try online login
-                String returnValueOnlineLogin = DataBase.onlineLogin(username, password);
+                //String returnValueOnlineLogin = DataBase.onlineLogin(username, password);
+                String returnValueOnlineLogin = DataBaseAPI.onlineLogin(username, password);
+
                 System.out.println("Account.java: Returnvalue onlineLogin: " + returnValueOnlineLogin);
                 //if successfully logged in
                 if (returnValueOnlineLogin.equals("loggedIn")) {
@@ -264,7 +272,6 @@ public class Account {
         loggedInAlert.setContentText(Language.getPhrase("loggedInContent") + " " + username);
         loggedInAlert.show();
     }
-
 
 
 }

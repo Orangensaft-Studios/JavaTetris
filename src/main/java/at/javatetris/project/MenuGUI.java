@@ -86,11 +86,11 @@ public class MenuGUI {
     }
 
     /**
-     *
-     * @param actionEvent
+     * open leaderboard page
+     * @param actionEvent mouse click on leaderboard button
      */
     @FXML
     private void leaderboardClicked(ActionEvent actionEvent) {
-        Main.notImplementedAlert();
+        LeaderboardGUI.start();
     }
 }
