@@ -6,12 +6,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.effect.GaussianBlur;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.Objects;
 
 import static at.javatetris.project.GameStage.*;
 
@@ -48,16 +51,17 @@ public class PauseGUI {
     public static void handle(KeyEvent event, String mode) {
         gameMode = mode;
 
-        newWindow.setTitle("Pause");
+        newWindow.setTitle("JavaTetris | Pause");
         newWindow.setResizable(false);
         newWindow.setAlwaysOnTop(true);
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(PauseGUI.class.getResource("fxml/pause_" + Language.get() + ".fxml"));
             Scene scene = new Scene(fxmlLoader.load());
+            newWindow.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResource("icons/jt_icon48x48_no_bg.png")).toURI().toString()));
             newWindow.setScene(scene);
             newWindow.show();
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             Main.errorAlert("PauseGUI.java");
             e.printStackTrace();
         }
