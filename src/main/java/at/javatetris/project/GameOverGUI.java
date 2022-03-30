@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -15,12 +14,34 @@ import java.util.Objects;
 
 import static at.javatetris.project.GameStage.getPoints;
 
+/**
+ * class to display GameOverGUI
+ * @author Severin Rosner (& Roman Krebs)
+ */
 public class GameOverGUI {
 
+    /** the before choosen gameMode */
     private static String gameMode;
 
-    static Stage newWindow = new Stage();
+    /** newWindow stage */
+    private static Stage newWindow = new Stage();
 
+    /** score you achieved */
+    @FXML
+    private Text score;
+
+    /** your highscore */
+    @FXML
+    private Text highscore;
+
+    /** the points that were left to be first */
+    @FXML
+    private Text pointsToFirst;
+
+    /**
+     * start gameOverGUI
+     * @param mode the choosen mode
+     */
     public static void start(String mode) {
         gameMode = mode;
 
@@ -34,6 +55,7 @@ public class GameOverGUI {
             newWindow.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResource("icons/jt_icon48x48_no_bg.png")).toURI().toString()));
             newWindow.setScene(scene);
             newWindow.show();
+
         } catch (IOException | URISyntaxException e) {
             Main.errorAlert("GameOverGUI.java");
             e.printStackTrace();
@@ -41,16 +63,7 @@ public class GameOverGUI {
 
     }
 
-    @FXML
-    private Text score;
-
-    @FXML
-    private Text highscore;
-
-    @FXML
-    private Text pointsToFirst;
-
-    /** on load */
+    /** on load, set fxml texts */
     @FXML
     public void initialize() {
         score.setText(getPoints() + "");
@@ -58,15 +71,24 @@ public class GameOverGUI {
         pointsToFirst.setText((0 - getPoints()) + ""); //0 later replaced with value from first
     }
 
+    /**
+     * restart the same gamemode
+     * @param actionEvent click on retry button
+     */
     @FXML
     private void retryClicked(ActionEvent actionEvent) throws Exception {
         GameStage.start(gameMode,true,false);
         newWindow.close();
     }
 
+    /**
+     * start ChooseModeGUI
+     * @param actionEvent click on choose mode button
+     */
     @FXML
     private void chooseModeClicked(ActionEvent actionEvent) {
         ChooseModeGUI.start(true);
         newWindow.close();
     }
+
 }

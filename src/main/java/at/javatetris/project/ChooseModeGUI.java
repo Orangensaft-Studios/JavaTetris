@@ -16,16 +16,19 @@ import java.io.IOException;
  * @author Severin Rosner
  */
 public class ChooseModeGUI {
-    private static int count =0;
+    /** counter */
+    private static int count = 0;
 
+    /** boolean if to reset */
     private static boolean resetGame = false;
 
     /**
      * start method to load chooseMode fxml file
+     * @param reset if to reset
      */
     public static void start(boolean reset) {
         resetGame = reset;
-        if (count > 0){
+        if (count > 0) {
             resetGame = true;
         }
         try {

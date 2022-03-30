@@ -24,7 +24,7 @@ OneDrive: [Link](https://htl3r-my.sharepoint.com/:b:/g/personal/0212_htl_rennweg
 ## 🗺️ Roadmap
 - [x] 17 Februar: Projekt erstellt
 - [x] 22 Februar: Vorstellung Pflichtenheft u. Projekt: 95%
-- [ ] 22 März: Zwischenabgabe mit erstem lauffähigen Prototyp
+- [x] 22 März: Zwischenabgabe mit erstem lauffähigen Prototyp: 100%
 - [ ] 19 April: Finale Abgabe
 
 ## 📄 GIT

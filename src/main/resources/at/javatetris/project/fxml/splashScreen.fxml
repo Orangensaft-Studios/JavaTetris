@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
+
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="149.0" prefWidth="481.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.javatetris.project.SplashScreenController">
+   <children>
+      <ImageView fitHeight="150.0" fitWidth="450.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/jt_giflogo.gif" />
+         </image>
+         <cursor>
+            <Cursor fx:constant="NONE" />
+         </cursor>
+      </ImageView>
+      <Text fx:id="loadingText" layoutX="17.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Loading...">
+         <cursor>
+            <Cursor fx:constant="NONE" />
+         </cursor></Text>
+      <ProgressBar fx:id="progressBar" layoutX="247.0" layoutY="114.0" prefHeight="18.0" prefWidth="217.0" progress="0.2">
+         <cursor>
+            <Cursor fx:constant="NONE" />
+         </cursor>
+      </ProgressBar>
+   </children>
+   <cursor>
+      <Cursor fx:constant="NONE" />
+   </cursor>
+</Pane>

@@ -1,21 +1,14 @@
 package at.javatetris.project;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
-import javafx.scene.image.Image;
-import javafx.stage.Stage;
 
 import java.io.*;
-import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
-import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 import static java.nio.file.StandardOpenOption.APPEND;
 

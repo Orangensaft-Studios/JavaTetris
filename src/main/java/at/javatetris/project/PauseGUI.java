@@ -4,11 +4,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -24,15 +21,20 @@ import static at.javatetris.project.GameStage.*;
  */
 
 public class PauseGUI {
+    //TODO das mans mit esc auch wieder schließen kann
 
+    /** newWindow stage */
     static Stage newWindow = new Stage();
 
+    /** score you achieved yet */
     @FXML
     private Text score;
 
+    /** your highscore */
     @FXML
     private Text highscore;
 
+    /** the before choosen gameMode */
     private static String gameMode;
 
     @FXML
@@ -47,7 +49,11 @@ public class PauseGUI {
         newWindow.close();
     }
 
-
+    /**
+     * open pause gui
+     * @param event keyevent
+     * @param mode mode you chose before
+     */
     public static void handle(KeyEvent event, String mode) {
         gameMode = mode;
 
@@ -65,12 +71,12 @@ public class PauseGUI {
             Main.errorAlert("PauseGUI.java");
             e.printStackTrace();
         }
-
     }
 
-
+    /** on load */
     @FXML
     public void initialize() {
         score.setText(getPoints() + "");
+        highscore.setText("0");
     }
 }

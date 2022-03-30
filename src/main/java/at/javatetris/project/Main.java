@@ -1,11 +1,15 @@
 package at.javatetris.project;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import java.util.Objects;
 
 
@@ -27,57 +31,27 @@ public class Main extends Application {
         return mainStage;
     }
 
-    @Override
-    public void start(Stage mainStage) throws Exception {
-        //check if setting and controls Files are available and then load from it
-        Settings.checkFile();
-
-        //load JDBC Driver to enable DataBase actions
-        /*
-        if (DataBase.loadJDBCDriver()) {
-            System.out.println("Main.java: JDBC Driver loaded successfully");
-        } else {
-            System.out.println("Main.java: JDBC Driver couldn't be loaded");
-        }
-         */
-
-
-        //set the mainStage
-        mainStage.setResizable(false);
-        mainStage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResource("icons/jt_icon48x48_no_bg.png")).toURI().toString()));
-        mainStage.setTitle("JavaTetris | Version: " + Settings.searchSettings("gameVersion"));
+    /**
+     * setter for mainStage
+     * @param mainStage stage
+     */
+    public static void setMainStage(Stage mainStage) {
         Main.mainStage = mainStage;
-
-
-
-        //login with in config stored user = last logged-in user
-        String accountType = Settings.searchSettings("accountType");
-        String username = Settings.searchSettings("username");
-        String password = Settings.searchSettings("password");
-        if (accountType.equals("online")) {
-            //if (DataBase.checkConnection()) {
-            if (DataBaseAPI.onlineLogin(username, password).equals("NoConnection")) {
-                Settings.setNewValue("username", "", "settings");
-                Settings.setNewValue("password", "", "settings");
-                Settings.setNewValue("accountType", "", "settings");
-                Alert alert = alertBuilder(Alert.AlertType.INFORMATION, "couldntLogInTitle", "couldntLogInHeader", "couldntLogInContent", true);
-                alert.show();
-            }
-        } else if (accountType.equals("local")) {
-            //load data for username
-            UserData.load(username);
-        }
-
-
-        //start music with volume from settings
-        Music.startMusic(Double.parseDouble(Settings.searchSettings("musicVolume")));
-
-        //call MenuGUI
-        MenuGUI.start();
-
-        Settings.checkIfVersionUpToDate();
     }
 
+    @Override
+    public void start(Stage splashStage) throws Exception {
+        //set the mainStage
+        splashStage.setResizable(false);
+        splashStage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResource("icons/jt_icon48x48_no_bg.png")).toURI().toString()));
+        splashStage.setTitle("JavaTetris");
+
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("fxml/splashScreen.fxml")));
+        Scene scene = new Scene(root);
+        splashStage.initStyle(StageStyle.UNDECORATED);
+        splashStage.setScene(scene);
+        splashStage.show();
+    }
 
     /**
      * build a basic alert

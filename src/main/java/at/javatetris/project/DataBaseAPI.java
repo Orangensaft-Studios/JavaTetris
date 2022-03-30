@@ -6,29 +6,24 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
+/**
+ * class to call to api's to get/write data from/to database
+ * @author Severin Rosner
+ */
 public class DataBaseAPI {
+    /** response code 500 */
+    private static final int RESPONSE_CODE_500 = 500;
+    /** response code 404 */
+    private static final int RESPONSE_CODE_404 = 404;
+    /** response code 200 */
+    private static final int RESPONSE_CODE_200 = 200;
 
-    public static boolean checkConnection() {
-        try {
-            URL url = new URL("https://80275.wayscript.io/checkConnection");
-            HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
-
-            conn.connect();
-            int responseCode = conn.getResponseCode();
-
-            if (responseCode == 200) {
-                return true;
-            } else {
-                return false;
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Main.errorAlert("DataBaseAPI.java");
-            return false;
-        }
-    }
-
+    /**
+     * create api call to create user
+     * @param username to create
+     * @param password for user
+     * @return usrAlrExists | Errror | noUsrOrPassw | AwC | error1
+     */
     public static String createUser(String username, String password) {
         System.out.println("DataBaseAPI.java: Trying to create user '" + username + "'");
         try {
@@ -41,14 +36,14 @@ public class DataBaseAPI {
             int responseCode = conn.getResponseCode();
             System.out.println("DataBaseAPI: Response code is: " + responseCode);
 
-            if (responseCode == 500) {
+            if (responseCode == RESPONSE_CODE_500) {
                 //no password or user given, shouldn't occur anyway
                 conn.disconnect();
                 return "noUsrOrPassw";
-            } else if (responseCode == 404) {
+            } else if (responseCode == RESPONSE_CODE_404) {
                 //user already exists
                 return "UsrAlrExists";
-            } else if (responseCode != 200) {
+            } else if (responseCode != RESPONSE_CODE_200) {
                 conn.disconnect();
                 return "Error";
             } else {
@@ -60,13 +55,19 @@ public class DataBaseAPI {
             }
         } catch (IOException e) {
             return "error1";
-        } catch(Exception e) {
+        } catch (Exception e) {
             Main.errorAlert("DataBaseAPI.java");
             e.printStackTrace();
             return "Error";
         }
     }
 
+    /**
+     * create api call to login user (check passwords)
+     * @param username to login
+     * @param password password to check
+     * @return if user logged in, user or password false, not logged in
+     */
     public static String onlineLogin(String username, String password) {
         try {
             URL url = new URL("https://80269.wayscript.io/login?username=" + username + "&password=" + password);
@@ -78,12 +79,12 @@ public class DataBaseAPI {
             int responseCode = conn.getResponseCode();
             System.out.println("DataBaseAPI: Response code is: " + responseCode);
 
-            if (responseCode == 500) {
+            if (responseCode == RESPONSE_CODE_500) {
                 conn.disconnect();
                 return "noUsrOrPassw";
-            } else if (responseCode == 404) {
+            } else if (responseCode == RESPONSE_CODE_404) {
                 return "userOrPasswordFalse";
-            } else if (responseCode != 200) {
+            } else if (responseCode != RESPONSE_CODE_200) {
                 conn.disconnect();
                 Main.errorAlert("DataBaseAPI.java");
                 return "Error";
@@ -99,13 +100,18 @@ public class DataBaseAPI {
         } catch (UnknownHostException e) {
             //e.g. when no internet
             return "NoConnection";
-        } catch(Exception e) {
+        } catch (Exception e) {
             Main.errorAlert("DataBaseAPI.java");
             e.printStackTrace();
             return "ERROR";
         }
     }
 
+    /**
+     * create api call to get user data
+     * @param username to get data from
+     * @return the data as string (in json format!)
+     */
     public static String getData(String username) {
         //data will store the JSON data streamed in string format
         String data = "";
@@ -118,16 +124,16 @@ public class DataBaseAPI {
             conn.connect();
 
             int responseCode = conn.getResponseCode();
-            System.out.println("DataBaseAPI: Response code is: " +responseCode);
+            System.out.println("DataBaseAPI: Response code is: " + responseCode);
 
-            if (responseCode == 404) {
+            if (responseCode == RESPONSE_CODE_404) {
                 throw new RuntimeException("No username | HttpResponseCode: " + responseCode);
-            } else if (responseCode != 200) {
+            } else if (responseCode != RESPONSE_CODE_200) {
                 throw new RuntimeException("HttpResponseCode: " + responseCode);
             } else {
                 Scanner sc = new Scanner(url.openStream());
 
-                while(sc.hasNext()) {
+                while (sc.hasNext()) {
                     data += sc.nextLine();
                 }
 
@@ -140,18 +146,23 @@ public class DataBaseAPI {
 
             return data;
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return "";
         }
     }
 
-
-    public static String getJSONValue(String JSONString, String DataBaseField) {
-        int beginIndex = JSONString.indexOf(DataBaseField);
-        int endIndex = JSONString.indexOf(",", beginIndex);
-        String returnValue = JSONString.substring(beginIndex, endIndex);
-        returnValue = returnValue.replaceAll(DataBaseField + "\\\": \\[\\\"", "").replaceAll( "\\\"\\]", "").trim();
+    /**
+     * get a value from a JSON string
+     * @param jsonString the JSON string
+     * @param dataBaseField the key/database field to search for
+     * @return the value
+     */
+    public static String getJSONValue(String jsonString, String dataBaseField) {
+        int beginIndex = jsonString.indexOf(dataBaseField);
+        int endIndex = jsonString.indexOf(",", beginIndex);
+        String returnValue = jsonString.substring(beginIndex, endIndex);
+        returnValue = returnValue.replaceAll(dataBaseField + "\\\": \\[\\\"", "").replaceAll("\\\"\\]", "").trim();
         System.out.println("DataBaseAPI: JSON Field Value: " + returnValue);
         return returnValue;
     }

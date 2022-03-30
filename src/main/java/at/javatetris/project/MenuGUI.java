@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+
 /**
  * main MenuGUI class
  * @author Severin Rosner
