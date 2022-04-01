@@ -1,10 +1,12 @@
 package at.javatetris.project;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -31,6 +33,8 @@ public class MenuGUI {
             e.printStackTrace();
         }
     }
+
+    @FXML public ImageView loading;
 
     /**
      * close stage -> close Menu/exit Game PopUp
@@ -92,6 +96,27 @@ public class MenuGUI {
      */
     @FXML
     private void leaderboardClicked(ActionEvent actionEvent) {
-        LeaderboardGUI.start();
+        loading.setVisible(true);
+        new leaderBoardLoadData().start();
+    }
+
+    private class leaderBoardLoadData extends Thread {
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(1);
+                LeaderboardGUI.setOwnValuesArray(UserDataOnline.update(Settings.searchSettings("username")));
+
+                //loading.setVisible(false);
+                Platform.runLater(() -> {
+                    loading.setVisible(false);
+                    LeaderboardGUI.start();
+                });
+
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+                Main.errorAlert("MenuGUI.java");
+            }
+        }
     }
 }

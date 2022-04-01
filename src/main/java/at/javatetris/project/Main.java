@@ -33,10 +33,10 @@ public class Main extends Application {
 
     /**
      * setter for mainStage
-     * @param mainStage stage
+     * @param stage stage
      */
-    public static void setMainStage(Stage mainStage) {
-        Main.mainStage = mainStage;
+    public static void setMainStage(Stage stage) {
+        mainStage = stage;
     }
 
     @Override

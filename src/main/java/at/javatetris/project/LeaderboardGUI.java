@@ -1,20 +1,14 @@
 package at.javatetris.project;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+
 
 public class LeaderboardGUI {
     //local classic mode
@@ -90,9 +84,15 @@ public class LeaderboardGUI {
     @FXML private Text onlineInfinityHighscore5;
 
 
-
-
-
+    //your stats page
+    @FXML private Text placeClassic;
+    @FXML private Text placeTime;
+    @FXML private Text placeInfinity;
+    @FXML private Text highscoreClassic;
+    @FXML private Text highscoreTime;
+    @FXML private Text highscoreInfinity;
+    @FXML private Text gamesPlayed;
+    @FXML private Text playtime;
 
 
     /**
@@ -118,11 +118,40 @@ public class LeaderboardGUI {
         MenuGUI.start();
     }
 
+    private static String hsClassicText;
+    private static String hsTimeText;
+    private static String hsInfinityText;
+    private static String timePlayedText;
+    private static String gamesPlayedText;
+
+    private static String[] ownValuesArray;
+
+    public static void setOwnValuesArray(String[] ownValuesArray) {
+        LeaderboardGUI.ownValuesArray = ownValuesArray;
+    }
+
     /** on load */
     @FXML
     public void initialize() {
+        //String[] ownValues = UserDataOnline.update(Settings.searchSettings("username"));
 
 
-
+        highscoreClassic.setText(ownValuesArray[0]);
+        highscoreTime.setText(ownValuesArray[1]);
+        highscoreInfinity.setText(ownValuesArray[2]);
+        playtime.setText(calculateTime(ownValuesArray[3]));
+        gamesPlayed.setText(ownValuesArray[4]);
     }
+
+
+    public static String calculateTime(String time) {
+            int timePlayedDB = Integer.parseInt(time);
+            int hours = timePlayedDB / 3600;
+            int minutes = (timePlayedDB % 3600) / 60;
+            int seconds = timePlayedDB % 60;
+
+            return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+    }
+
+
 }

@@ -28,10 +28,13 @@ public class Settings {
     public final static String SETTING_FILE_PATH = JAVATETRIS_DIR_PATH + "config.properties";
 
     /** location of controls properties file */
-    private final static String CONTROLS_FILE_PATH = JAVATETRIS_DIR_PATH + "controls.properties";
+    private final static String CONTROLS_FILE_PATH = JAVATETRIS_DIR_PATH + ".controls.properties";
 
     /** location of all usernames passwort properties file */
-    public final static String ALL_USERNAMES_FILE_PATH = JAVATETRIS_USR_DATA_DIR_PATH + "allUsernames.txt";
+    public final static String ALL_USERNAMES_FILE_PATH = JAVATETRIS_USR_DATA_DIR_PATH + ".allUsernames.txt";
+
+    /** location of highscore file */
+    public final static String HIGHSCORE_FILE = JAVATETRIS_USR_DATA_DIR_PATH + ".highscores.txt";
 
     /** setting properties */
     private static Properties settings;
@@ -89,6 +92,7 @@ public class Settings {
             File settingFile = new File(SETTING_FILE_PATH);
             File controlsFile = new File(CONTROLS_FILE_PATH);
             File allUsernames = new File(ALL_USERNAMES_FILE_PATH);
+            File highscoreFile = new File(HIGHSCORE_FILE);
 
             if (!settingFile.exists()) {
                 //write the config lines in the new created config.properties file
@@ -108,7 +112,12 @@ public class Settings {
                 //create all usernames file (for Account.java)
                 Files.createFile(Paths.get(ALL_USERNAMES_FILE_PATH));
 
-                System.out.println("Settings.java: allUserNamesFile created her: " + allUsernames.getAbsolutePath());
+                System.out.println("Settings.java: allUserNamesFile created here: " + allUsernames.getAbsolutePath());
+            }
+
+            if (!highscoreFile.exists()) {
+                Files.createFile(Paths.get(HIGHSCORE_FILE));
+                System.out.println("Settings.java: highscore File created here: " + highscoreFile.getAbsolutePath());
             }
 
             load();

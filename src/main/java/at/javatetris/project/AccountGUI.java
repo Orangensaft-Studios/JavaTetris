@@ -1,18 +1,23 @@
 package at.javatetris.project;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 
 /**
  * class to load AccountGUI and listen to clicks
@@ -47,10 +52,14 @@ public class AccountGUI {
     @FXML
     private Text loggedInAs;
 
+    @FXML
+    private Text loading;
+
     /** on load, display username from config as loggedIn */
     @FXML
     public void initialize() {
         loggedInAs.setText(Settings.searchSettings("username") + " (" + Settings.searchSettings("accountType") + ")");
+        loading.setVisible(false);
     }
 
     /**
@@ -68,6 +77,7 @@ public class AccountGUI {
      */
     @FXML
     private void loginClicked(ActionEvent actionEvent) {
+        loading.setVisible(true);
         String username = usernameField.getText();
         String password = passwordField.getText();
 
@@ -86,6 +96,8 @@ public class AccountGUI {
      * @param actionEvent mouse click on register button
      */
     public void registerClicked(ActionEvent actionEvent) {
+        loading.setVisible(true);
+
         //get username and password from fields
         final String username = usernameField.getText();
         String password = passwordField.getText();
@@ -105,6 +117,7 @@ public class AccountGUI {
 
         //display current username + accountType
         initialize();
+
     }
 
     /**

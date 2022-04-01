@@ -1812,43 +1812,75 @@
                                     <Font size="25.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="hours" layoutX="251.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="24">
+                              <Text fx:id="gamesPlayed" layoutX="252.0" layoutY="243.0" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
                                  <font>
                                     <Font size="25.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="minutes" layoutX="316.0" layoutY="199.0" strokeType="OUTSIDE" strokeWidth="0.0" text="60">
+                              <Text layoutX="93.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Place">
                                  <font>
-                                    <Font size="25.0" />
+                                    <Font size="20.0" />
                                  </font>
                               </Text>
-                              <Text layoutX="285.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="h">
+                              <Text layoutX="49.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Highscore">
                                  <font>
-                                    <Font size="25.0" />
+                                    <Font size="20.0" />
                                  </font>
                               </Text>
-                              <Text layoutX="349.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="min">
+                              <Text layoutX="186.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Classic">
                                  <font>
-                                    <Font size="25.0" />
+                                    <Font size="20.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="seconds" layoutX="406.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="60">
+                              <Text layoutX="321.0" layoutY="44.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time">
                                  <font>
-                                    <Font size="25.0" />
+                                    <Font size="20.0" />
                                  </font>
                               </Text>
-                              <Text layoutX="442.0" layoutY="200.0" strokeType="OUTSIDE" strokeWidth="0.0" text="s">
+                              <Text layoutX="428.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Infinity">
                                  <font>
-                                    <Font size="25.0" />
+                                    <Font size="20.0" />
                                  </font>
                               </Text>
-                              <Text layoutX="252.0" layoutY="243.0" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                              <Line endX="336.5" layoutX="186.0" layoutY="52.0" startX="-100.0" />
+                              <Line endX="-8.5" endY="67.0" layoutX="172.0" layoutY="90.0" startX="-8.5" startY="-62.0" />
+                              <Text fx:id="placeClassic" layoutX="195.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00000">
                                  <font>
-                                    <Font size="25.0" />
+                                    <Font size="17.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="placeTime" layoutX="322.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00000">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="placeInfinity" layoutX="436.0" layoutY="83.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00000">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="highscoreClassic" layoutX="195.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00000">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="highscoreTime" layoutX="322.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00000">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="highscoreInfinity" layoutX="436.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="00000">
+                                 <font>
+                                    <Font size="17.0" />
                                  </font>
                               </Text>
                            </children>
                         </AnchorPane>
+                        <Text fx:id="playtime" layoutX="249.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" text="000000">
+                           <font>
+                              <Font size="25.0" />
+                           </font>
+                        </Text>
                      </children>
                   </AnchorPane>
               </content>

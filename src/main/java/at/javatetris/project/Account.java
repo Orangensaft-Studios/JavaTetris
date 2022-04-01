@@ -141,7 +141,7 @@ public class Account {
         setUsernamePasswordAccountTypeInSettings(username, password, "local");
 
         //load user data template to user data properties
-        UserData.load(username);
+        UserDataLocal.load(username);
 
 
         //local account was now created
@@ -191,9 +191,9 @@ public class Account {
                 //check if user exists in allUserNames file
                 if (doesUsernameExistInFile(username)) {
                     //load data to username
-                    UserData.load(username);
+                    UserDataLocal.load(username);
                     //check if passwords match
-                    if (UserData.search("password").equals(password)) {
+                    if (UserDataLocal.search("password").equals(password)) {
                         loggedIn(username, password, "local");
                     } else {
                         //false password PopUp

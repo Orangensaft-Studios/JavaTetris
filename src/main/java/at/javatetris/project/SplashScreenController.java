@@ -39,6 +39,7 @@ public class SplashScreenController implements Initializable {
         @Override
         public void run() {
             try {
+                boolean loggedIn = false;
                 final double progress1 = 0.10;
                 final double progress2 = 0.35;
                 final double progress3 = 0.80;
@@ -64,20 +65,24 @@ public class SplashScreenController implements Initializable {
 
                     loadingText.setText(Language.getPhrase("loadingAccountOnline"));
 
-                    //if (DataBase.checkConnection()) {
-                    if (DataBaseAPI.onlineLogin(username, password).equals("NoConnection")) {
+
+                    if (DataBaseAPI.onlineLogin(username, password).equals("loggedIn")) {
+                        System.out.println("SplashScreenController.java: loggedIn");
+                        loggedIn = true;
+                    } else {
                         Settings.setNewValue("username", "", "settings");
                         Settings.setNewValue("password", "", "settings");
                         Settings.setNewValue("accountType", "", "settings");
                         Alert alert = Main.alertBuilder(Alert.AlertType.INFORMATION, "couldntLogInTitle", "couldntLogInHeader", "couldntLogInContent", true);
                         alert.show();
                     }
-                } else if (accountType.equals("local")) {
 
+                } else if (accountType.equals("local")) {
+                    loggedIn = true;
                     loadingText.setText(Language.getPhrase("loadingAccountLocal"));
 
                     //load data for username
-                    UserData.load(username);
+                    UserDataLocal.load(username);
                 }
 
                 progressBar.setProgress(progress3);
@@ -92,6 +97,8 @@ public class SplashScreenController implements Initializable {
 
                 Thread.sleep(sleepTime);
                 progressBar.setProgress(progress6);
+
+                final boolean isLoggedInNow = loggedIn;
 
                 Platform.runLater(() -> {
                     Stage mainStage = new Stage();
@@ -117,6 +124,14 @@ public class SplashScreenController implements Initializable {
 
                     mainStage.setScene(scene);
                     mainStage.show();
+
+                    if (!isLoggedInNow) {
+                        Alert alert = Main.alertBuilder(Alert.AlertType.INFORMATION, "couldntLogInTitle", "couldntLogInHeader", "couldntLogInContent", true);
+                        alert.show();
+                    }
+
+                    Settings.checkIfVersionUpToDate();
+
                     pane.getScene().getWindow().hide();
                 });
             } catch (InterruptedException ex) {
