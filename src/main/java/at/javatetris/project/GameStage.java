@@ -124,6 +124,11 @@ public class GameStage {
     private static boolean spawn;
     private static float timing = 0;
     private static boolean otherPlay = false;
+    private static boolean otherRotate = false;
+    private static boolean otherMove = false;
+    private static boolean otherMoveLeft = false;
+    private static boolean pause = false;
+
     private static float opacity = 0;
 
     /**
@@ -221,7 +226,7 @@ public class GameStage {
         final int secondsPerMinute = 60;
         final int minutesPerHour = 60;
         final int second = 1000;
-        final int topBeforeLosing = 12;
+        final int topBeforeLosing = 6;
 
 
         gameMode = mode;
@@ -243,17 +248,20 @@ public class GameStage {
         final Text blockInfo3 = new Text("It has different shapes.");
         final Text blockInfo4 = new Text("Your goal is to move \nand rotate them");
         final Text blockInfo5 = new Text("so the blocks do \nnot reach the top.");
-        final Text lineClear = new Text(("To clear a line you have to fill a line with Tetrominos"));
+        final Text lineClear = new Text(("To clear a line you have \nto fill a line with blocks."));
 
-        final Text move = new Text("To move the Block, you have to press " + Settings.searchControls("moveLeftKey")
-                + "to move it to the left and " + Settings.searchControls("moveRightKey") + "to move it to the right.");
+        final Text move = new Text("To move the Block to\n the left, press "
+                + Settings.searchControls("moveLeftKey"));
+        final Text moveLeft = new Text("and " + Settings.searchControls("moveRightKey") + " to move it \nto the right.");
 
-        final Text rotate = new Text("To rotate the Tetromino press " + Settings.searchControls("rotateKey"));
+        final Text rotate = new Text("To rotate the \nblock press " + Settings.searchControls("rotateKey"));
 
-        final Text hardDrop = new Text("To let your Tetromino instantly fall down press "
-                + Settings.searchControls("hardDrop"));
+        final Text hardDrop = new Text("To let your block fall down\n to the bottom press "
+                + Settings.searchControls("hardDropKey") + ".");
 
-        final Text multiplier = new Text(" You get more Points if you clear more lines at once");
+        final Text multiplier = new Text("To get extra Points\n clear more lines at once");
+
+        final Text tutorialEnd = new Text("Now lets try yourself.");
         if (tutorial) {
             blockInfo.setStyle("-fx-font: 20 arial;");
             blockInfo.setY(yCoordinate);
@@ -290,6 +298,11 @@ public class GameStage {
             move.setX(xCoordinate5);
             move.setOpacity(0);
 
+            moveLeft.setStyle("-fx-font: 20 arial;");
+            moveLeft.setY(yCoordinate);
+            moveLeft.setX(xCoordinate5);
+            moveLeft.setOpacity(0);
+
             rotate.setStyle("-fx-font: 20 arial;");
             rotate.setY(yCoordinate);
             rotate.setX(xCoordinate5);
@@ -297,7 +310,7 @@ public class GameStage {
 
             hardDrop.setStyle("-fx-font: 20 arial;");
             hardDrop.setY(yCoordinate);
-            hardDrop.setX(xCoordinate5);
+            hardDrop.setX(xCoordinate5 - xCoordinate2);
             hardDrop.setOpacity(0);
 
             multiplier.setStyle("-fx-font: 20 arial;");
@@ -305,10 +318,10 @@ public class GameStage {
             multiplier.setX(xCoordinate5);
             multiplier.setOpacity(0);
 
-
-
-
-
+            tutorialEnd.setStyle("-fx-font: 20 arial;");
+            tutorialEnd.setY(yCoordinate);
+            tutorialEnd.setX(xCoordinate5);
+            tutorialEnd.setOpacity(0);
 
         }
         info.setStyle("-fx-font: 15 arial;");
@@ -347,9 +360,10 @@ public class GameStage {
             all.getChildren().addAll(line, score, info
                     , playTime, time, nextBLocks, endTime, linesCleared, group);
         } else if (tutorial) {
-            all.getChildren().addAll(line, info, score, playTime, time, nextBLocks, linesCleared, group
-            , blockInfo, blockInfo2, blockInfo3, blockInfo4,blockInfo5, lineClear, move, rotate, hardDrop, multiplier);
-        }else{
+            all.getChildren().addAll(line, info, score, playTime, time, nextBLocks, linesCleared
+                    , blockInfo, blockInfo2, blockInfo3, blockInfo4, blockInfo5, lineClear, move, moveLeft, rotate, hardDrop
+                    , multiplier, tutorialEnd, group);
+        } else {
             all.getChildren().addAll(line, info, score, playTime, time, nextBLocks, linesCleared, group);
         }
         // add additional columns and a row at the bottom to create a border for the playground
@@ -379,9 +393,6 @@ public class GameStage {
         nextBLock.c3.setTranslateY(yCoordinate7);
         nextBLock.c4.setTranslateY(yCoordinate7);
 
-        stage.setTitle("JavaTetris");
-
-
         block = currentBlock;
         //prevBlock = blocks;
 
@@ -396,49 +407,125 @@ public class GameStage {
         stage.show();
 
         if (tutorial) {
-            moveDown(block,true,false);
-
-
-
+            moveDown(block, true, false);
+            timing = 0;
+            pause = false;
             fall3 = new Timer();
             tutorialTimer = new TimerTask() {
                 public void run() {
                     Platform.runLater(new Runnable() {
                         public void run() {
                             play = false;
-                            timing += 0.1;
-                            otherPlay = timing < 2.4;
-                            if (timing > 2.4 && timing < 5){
-                                blockInfo.setOpacity((float)timing / 5);
-                            }
-                            if (timing > 5 && timing < 7.5){
-                                blockInfo.setOpacity(0);
-                                blockInfo2.setOpacity(opacity);
-                                opacity += 0.2;
-                            }
-                            if ((timing - 7.5) < 0.1 && timing > 7.4){
-                                opacity = 0;
-                            }
-                            if (timing > 7.5 && timing < 10){
-                                blockInfo2.setOpacity(0);
-                                blockInfo3.setOpacity(opacity);
-                                opacity += 0.2;
-                            }
-                            if ((timing - 10) < 0.1 && timing > 9.9){
-                                opacity = 0;
-                            }
-                            if (timing > 10 && timing < 12.5){
-                                blockInfo3.setOpacity(0);
-                                blockInfo4.setOpacity(opacity);
-                                opacity += 0.2;
-                            }
-                            if ((timing - 12.5) < 0.1 && timing > 12.4){
-                                opacity = 0;
-                            }
-                            if (timing > 12.5 && timing < 15){
-                                blockInfo4.setOpacity(0);
-                                blockInfo5.setOpacity(opacity);
-                                opacity += 0.2;
+                            if (!pause) {
+                                timing += 0.1;
+                                otherPlay = timing < 2.4 || (timing > 27 && timing < 30);
+                                System.out.println(otherPlay + "h");
+                                otherRotate = timing < 25 && timing > 22.6;
+                                otherMove = timing < 20.1 && timing > 18.5;
+                                otherMoveLeft = timing < 22.6 && timing > 21;
+                                if (timing > 2.4 && timing < 5) {
+                                    blockInfo.setOpacity((float) timing / 5);
+                                }
+                                if (timing > 5 && timing < 7.5) {
+                                    blockInfo.setOpacity(0);
+                                    blockInfo2.setOpacity(opacity);
+                                    opacity += 0.2;
+                                }
+                                if ((timing - 7.5) < 0.1 && timing > 7.4) {
+                                    opacity = 0;
+                                }
+                                if (timing > 7.5 && timing < 10) {
+                                    blockInfo2.setOpacity(0);
+                                    blockInfo3.setOpacity(opacity);
+                                    opacity += 0.2;
+                                }
+                                if ((timing - 10) < 0.1 && timing > 9.9) {
+                                    opacity = 0;
+                                }
+                                if (timing > 10 && timing < 12.5) {
+                                    blockInfo3.setOpacity(0);
+                                    blockInfo4.setOpacity(opacity);
+                                    opacity += 0.2;
+                                }
+                                if ((timing - 12.5) < 0.1 && timing > 12.4) {
+                                    opacity = 0;
+                                }
+                                if (timing > 12.5 && timing < 15) {
+                                    blockInfo4.setOpacity(0);
+                                    blockInfo5.setOpacity(opacity);
+                                    opacity += 0.2;
+                                }
+                                if ((timing - 15) < 0.1 && timing > 14.9) {
+                                    opacity = 0;
+                                }
+                                if (timing > 15 && timing < 17.5) {
+                                    blockInfo5.setOpacity(0);
+                                    lineClear.setOpacity(opacity);
+                                    opacity += 0.2;
+                                }
+                                if ((timing - 17.5) < 0.1 && timing > 17.4) {
+                                    opacity = 0;
+                                }
+                                if (timing > 17.5 && timing < 20) {
+                                    lineClear.setOpacity(0);
+                                    move.setOpacity(opacity);
+                                    opacity += 0.2;
+                                }
+                                if ((timing - 20) < 0.1 && timing > 19.9) {
+                                    opacity = 0;
+                                }
+                                if (timing > 20 && timing < 22.5) {
+                                    move.setOpacity(0);
+                                    moveLeft.setOpacity(opacity);
+                                    opacity += 0.2;
+                                }
+                                if ((timing - 22.5) < 0.1 && timing > 22.4) {
+                                    opacity = 0;
+                                }
+                                if (timing > 22.5 && timing < 25) {
+                                    moveLeft.setOpacity(0);
+                                    rotate.setOpacity(opacity);
+                                    opacity += 0.2;
+
+                                }
+                                if ((timing - 25) < 0.1 && timing > 24.9) {
+                                    opacity = 0;
+                                }
+                                if (timing > 25 && timing < 27.5) {
+                                    rotate.setOpacity(0);
+                                    hardDrop.setOpacity(opacity);
+                                    opacity += 0.2;
+                                    if ((timing - 26) < 0.005 && timing > 25.9){
+                                        spaceCooldown = true;
+                                    }
+                                    if ((timing - 27) < 0.005 && timing > 26.9){
+                                        if (spaceCooldown){
+                                            moveDown(block,true,true);
+                                        }
+                                    }
+                                }
+                                if ((timing - 27.5) < 0.1 && timing > 27.4) {
+                                    opacity = 0;
+                                }
+                                if (timing > 27.5 && timing < 30) {
+                                    hardDrop.setOpacity(0);
+                                    multiplier.setOpacity(opacity);
+                                    opacity += 0.2;
+
+                                }
+                                if ((timing - 30) < 0.1 && timing > 29.9) {
+                                    opacity = 0;
+                                }
+                                if (timing > 30 && timing < 32.5) {
+                                    multiplier.setOpacity(0);
+                                    tutorialEnd.setOpacity(opacity);
+                                    opacity += 0.2;
+                                }
+                                if (timing > 34){
+                                    tutorialEnd.setOpacity(0);
+                                    tutorialTimer.cancel();
+                                    play = true;
+                                }
                             }
                         }
                     });
@@ -454,8 +541,17 @@ public class GameStage {
                 Platform.runLater(new Runnable() {
                     public void run() {
 
-                        if (otherPlay){
+                        if (otherPlay && !pause) {
                             moveDown(block, true, false);
+                        }
+                        if (otherRotate && !pause) {
+                            rotateBlock(block);
+                        }
+                        if (otherMove && !pause) {
+                            moveLeft(block);
+                        }
+                        if (otherMoveLeft && !pause) {
+                            moveRight(block);
                         }
 
                         if (play) {
@@ -487,6 +583,9 @@ public class GameStage {
 
 
                         if (play) {
+                            if (!spaceCooldown) {
+                                spaceCooldown = true;
+                            }
                             playTime.setText(Language.getPhrase("playTime"));
                             linesCleared.setText(Language.getPhrase("lines") + " " + lines);
                             if (timeMode) {
@@ -521,9 +620,7 @@ public class GameStage {
                     public void run() {
                         if (play) {
                             seconds++;
-                            if (!spaceCooldown) {
-                                spaceCooldown = true;
-                            }
+
                             if (timeMode) {
                                 endTimer--;
                             }
@@ -573,6 +670,7 @@ public class GameStage {
                     break;
                 case ESCAPE:
                     play = false;
+                    pause = true;
                     PauseGUI.handle(e, gameMode);
                     break;
                 case SPACE:
@@ -876,6 +974,7 @@ public class GameStage {
         final int yCoordinate = 70;
         final int indexToDelete = 7;
         final int indexToDelete2 = 8;
+        final int indexToDelte3 = 19;
         final int pointsToAdd = 20;
         Boolean end = false;
 
@@ -915,7 +1014,9 @@ public class GameStage {
                         for (int i = 0; i < 1; i++) {
                             all.getChildren().remove(indexToDelete2);
                         }
-                    } else {
+                    } else if (tutorial){
+                        all.getChildren().remove(indexToDelte3);
+                    } else{
                         for (int i = 0; i < 1; i++) {
                             all.getChildren().remove(indexToDelete);
                         }
@@ -959,8 +1060,7 @@ public class GameStage {
                     tBlock.c3.setY(tBlock.c3.getY() + SIZE);
                     tBlock.c4.setY(tBlock.c4.getY() + SIZE);
                 }
-                System.out.println(end);
-                System.out.println(spaceCooldown);
+
             } while (!end);
 
         } else {
@@ -1117,5 +1217,9 @@ public class GameStage {
      */
     public static void setEndTimer(int endTimer) {
         GameStage.endTimer = endTimer;
+    }
+
+    public static void setPause(boolean pause) {
+        GameStage.pause = pause;
     }
 }
