@@ -226,5 +226,6 @@
          </children>
       </VBox>
       <Line endX="-873.5" endY="-92.0" layoutX="1168.0" layoutY="375.0" startX="-873.5" startY="-296.8359375" />
+      <Text layoutX="186.0" layoutY="288.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click on a key field to set a new key for it" />
    </children>
 </Pane>

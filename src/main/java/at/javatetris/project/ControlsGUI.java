@@ -72,9 +72,6 @@ public class ControlsGUI {
         SettingsGUI.start();
     }
 
-    //TODO funktional machen, checken ob zwei den gleichen KEY haben,
-    // usw., Felder vlt bissl größer machen damit sich auch SPACE ausgeht, set ne
-
     /** on load, set key texts to in controls saved keys */
     @FXML
     public void initialize() {

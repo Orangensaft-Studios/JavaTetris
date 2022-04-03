@@ -35,9 +35,9 @@
             </Text>
             <HBox prefHeight="50.0" prefWidth="464.0" spacing="30.0">
                <children>
-                  <HBox prefHeight="48.0" prefWidth="216.0">
+                  <HBox onMouseClicked="#dropField" prefHeight="48.0" prefWidth="216.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Beschleunigen" underline="true">
+                        <Text onMouseClicked="#dropField" strokeType="OUTSIDE" strokeWidth="0.0" text="Beschleunigen" underline="true">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -58,9 +58,9 @@
                         </Text>
                      </children>
                   </HBox>
-                  <HBox prefHeight="49.0" prefWidth="217.0">
+                  <HBox onMouseClicked="#hardDropField" prefHeight="49.0" prefWidth="217.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Fallen lassen" underline="true">
+                        <Text onMouseClicked="#hardDropField" strokeType="OUTSIDE" strokeWidth="0.0" text="Fallen lassen" underline="true">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -68,7 +68,7 @@
                               <Insets />
                            </HBox.margin>
                         </Text>
-                        <Text fx:id="hardDropKey" onMouseClicked="#dropField" strokeType="OUTSIDE" strokeWidth="0.0" text="SPACE" wrappingWidth="60.7734375">
+                        <Text fx:id="hardDropKey" onMouseClicked="#hardDropField" strokeType="OUTSIDE" strokeWidth="0.0" text="SPACE" wrappingWidth="60.7734375">
                            <HBox.margin>
                               <Insets left="30.0" />
                            </HBox.margin>
@@ -85,9 +85,9 @@
             </HBox>
             <HBox prefHeight="50.0" prefWidth="464.0" spacing="30.0">
                <children>
-                  <HBox prefHeight="38.0" prefWidth="216.0">
+                  <HBox onMouseClicked="#moveLeftField" prefHeight="38.0" prefWidth="216.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nach links" underline="true">
+                        <Text onMouseClicked="#moveLeftField" strokeType="OUTSIDE" strokeWidth="0.0" text="Nach links" underline="true">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -108,9 +108,9 @@
                         </Text>
                      </children>
                   </HBox>
-                  <HBox prefHeight="70.0" prefWidth="219.0">
+                  <HBox onMouseClicked="#moveRightField" prefHeight="70.0" prefWidth="219.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Nach rechts" underline="true">
+                        <Text onMouseClicked="#moveRightField" strokeType="OUTSIDE" strokeWidth="0.0" text="Nach rechts" underline="true">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -138,9 +138,9 @@
                   <Insets />
                </VBox.margin>
                <children>
-                  <HBox prefHeight="39.0" prefWidth="217.0">
+                  <HBox onMouseClicked="#rotateField" prefHeight="39.0" prefWidth="217.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Drehen" underline="true">
+                        <Text onMouseClicked="#rotateField" strokeType="OUTSIDE" strokeWidth="0.0" text="Drehen" underline="true">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -161,9 +161,9 @@
                         </Text>
                      </children>
                   </HBox>
-                  <HBox prefHeight="70.0" prefWidth="218.0">
+                  <HBox onMouseClicked="#pauseField" prefHeight="70.0" prefWidth="218.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pause/Play" underline="true">
+                        <Text onMouseClicked="#pauseField" strokeType="OUTSIDE" strokeWidth="0.0" text="Pause/Play" underline="true">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -188,9 +188,9 @@
             </HBox>
             <HBox prefHeight="50.0" prefWidth="464.0" spacing="30.0">
                <children>
-                  <HBox prefHeight="40.0" prefWidth="218.0">
+                  <HBox onMouseClicked="#holdField" prefHeight="40.0" prefWidth="218.0">
                      <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hold" underline="true">
+                        <Text onMouseClicked="#holdField" strokeType="OUTSIDE" strokeWidth="0.0" text="Hold" underline="true">
                            <font>
                               <Font size="20.0" />
                            </font>
@@ -216,15 +216,16 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                <children>
-                  <Button fx:id="resetControlsBtn" mnemonicParsing="false" onAction="#resetControls" prefHeight="48.0" prefWidth="220.0" style="-fx-background-color: red;" text="Reset all controls" textFill="WHITE">
+                  <Button fx:id="resetControlsBtn" mnemonicParsing="false" onAction="#resetControls" prefHeight="48.0" prefWidth="220.0" style="-fx-background-color: red;" text="Alles zurücksetzten" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
                </children>
             </HBox>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Can also always be controlled with the arrow keys" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kann auch immer mit den Pfeiltasten gesteuert werden" />
          </children>
       </VBox>
       <Line endX="-873.5" endY="-92.0" layoutX="1168.0" layoutY="375.0" startX="-873.5" startY="-296.8359375" />
+      <Text layoutX="151.0" layoutY="288.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Klicke auf ein Tastenfeld um eine neue Taste zu setzen" />
    </children>
 </Pane>

@@ -82,7 +82,9 @@ public class ControlsExtraWindowGUI {
     private void startListener(MouseEvent mouseEvent) {
         scene.addEventHandler(KeyEvent.KEY_PRESSED, (pressedKeyEvent) -> {
             errorMessage.setVisible(false);
-            String tempKey = pressedKeyEvent.getText();
+            spaceCheckBox.setSelected(false);
+
+            String tempKey = pressedKeyEvent.getCode().getName();
             System.out.println(tempKey);
 
             if (tempKey.equals("Undefined")) {
@@ -99,12 +101,8 @@ public class ControlsExtraWindowGUI {
 
     }
 
-    @FXML
-    private void spaceSelected(ActionEvent actionEvent) {
-        //pressedKey.setText("SPACE");
-    }
-
     private void errorMessage(String errorMessageLanguageKey) {
+        pressedKey.setText("");
         errorMessage.setVisible(true);
         errorMessage.setText(Language.getPhrase(errorMessageLanguageKey));
     }
@@ -116,6 +114,7 @@ public class ControlsExtraWindowGUI {
         keyText.setText(keyField);
 
         spaceCheckBox.selectedProperty().addListener((ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
+            errorMessage.setVisible(false);
             pressedKey.setText("SPACE");
             key = "SPACE";
         });
@@ -132,6 +131,8 @@ public class ControlsExtraWindowGUI {
             return;
         }
 
+
+        System.out.println(keyField);
         Settings.setNewValue(keyField + "Key", key, "controls");
         ControlsGUI.start();
     }
