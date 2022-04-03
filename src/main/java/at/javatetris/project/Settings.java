@@ -1,9 +1,5 @@
 package at.javatetris.project;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonBar;
-import javafx.scene.control.ButtonType;
-
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -18,32 +14,35 @@ import java.util.Properties;
  * @author Severin Rosner
  */
 public class Settings {
+    /** version number */
+    private static final String VERSION = "1.0.0";
+
     /** user home path + AppData\Local\JavaTetris\ */
-    private final static String JAVATETRIS_DIR_PATH = System.getProperty("user.home") + "\\AppData\\Local\\JavaTetris\\";
+    private final static String JAVATETRIS_DIR_PATH = System.getProperty("user.home") + "\\AppData\\Local\\Orangensaft Studios\\JavaTetris\\";
 
     /** path as string to userData directory in JavaTetris directory */
-    public final static String JAVATETRIS_USR_DATA_DIR_PATH = JAVATETRIS_DIR_PATH + "\\userData\\";
+    private final static String JAVATETRIS_USR_DATA_DIR_PATH = JAVATETRIS_DIR_PATH + "\\userData\\";
+
+    /** path as string to MAJOR VERSION directory in JavaTetris directory */
+    private final static String JAVATETRIS_MAJOR_VERSION_PATH = JAVATETRIS_DIR_PATH + "v" + VERSION.substring(0, VERSION.indexOf(".")) + "\\";
 
     /** location of setting properties file */
-    public final static String SETTING_FILE_PATH = JAVATETRIS_DIR_PATH + "config.properties";
+    private final static String SETTING_FILE_PATH = JAVATETRIS_MAJOR_VERSION_PATH + "config.properties";
 
     /** location of controls properties file */
-    private final static String CONTROLS_FILE_PATH = JAVATETRIS_DIR_PATH + ".controls.properties";
+    private final static String CONTROLS_FILE_PATH = JAVATETRIS_MAJOR_VERSION_PATH + "controls.properties";
 
     /** location of all usernames passwort properties file */
-    public final static String ALL_USERNAMES_FILE_PATH = JAVATETRIS_USR_DATA_DIR_PATH + ".allUsernames.txt";
+    private final static String ALL_USERNAMES_FILE_PATH = JAVATETRIS_USR_DATA_DIR_PATH + "allUsernames.txt";
 
     /** location of highscore file */
-    public final static String HIGHSCORE_FILE = JAVATETRIS_USR_DATA_DIR_PATH + ".highscores.txt";
+    private final static String HIGHSCORE_FILE_PATH = JAVATETRIS_USR_DATA_DIR_PATH + "highscores.txt";
 
     /** setting properties */
     private static Properties settings;
 
     /** controls properties */
     private static Properties controls;
-
-    /** version number */
-    private static final String VERSION = "0.6.1";
 
     /** default lines for config, add config values here */
     private static final List<String> DEFAULT_CONFIG = Arrays.asList(
@@ -57,13 +56,46 @@ public class Settings {
 
     /** default control lines for controls files */
     private static final List<String> DEFAULT_CONTROLS = Arrays.asList(
-            "pauseKey=esc",
+            "pauseKey=ESC",
             "dropKey=S",
             "rotateKey=W",
             "moveLeftKey=A",
             "moveRightKey=D",
-            "hardDropKey=SPACE"
+            "hardDropKey=SPACE",
+            "holdKey=SHIFT"
     );
+
+    /**
+     * getter for JAVATETRIS_DIR_PATH
+     * @return JAVATETRIS_DIR_PATH
+     */
+    public static String getJavatetrisDirPath() {
+        return JAVATETRIS_DIR_PATH;
+    }
+
+    /**
+     * getter for JAVATETRIS_USR_DATA_DIR_PATH
+     * @return JAVATETRIS_USR_DATA_DIR_PATH
+     */
+    public static String getJavatetrisUsrDataDirPath() {
+        return JAVATETRIS_USR_DATA_DIR_PATH;
+    }
+
+    /**
+     * getter for ALL_USERNAMES_FILE_PATH
+     * @return ALL_USERNAMES_FILE_PATH
+     */
+    public static String getAllUsernamesFilePath() {
+        return ALL_USERNAMES_FILE_PATH;
+    }
+
+    /**
+     * getter for HIGHSCORE_FILE_PATH
+     * @return HIGHSCORE_FILE_PATH
+     */
+    public static String getHighscoreFilePath() {
+        return HIGHSCORE_FILE_PATH;
+    }
 
     /**
      * getter for setting properties
@@ -82,17 +114,20 @@ public class Settings {
     }
 
     /** check if setting file is here, else create directory and file with defaultConfig */
-    public static void checkFile() {
+    public static void checkFiles() {
         try {
-            //Files.createDirectories(Paths.get(JAVATETRIS_DIR_PATH));
-            Files.createDirectories(Paths.get(JAVATETRIS_USR_DATA_DIR_PATH));
-
-            System.out.println("Settings.java: Directory: " + JAVATETRIS_DIR_PATH);
-
+            boolean dirExists = Files.exists(Paths.get(JAVATETRIS_DIR_PATH));
             File settingFile = new File(SETTING_FILE_PATH);
             File controlsFile = new File(CONTROLS_FILE_PATH);
-            File allUsernames = new File(ALL_USERNAMES_FILE_PATH);
-            File highscoreFile = new File(HIGHSCORE_FILE);
+
+            Files.createDirectories(Paths.get(JAVATETRIS_USR_DATA_DIR_PATH));
+            System.out.println("Settings.java: Directory: " + JAVATETRIS_DIR_PATH);
+
+            if ((!Files.exists(Paths.get(JAVATETRIS_MAJOR_VERSION_PATH))) && (dirExists)) {
+                SplashScreenController.newMajorVersion = true;
+            }
+
+            Files.createDirectories(Paths.get(JAVATETRIS_MAJOR_VERSION_PATH));
 
             if (!settingFile.exists()) {
                 //write the config lines in the new created config.properties file
@@ -108,6 +143,9 @@ public class Settings {
                 System.out.println("Settings.java: Controls File was created here: " + controlsFile.getAbsolutePath());
             }
 
+            File allUsernames = new File(ALL_USERNAMES_FILE_PATH);
+            File highscoreFile = new File(HIGHSCORE_FILE_PATH);
+
             if (!allUsernames.exists()) {
                 //create all usernames file (for Account.java)
                 Files.createFile(Paths.get(ALL_USERNAMES_FILE_PATH));
@@ -116,14 +154,18 @@ public class Settings {
             }
 
             if (!highscoreFile.exists()) {
-                Files.createFile(Paths.get(HIGHSCORE_FILE));
+                Files.createFile(Paths.get(HIGHSCORE_FILE_PATH));
                 System.out.println("Settings.java: highscore File created here: " + highscoreFile.getAbsolutePath());
             }
 
             load();
 
+            if (!searchSettings("gameVersion").equals(VERSION)) {
+                setNewValue("gameVersion", VERSION, "settings");
+            }
+
         } catch (IOException e) {
-            Main.errorAlert("Settings.java");
+            //Main.errorAlert("Settings.java");
             e.printStackTrace();
         }
     }
@@ -148,7 +190,7 @@ public class Settings {
             controls.load(controlsInputStream);
 
         } catch (IOException e) {
-            Main.errorAlert("Settings.java");
+            //Main.errorAlert("Settings.java");
             e.printStackTrace();
         }
     }
@@ -255,22 +297,6 @@ public class Settings {
      */
     public static String searchControls(String key) {
         return getControls().getProperty(key);
-    }
-
-    //TODO dont show again for this version
-    /** check if version in code is same as in local stored config file */
-    public static void checkIfVersionUpToDate() {
-        if (!VERSION.equals(searchSettings("gameVersion"))) {
-            Alert alert = Main.alertBuilder(Alert.AlertType.WARNING, "notSameVersionTitle", "notSameVersionHeader", "notSameVersionContent", false);
-            alert.setContentText(Language.getPhrase("notSameVersionContent") + " " + SETTING_FILE_PATH);
-            ButtonType closeButton = new ButtonType(Language.getPhrase("closeGameTitle"), ButtonBar.ButtonData.OK_DONE);
-            alert.getButtonTypes().setAll(closeButton);
-            alert.showAndWait().ifPresent(type -> {
-                if (type == closeButton) {
-                    Main.getStage().close();
-                }
-            });
-        }
     }
 
 }

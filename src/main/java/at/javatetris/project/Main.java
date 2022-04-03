@@ -44,7 +44,7 @@ public class Main extends Application {
         //set the mainStage
         splashStage.setResizable(false);
         splashStage.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResource("icons/jt_icon48x48_no_bg.png")).toURI().toString()));
-        splashStage.setTitle("JavaTetris");
+        splashStage.setTitle("JavaTetris | Loading...");
 
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("fxml/splashScreen.fxml")));
         Scene scene = new Scene(root);
@@ -64,6 +64,8 @@ public class Main extends Application {
      */
     public static Alert alertBuilder(Alert.AlertType type, String titleKey, String headerKey, String contentKey, boolean implementOkButton) {
         Alert alert = new Alert(type);
+        alert.setResizable(false);
+        alert.initStyle(StageStyle.UTILITY);
         alert.setTitle(Language.getPhrase(titleKey));
         alert.setHeaderText(Language.getPhrase(headerKey));
         alert.setContentText(Language.getPhrase(contentKey));

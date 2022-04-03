@@ -1,14 +1,12 @@
 package at.javatetris.project;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -21,9 +19,6 @@ import java.io.IOException;
  */
 
 public class ControlsGUI {
-    /** scene */
-    private static Scene scene;
-
     /** pauseKey text */
     @FXML
     private Text pauseKey;
@@ -44,14 +39,21 @@ public class ControlsGUI {
     @FXML
     private Text moveRightKey;
 
+    /** hardDropKey text */
+    @FXML
+    private Text hardDropKey;
+
+    /** holdKey text */
+    @FXML
+    private Text holdKey;
+
     /**
      * start method to load controls fxml file
      */
     public static void start() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ControlsGUI.class.getResource("fxml/controls_" + Language.get() + ".fxml"));
-            //Scene scene = new Scene(fxmlLoader.load());
-            scene = new Scene(fxmlLoader.load());
+            Scene scene = new Scene(fxmlLoader.load());
             Stage stage = Main.getStage();
             stage.setScene(scene);
         } catch (IOException e) {
@@ -60,13 +62,6 @@ public class ControlsGUI {
         }
     }
 
-    /**
-     * getter for scene
-     * @return scene
-     * */
-    public static Scene getScene() {
-        return scene;
-    }
 
     /**
      * on arrow back click, load SettingsGUI
@@ -88,53 +83,55 @@ public class ControlsGUI {
         rotateKey.setText(Settings.searchControls("rotateKey"));
         moveLeftKey.setText(Settings.searchControls("moveLeftKey"));
         moveRightKey.setText(Settings.searchControls("moveRightKey"));
+        hardDropKey.setText(Settings.searchControls("hardDropKey"));
+        holdKey.setText(Settings.searchControls("holdKey"));
     }
 
+    private static void extraWindow(String languageKeyFieldName) {
+        ControlsExtraWindowGUI.start(Language.getPhrase(languageKeyFieldName));
 
-    private EventHandler<KeyEvent> keyHandler;
-
-    private void setKey(Text fieldName) {
-        /*
-        getScene().addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
-            fieldName.setText(key.getCode().getName());
-            try {
-                Settings.setNewValue(fieldName.getId(), key.getCode().toString(), "controls");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-
-         */
     }
 
     @FXML
     private void pauseField(MouseEvent mouseEvent) {
         System.out.println("ControlsGUI.java: pauseField clicked");
-        setKey(pauseKey);
+        extraWindow("pause");
     }
 
     @FXML
     private void dropField(MouseEvent mouseEvent) {
         System.out.println("ControlsGUI.java: dropField clicked");
-        setKey(dropKey);
+        extraWindow("drop");
     }
 
     @FXML
     private void rotateField(MouseEvent mouseEvent) {
         System.out.println("ControlsGUI.java: rotateField clicked");
-        setKey(rotateKey);
+        extraWindow("rotate");
     }
 
     @FXML
     private void moveLeftField(MouseEvent mouseEvent) {
         System.out.println("ControlsGUI.java: moveLeftField clicked");
-        setKey(moveLeftKey);
+        extraWindow("moveLeft");
     }
 
     @FXML
     private void moveRightField(MouseEvent mouseEvent) {
         System.out.println("ControlsGUI.java: moveRightField clicked");
-        setKey(moveRightKey);
+        extraWindow("moveRight");
+    }
+
+    @FXML
+    private void hardDropField(MouseEvent mouseEvent) {
+        System.out.println("ControlsGUI.java: hardDropField clicked");
+        extraWindow("hardDrop");
+    }
+
+    @FXML
+    private void holdField(MouseEvent mouseEvent) {
+        System.out.println("ControlsGUI.java: holdField clicked");
+        extraWindow("hold");
     }
 
     @FXML

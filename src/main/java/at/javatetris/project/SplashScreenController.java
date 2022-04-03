@@ -32,6 +32,9 @@ public class SplashScreenController implements Initializable {
     /** progressbar to show status */
     @FXML private ProgressBar progressBar;
 
+    /** if there was a new major version */
+    public static boolean newMajorVersion = false;
+
     /**
      * splash screen class
      */
@@ -39,7 +42,6 @@ public class SplashScreenController implements Initializable {
         @Override
         public void run() {
             try {
-                boolean loggedIn = false;
                 final double progress1 = 0.10;
                 final double progress2 = 0.35;
                 final double progress3 = 0.80;
@@ -52,7 +54,7 @@ public class SplashScreenController implements Initializable {
                 progressBar.setProgress(progress1);
 
                 //check if setting and controls Files are available and then load from it
-                Settings.checkFile();
+                Settings.checkFiles();
 
                 progressBar.setProgress(progress2);
                 loadingText.setText(Language.getPhrase("loadingSettings"));
@@ -61,28 +63,33 @@ public class SplashScreenController implements Initializable {
                 String accountType = Settings.searchSettings("accountType");
                 String username = Settings.searchSettings("username");
                 String password = Settings.searchSettings("password");
-                if (accountType.equals("online")) {
 
-                    loadingText.setText(Language.getPhrase("loadingAccountOnline"));
+                boolean thereIsUser = !username.equals("");
+
+                if (thereIsUser) {
+                    if (accountType.equals("online")) {
+
+                        loadingText.setText(Language.getPhrase("loadingAccountOnline") + username + "'...");
 
 
-                    if (DataBaseAPI.onlineLogin(username, password).equals("loggedIn")) {
-                        System.out.println("SplashScreenController.java: loggedIn");
-                        loggedIn = true;
-                    } else {
-                        Settings.setNewValue("username", "", "settings");
-                        Settings.setNewValue("password", "", "settings");
-                        Settings.setNewValue("accountType", "", "settings");
-                        Alert alert = Main.alertBuilder(Alert.AlertType.INFORMATION, "couldntLogInTitle", "couldntLogInHeader", "couldntLogInContent", true);
-                        alert.show();
+                        if (DataBaseAPI.onlineLogin(username, password).equals("loggedIn")) {
+                            System.out.println("SplashScreenController.java: loggedIn");
+
+                        } else {
+                            Settings.setNewValue("username", "", "settings");
+                            Settings.setNewValue("password", "", "settings");
+                            Settings.setNewValue("accountType", "", "settings");
+                            Alert alert = Main.alertBuilder(Alert.AlertType.INFORMATION, "couldntLogInTitle", "couldntLogInHeader", "couldntLogInContent", true);
+                            alert.show();
+                        }
+
+                    } else if (accountType.equals("local")) {
+
+                        loadingText.setText(Language.getPhrase("loadingAccountLocal") + username + "'...");
+
+                        //load data for username
+                        UserDataLocal.load(username);
                     }
-
-                } else if (accountType.equals("local")) {
-                    loggedIn = true;
-                    loadingText.setText(Language.getPhrase("loadingAccountLocal"));
-
-                    //load data for username
-                    UserDataLocal.load(username);
                 }
 
                 progressBar.setProgress(progress3);
@@ -98,7 +105,6 @@ public class SplashScreenController implements Initializable {
                 Thread.sleep(sleepTime);
                 progressBar.setProgress(progress6);
 
-                final boolean isLoggedInNow = loggedIn;
 
                 Platform.runLater(() -> {
                     Stage mainStage = new Stage();
@@ -118,19 +124,20 @@ public class SplashScreenController implements Initializable {
                     } catch (URISyntaxException e) {
                         e.printStackTrace();
                     }
-                    mainStage.setTitle("JavaTetris | Version: " + Settings.searchSettings("gameVersion"));
+                    mainStage.setTitle("JavaTetris | Version: " + Settings.searchSettings("gameVersion") + " (ALPHA)");
 
                     Main.setMainStage(mainStage);
 
                     mainStage.setScene(scene);
                     mainStage.show();
 
-                    if (!isLoggedInNow) {
-                        Alert alert = Main.alertBuilder(Alert.AlertType.INFORMATION, "couldntLogInTitle", "couldntLogInHeader", "couldntLogInContent", true);
-                        alert.show();
+                    if (newMajorVersion) {
+                        Alert majorUpdateAlert = Main.alertBuilder(Alert.AlertType.INFORMATION, "majorUpdateTitle", "majorUpdateHeader", "majorUpdateContent", true);
+                        majorUpdateAlert.setTitle(Language.getPhrase("majorUpdateTitle"));
+                        majorUpdateAlert.setHeaderText(Language.getPhrase("majorUpdateHeader") + Language.getPhrase("majorUpdateContent"));
+                        majorUpdateAlert.setContentText(Settings.getJavatetrisDirPath() + " " + Language.getPhrase("majorUpdateContent2"));
+                        majorUpdateAlert.show();
                     }
-
-                    Settings.checkIfVersionUpToDate();
 
                     pane.getScene().getWindow().hide();
                 });

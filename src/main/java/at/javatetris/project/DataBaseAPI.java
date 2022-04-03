@@ -11,20 +11,6 @@ import java.util.Scanner;
  * @author Severin Rosner
  */
 public class DataBaseAPI {
-    /*
-    CREATE TABLE `UserData` (
-	`username` VARCHAR(15) DEFAULT NULL,
-	`password` TEXT,
-	`hs_classic` INT DEFAULT NULL,
-	`hs_time` INT DEFAULT NULL,
-	`hs_infinity` INT DEFAULT NULL,
-	`gamesPlayed` INT DEFAULT NULL,
-	`timePlayed` INT DEFAULT NULL,
-	PRIMARY KEY (`username`)
-     );
-     */
-
-
     /** response code 500 */
     private static final int RESPONSE_CODE_500 = 500;
     /** response code 404 */
@@ -48,7 +34,7 @@ public class DataBaseAPI {
             conn.connect();
 
             int responseCode = conn.getResponseCode();
-            System.out.println("DataBaseAPI: Response code is: " + responseCode);
+            System.out.println("DataBaseAPI.java: Response code is: " + responseCode);
 
             if (responseCode == RESPONSE_CODE_500) {
                 //no password or user given, shouldn't occur anyway
@@ -93,7 +79,7 @@ public class DataBaseAPI {
             conn.connect();
 
             int responseCode = conn.getResponseCode();
-            System.out.println("DataBaseAPI: Response code is: " + responseCode);
+            System.out.println("DataBaseAPI.java: Response code is: " + responseCode);
 
             if (responseCode == RESPONSE_CODE_500) {
                 conn.disconnect();
@@ -124,7 +110,14 @@ public class DataBaseAPI {
         }
     }
 
-
+    /**
+     * create api call to save data
+     * @param username to save data for
+     * @param password to check if valid
+     * @param field to store value to
+     * @param value the new value
+     * @return if successful
+     */
     public static String saveData(String username, String password, String field, String value) {
         try {
             String urlString = String.format("https://80458.wayscript.io/saveData?username=%s&password=%s&field=%s&value=%s", username, password, field, value);
@@ -135,7 +128,7 @@ public class DataBaseAPI {
             conn.connect();
 
             int responseCode = conn.getResponseCode();
-            System.out.println("DataBaseAPI: Response code is: " + responseCode);
+            System.out.println("DataBaseAPI.java: Response code is: " + responseCode);
 
             if (responseCode == RESPONSE_CODE_500) {
                 //no password or user given, shouldn't occur anyway
@@ -179,7 +172,7 @@ public class DataBaseAPI {
             conn.connect();
 
             int responseCode = conn.getResponseCode();
-            System.out.println("DataBaseAPI: Response code is: " + responseCode);
+            System.out.println("DataBaseAPI.java: Response code is: " + responseCode);
 
             if (responseCode == RESPONSE_CODE_404) {
                 conn.disconnect();
@@ -194,7 +187,7 @@ public class DataBaseAPI {
                     data += sc.nextLine();
                 }
 
-                System.out.println("DataBaseAPI: data: " + data);
+                System.out.println("DataBaseAPI.java: data: " + data);
 
                 sc.close();
             }

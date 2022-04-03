@@ -444,7 +444,7 @@
                                                 </HBox>
                                                 <HBox prefHeight="46.0" prefWidth="600.0" spacing="50.0">
                                                    <children>
-                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="1.">
+                                                      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="2.">
                                                          <font>
                                                             <Font size="19.0" />
                                                          </font>

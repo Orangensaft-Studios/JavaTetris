@@ -9,7 +9,7 @@ import static java.nio.file.StandardOpenOption.APPEND;
 
 public class UserDataLocal {
     /** path where file is located */
-    private static final String USERNAME_FILE = Settings.JAVATETRIS_USR_DATA_DIR_PATH;
+    private static final String USERNAME_FILE = Settings.getJavatetrisUsrDataDirPath();
 
     /** user data properties of current user */
     private static Properties userDataLocal;
@@ -86,7 +86,7 @@ public class UserDataLocal {
     public static void setNewHighscore(String value, String username) {
         try {
             Files.writeString(
-                    Path.of(Settings.HIGHSCORE_FILE),
+                    Path.of(Settings.getHighscoreFilePath()),
                     value + username + System.lineSeparator(), APPEND
             );
         } catch (IOException e) {

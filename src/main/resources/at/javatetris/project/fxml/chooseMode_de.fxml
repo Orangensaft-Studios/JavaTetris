@@ -13,7 +13,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.javatetris.project.ChooseModeGUI">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="114.0" layoutX="189.0" layoutY="248.0" onMouseClicked="#startInfinityMode" opacity="0.3" stroke="BLACK" strokeType="INSIDE" width="166.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="114.0" layoutX="189.0" layoutY="248.0" onMouseClicked="#startInfinityMode" stroke="BLACK" strokeType="INSIDE" width="166.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Rectangle>
@@ -21,7 +21,7 @@
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Rectangle>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" height="85.0" layoutX="-6.0" layoutY="116.0" onMouseClicked="#startModeTutorial" opacity="0.3" stroke="BLACK" strokeType="INSIDE" width="93.0">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" height="85.0" layoutX="-6.0" layoutY="116.0" onMouseClicked="#startModeTutorial" stroke="BLACK" strokeType="INSIDE" width="93.0">
          <cursor>
             <Cursor fx:constant="HAND" />
          </cursor></Rectangle>
@@ -39,7 +39,7 @@
             <Font size="52.0" />
          </font>
       </Text>
-      <ImageView fitHeight="75.0" fitWidth="72.0" layoutX="7.0" layoutY="123.0" onMouseClicked="#startModeTutorial" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="75.0" fitWidth="72.0" layoutX="7.0" layoutY="123.0" onMouseClicked="#startModeTutorial" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../icons/mode_tutorial_icon.png" />
          </image>
@@ -47,7 +47,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <ImageView fitHeight="104.0" fitWidth="153.0" layoutX="214.0" layoutY="253.0" onMouseClicked="#startInfinityMode" opacity="0.3" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="104.0" fitWidth="153.0" layoutX="214.0" layoutY="253.0" onMouseClicked="#startInfinityMode" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../icons/mode_infinity_icon.png" />
          </image>
@@ -75,7 +75,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <Text fill="#fafafa" layoutX="168.0" layoutY="315.0" onMouseClicked="#startInfinityMode" opacity="0.3" rotate="-90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Endlos">
+      <Text fill="#fafafa" layoutX="168.0" layoutY="315.0" onMouseClicked="#startInfinityMode" rotate="-90.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Endlos">
          <font>
             <Font size="21.0" />
          </font>
@@ -90,7 +90,7 @@
             <Font size="46.0" />
          </font>
       </Text>
-      <Text layoutX="13.0" layoutY="223.0" opacity="0.3" strokeType="OUTSIDE" strokeWidth="0.0" text="Tutorial">
+      <Text layoutX="13.0" layoutY="223.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tutorial">
          <font>
             <Font size="18.0" />
          </font>

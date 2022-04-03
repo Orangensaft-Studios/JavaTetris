@@ -41,6 +41,7 @@ public class PauseGUI {
     private void continueClicked(ActionEvent actionEvent) {
         setPlay(!"Tutorial".equals(gameMode));
         setPause(false);
+        Main.getStage().setAlwaysOnTop(true);
         newWindow.close();
     }
 

@@ -42,9 +42,14 @@ public class InfoGUI {
     @FXML
     private Text versionTxt;
 
+    /** text to show if the music is from a friend */
+    @FXML
+    private Text musicBy;
+
     /** on load, set versionTxt in correct language and get current version from settings (config file) */
     @FXML
     public void initialize() {
         versionTxt.setText(Language.getPhrase("versionTxt") + " " + Settings.searchSettings("gameVersion"));
+        musicBy.setVisible(false);
     }
 }

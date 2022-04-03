@@ -52,7 +52,7 @@
                   <Font size="20.0" />
                </font>
             </Text>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Musik von Kiyan">
+            <Text fx:id="musicBy" strokeType="OUTSIDE" strokeWidth="0.0" text="Musik von Kiyan">
                <font>
                   <Font size="21.0" />
                </font>

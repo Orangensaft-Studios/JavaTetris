@@ -129,13 +129,13 @@ public class Account {
 
         //write the username to the all username file
         Files.writeString(
-                Path.of(Settings.ALL_USERNAMES_FILE_PATH),
+                Path.of(Settings.getAllUsernamesFilePath()),
                 username + System.lineSeparator(), APPEND
         );
 
         //create a user data file with username as name
         File playerDataFile = new File(username + ".properties");
-        Files.write(Paths.get(Settings.JAVATETRIS_USR_DATA_DIR_PATH + playerDataFile), userDataTemplate, StandardCharsets.UTF_8);
+        Files.write(Paths.get(Settings.getJavatetrisUsrDataDirPath() + playerDataFile), userDataTemplate, StandardCharsets.UTF_8);
 
         //set username, password and accountType in config/settings file
         setUsernamePasswordAccountTypeInSettings(username, password, "local");
@@ -168,7 +168,7 @@ public class Account {
             //online login
             if (type == onlineBtn) {
                 //try online login
-                //String returnValueOnlineLogin = DataBase.onlineLogin(username, password);
+
                 String returnValueOnlineLogin = DataBaseAPI.onlineLogin(username, password);
 
                 System.out.println("Account.java: Returnvalue onlineLogin: " + returnValueOnlineLogin);
@@ -229,7 +229,7 @@ public class Account {
     private static boolean doesUsernameExistInFile(String username) {
         //read all lines from all username files
         try {
-            List<String> file = Files.readAllLines(Path.of(Settings.ALL_USERNAMES_FILE_PATH));
+            List<String> file = Files.readAllLines(Path.of(Settings.getAllUsernamesFilePath()));
             for (String line : file) {
                 //check if the given username already exists in allUsernames file
                 if (line.equals(username)) {

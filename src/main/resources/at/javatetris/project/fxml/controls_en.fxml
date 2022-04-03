@@ -33,44 +33,44 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </Text>
-            <HBox prefHeight="55.0" prefWidth="464.0" spacing="30.0">
+            <HBox prefHeight="50.0" prefWidth="464.0" spacing="30.0">
                <children>
-                  <HBox prefHeight="60.0" prefWidth="200.0">
-                     <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pause/Play" underline="true">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <HBox.margin>
-                              <Insets top="10.0" />
-                           </HBox.margin>
-                        </Text>
-                        <Text fx:id="pauseKey" onMouseClicked="#pauseField" strokeType="OUTSIDE" strokeWidth="0.0" text="KEY" wrappingWidth="48.7734375">
-                           <HBox.margin>
-                              <Insets left="30.0" top="10.0" />
-                           </HBox.margin>
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                           <cursor>
-                              <Cursor fx:constant="HAND" />
-                           </cursor>
-                        </Text>
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="20.0" prefWidth="200.0">
+                  <HBox prefHeight="50.0" prefWidth="234.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Drop" underline="true">
                            <font>
                               <Font size="20.0" />
                            </font>
                            <HBox.margin>
-                              <Insets top="10.0" />
+                              <Insets />
                            </HBox.margin>
                         </Text>
-                        <Text fx:id="dropKey" onMouseClicked="#dropField" strokeType="OUTSIDE" strokeWidth="0.0" text="KEY" wrappingWidth="48.7734375">
+                        <Text fx:id="dropKey" onMouseClicked="#dropField" strokeType="OUTSIDE" strokeWidth="0.0" text="SPACE" wrappingWidth="59.7734375">
                            <HBox.margin>
-                              <Insets left="90.0" top="10.0" />
+                              <Insets left="80.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Text>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="55.0" prefWidth="237.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hard Drop" underline="true">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Text>
+                        <Text fx:id="hardDropKey" onMouseClicked="#hardDropField" strokeType="OUTSIDE" strokeWidth="0.0" text="SPACE" wrappingWidth="76.7734375">
+                           <HBox.margin>
+                              <Insets left="45.0" />
                            </HBox.margin>
                            <font>
                               <Font size="20.0" />
@@ -83,21 +83,21 @@
                   </HBox>
                </children>
             </HBox>
-            <HBox prefHeight="55.0" prefWidth="464.0" spacing="30.0">
+            <HBox prefHeight="50.0" prefWidth="464.0" spacing="30.0">
                <children>
-                  <HBox prefHeight="60.0" prefWidth="200.0">
+                  <HBox prefHeight="70.0" prefWidth="216.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Move left" underline="true">
                            <font>
                               <Font size="20.0" />
                            </font>
                            <HBox.margin>
-                              <Insets top="10.0" />
+                              <Insets />
                            </HBox.margin>
                         </Text>
-                        <Text fx:id="moveLeftKey" onMouseClicked="#moveLeftField" strokeType="OUTSIDE" strokeWidth="0.0" text="KEY" wrappingWidth="48.7734375">
+                        <Text fx:id="moveLeftKey" onMouseClicked="#moveLeftField" strokeType="OUTSIDE" strokeWidth="0.0" text="SPACE" wrappingWidth="67.7734375">
                            <HBox.margin>
-                              <Insets left="42.0" top="10.0" />
+                              <Insets left="40.0" />
                            </HBox.margin>
                            <font>
                               <Font size="20.0" />
@@ -108,19 +108,19 @@
                         </Text>
                      </children>
                   </HBox>
-                  <HBox prefHeight="20.0" prefWidth="200.0">
+                  <HBox prefHeight="70.0" prefWidth="219.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Move right" underline="true">
                            <font>
                               <Font size="20.0" />
                            </font>
                            <HBox.margin>
-                              <Insets top="10.0" />
+                              <Insets />
                            </HBox.margin>
                         </Text>
-                        <Text fx:id="moveRightKey" onMouseClicked="#moveRightField" strokeType="OUTSIDE" strokeWidth="0.0" text="KEY" wrappingWidth="48.7734375">
+                        <Text fx:id="moveRightKey" onMouseClicked="#moveRightField" strokeType="OUTSIDE" strokeWidth="0.0" text="SPACE" wrappingWidth="71.7734375">
                            <HBox.margin>
-                              <Insets left="40.0" top="10.0" />
+                              <Insets left="40.0" />
                            </HBox.margin>
                            <font>
                               <Font size="20.0" />
@@ -133,24 +133,47 @@
                   </HBox>
                </children>
             </HBox>
-            <HBox prefHeight="55.0" prefWidth="464.0" spacing="30.0">
+            <HBox prefHeight="50.0" prefWidth="464.0" spacing="30.0">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
                <children>
-                  <HBox prefHeight="20.0" prefWidth="200.0">
+                  <HBox prefHeight="39.0" prefWidth="217.0">
                      <children>
                         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Rotate" underline="true">
                            <font>
                               <Font size="20.0" />
                            </font>
                            <HBox.margin>
-                              <Insets top="10.0" />
+                              <Insets />
                            </HBox.margin>
                         </Text>
-                        <Text fx:id="rotateKey" onMouseClicked="#rotateField" strokeType="OUTSIDE" strokeWidth="0.0" text="KEY" wrappingWidth="48.7734375">
+                        <Text fx:id="rotateKey" onMouseClicked="#rotateField" strokeType="OUTSIDE" strokeWidth="0.0" text="SPACE" wrappingWidth="60.7734375">
                            <HBox.margin>
-                              <Insets left="70.0" top="10.0" />
+                              <Insets left="66.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Text>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="70.0" prefWidth="218.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pause/Play" underline="true">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Text>
+                        <Text fx:id="pauseKey" onMouseClicked="#pauseField" strokeType="OUTSIDE" strokeWidth="0.0" text="SPACE" wrappingWidth="72.7734375">
+                           <HBox.margin>
+                              <Insets left="40.0" />
                            </HBox.margin>
                            <font>
                               <Font size="20.0" />
@@ -163,9 +186,37 @@
                   </HBox>
                </children>
             </HBox>
+            <HBox prefHeight="50.0" prefWidth="464.0" spacing="30.0">
+               <children>
+                  <HBox prefHeight="40.0" prefWidth="218.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Hold" underline="true">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Text>
+                        <Text fx:id="holdKey" onMouseClicked="#holdField" strokeType="OUTSIDE" strokeWidth="0.0" text="SPACE" wrappingWidth="71.7734375">
+                           <HBox.margin>
+                              <Insets left="81.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                           <cursor>
+                              <Cursor fx:constant="HAND" />
+                           </cursor>
+                        </Text>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="60.0" prefWidth="200.0" />
+               </children>
+            </HBox>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                <children>
-                  <Button fx:id="resetControlsBtn" mnemonicParsing="false" onAction="#resetControls" prefHeight="48.0" prefWidth="220.0" style="-fx-background-color: red;" text="Reset controls" textFill="WHITE">
+                  <Button fx:id="resetControlsBtn" mnemonicParsing="false" onAction="#resetControls" prefHeight="48.0" prefWidth="220.0" style="-fx-background-color: red;" text="Reset all controls" textFill="WHITE">
                      <cursor>
                         <Cursor fx:constant="HAND" />
                      </cursor></Button>
@@ -174,5 +225,6 @@
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Can also always be controlled with the arrow keys" />
          </children>
       </VBox>
+      <Line endX="-873.5" endY="-92.0" layoutX="1168.0" layoutY="375.0" startX="-873.5" startY="-296.8359375" />
    </children>
 </Pane>

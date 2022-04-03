@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="327.0" prefWidth="524.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.javatetris.project.ControlsExtraWindowGUI">
+   <children>
+      <Text fill="WHITE" layoutX="85.0" layoutY="40.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Click in the white box and press (almost) any key to set as new" textAlignment="CENTER" wrappingWidth="380.76318359375">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Text>
+      <Text fx:id="keyText" fill="WHITE" layoutX="220.0" layoutY="115.0" strokeType="OUTSIDE" strokeWidth="0.0" text="KEYTEXT">
+         <font>
+            <Font size="29.0" />
+         </font>
+      </Text>
+      <Button layoutX="115.0" layoutY="252.0" mnemonicParsing="false" onMouseClicked="#saveKey" prefHeight="39.0" prefWidth="119.0" style="-fx-background-color: green;" text="Save" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Button layoutX="343.0" layoutY="252.0" mnemonicParsing="false" onMouseClicked="#close" prefHeight="39.0" prefWidth="119.0" style="-fx-background-color: red;" text="Close" textFill="WHITE">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor></Button>
+      <Pane layoutX="128.0" layoutY="129.0" onMouseClicked="#startListener" prefHeight="111.0" prefWidth="297.0" style="-fx-background-color: white;">
+         <children>
+            <Text fx:id="pressedKey" layoutX="102.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="149.9999999999999">
+               <font>
+                  <Font size="32.0" />
+               </font>
+            </Text>
+         </children>
+      </Pane>
+      <Text fx:id="errorMessage" fill="RED" layoutX="175.0" layoutY="320.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LOOONNG error message" wrappingWidth="224.9384765625">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
+      <CheckBox fx:id="spaceCheckBox" layoutX="436.0" layoutY="155.0" mnemonicParsing="false" onAction="#spaceSelected" text="Space" textFill="WHITE" />
+      <Text fill="WHITE" layoutX="436.0" layoutY="142.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Special Keys" />
+   </children>
+</Pane>
