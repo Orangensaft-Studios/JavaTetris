@@ -222,10 +222,9 @@
                      </cursor></Button>
                </children>
             </HBox>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kann auch immer mit den Pfeiltasten gesteuert werden" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Klicke auf ein Tastenfeld um eine neue Taste zu setzen" />
          </children>
       </VBox>
       <Line endX="-873.5" endY="-92.0" layoutX="1168.0" layoutY="375.0" startX="-873.5" startY="-296.8359375" />
-      <Text layoutX="151.0" layoutY="288.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Klicke auf ein Tastenfeld um eine neue Taste zu setzen" />
    </children>
 </Pane>

@@ -52,6 +52,8 @@ public class ControlsExtraWindowGUI {
      */
     private static String keyField;
 
+    private static String keyConfig;
+
     /**
      * the scene for event listener
      */
@@ -61,8 +63,9 @@ public class ControlsExtraWindowGUI {
      * start controlsExtraWindow
      * @param keyFieldName the name of the key function to set (e.g. Pause)
      */
-    public static void start(String keyFieldName) {
+    public static void start(String keyFieldName, String keyKey) {
         keyField = keyFieldName;
+        keyConfig = keyKey;
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(GameOverGUI.class.getResource("fxml/controlsExtraWindow_" + Language.get() + ".fxml"));
@@ -75,7 +78,6 @@ public class ControlsExtraWindowGUI {
             Main.errorAlert("ControlsExtraWindowGUI.java");
             e.printStackTrace();
         }
-
     }
 
     @FXML
@@ -133,7 +135,7 @@ public class ControlsExtraWindowGUI {
 
 
         System.out.println(keyField);
-        Settings.setNewValue(keyField + "Key", key, "controls");
+        Settings.setNewValue(keyConfig, key, "controls");
         ControlsGUI.start();
     }
 

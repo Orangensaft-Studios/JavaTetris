@@ -84,51 +84,51 @@ public class ControlsGUI {
         holdKey.setText(Settings.searchControls("holdKey"));
     }
 
-    private static void extraWindow(String languageKeyFieldName) {
-        ControlsExtraWindowGUI.start(Language.getPhrase(languageKeyFieldName));
+    private static void extraWindow(String languageKeyFieldName, String keyKey) {
+        ControlsExtraWindowGUI.start(Language.getPhrase(languageKeyFieldName), keyKey);
 
     }
 
     @FXML
     private void pauseField(MouseEvent mouseEvent) {
         System.out.println("ControlsGUI.java: pauseField clicked");
-        extraWindow("pause");
+        extraWindow("pause", "pauseKey");
     }
 
     @FXML
     private void dropField(MouseEvent mouseEvent) {
         System.out.println("ControlsGUI.java: dropField clicked");
-        extraWindow("drop");
+        extraWindow("drop", "dropKey");
     }
 
     @FXML
     private void rotateField(MouseEvent mouseEvent) {
         System.out.println("ControlsGUI.java: rotateField clicked");
-        extraWindow("rotate");
+        extraWindow("rotate", "rotateKey");
     }
 
     @FXML
     private void moveLeftField(MouseEvent mouseEvent) {
         System.out.println("ControlsGUI.java: moveLeftField clicked");
-        extraWindow("moveLeft");
+        extraWindow("moveLeft", "moveLeftKey");
     }
 
     @FXML
     private void moveRightField(MouseEvent mouseEvent) {
         System.out.println("ControlsGUI.java: moveRightField clicked");
-        extraWindow("moveRight");
+        extraWindow("moveRight", "moveRightKey");
     }
 
     @FXML
     private void hardDropField(MouseEvent mouseEvent) {
         System.out.println("ControlsGUI.java: hardDropField clicked");
-        extraWindow("hardDrop");
+        extraWindow("hardDrop", "hardDropKey");
     }
 
     @FXML
     private void holdField(MouseEvent mouseEvent) {
         System.out.println("ControlsGUI.java: holdField clicked");
-        extraWindow("hold");
+        extraWindow("hold", "holdKey");
     }
 
     @FXML
