@@ -105,9 +105,14 @@ public class MenuGUI {
         public void run() {
             try {
                 Thread.sleep(1);
-                LeaderboardGUI.setOwnValuesArray(UserDataOnline.update(Settings.searchSettings("username")));
+                if (Settings.searchSettings("accountType").equals("online")) {
+                    LeaderboardGUI.setOwnValuesArray(UserDataOnline.update(Settings.searchSettings("username")));
+                } else if (Settings.searchSettings("accountType").equals("local")) {
+                   LeaderboardGUI.setOwnValuesArray(UserDataLocal.update());
+                } else {
+                    LeaderboardGUI.setOwnValuesArray(new String[] {"0", "0", "0", "0", "0"});
+                }
 
-                //loading.setVisible(false);
                 Platform.runLater(() -> {
                     loading.setVisible(false);
                     LeaderboardGUI.start();

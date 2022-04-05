@@ -1,12 +1,8 @@
 package at.javatetris.project;
 
-import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -37,12 +33,6 @@ public class ControlsExtraWindowGUI {
     private Text errorMessage;
 
     /**
-     * checkbox for space key
-     */
-    @FXML
-    private CheckBox spaceCheckBox;
-
-    /**
      * the pressed or selected key
      */
     private static String key;
@@ -52,6 +42,9 @@ public class ControlsExtraWindowGUI {
      */
     private static String keyField;
 
+    /**
+     * how the key is stored in config (the key for the value)
+     */
     private static String keyConfig;
 
     /**
@@ -62,6 +55,7 @@ public class ControlsExtraWindowGUI {
     /**
      * start controlsExtraWindow
      * @param keyFieldName the name of the key function to set (e.g. Pause)
+     * @param keyKey the key name in the config
      */
     public static void start(String keyFieldName, String keyKey) {
         keyField = keyFieldName;
@@ -82,22 +76,18 @@ public class ControlsExtraWindowGUI {
 
     @FXML
     private void startListener(MouseEvent mouseEvent) {
-        scene.addEventHandler(KeyEvent.KEY_PRESSED, (pressedKeyEvent) -> {
+        scene.setOnKeyPressed(pressedKeyEvent -> {
             errorMessage.setVisible(false);
-            spaceCheckBox.setSelected(false);
+            String tempKey = pressedKeyEvent.getCode() + "";
 
-            String tempKey = pressedKeyEvent.getCode().getName();
-            System.out.println(tempKey);
-
-            if (tempKey.equals("Undefined")) {
-                System.out.println("undefined key");
+            if (tempKey.equals("UNDEFINED")) {
                 errorMessage("keyNotSupported");
                 return;
             }
 
-            key = tempKey.toUpperCase();
+            key = tempKey;
 
-            pressedKey.setText(key.toUpperCase());
+            pressedKey.setText(key);
         });
 
 
@@ -114,28 +104,18 @@ public class ControlsExtraWindowGUI {
     private void initialize() {
         errorMessage.setVisible(false);
         keyText.setText(keyField);
-
-        spaceCheckBox.selectedProperty().addListener((ObservableValue<? extends Boolean> ov, Boolean old_val, Boolean new_val) -> {
-            errorMessage.setVisible(false);
-            pressedKey.setText("SPACE");
-            key = "SPACE";
-        });
+        pressedKey.setText(Language.getPhrase("clickHereToSetNewKey"));
     }
 
 
 
     @FXML
     private void saveKey(MouseEvent mouseEvent) {
-        System.out.println("ControlsExtraWindowGUI.java: key: " + key);
-
         if ((key.equals(Settings.searchControls("pauseKey"))) || (key.equals(Settings.searchControls("dropKey"))) || (key.equals(Settings.searchControls("rotateKey"))) || (key.equals(Settings.searchControls("moveLeftKey"))) || (key.equals(Settings.searchControls("moveRightKey"))) || (key.equals(Settings.searchControls("hardDropKey"))) || (key.equals(Settings.searchControls("holdKey")))) {
             errorMessage("keyAlrExists");
             return;
         }
-
-
-        System.out.println(keyField);
-        Settings.setNewValue(keyConfig, key, "controls");
+        Settings.setNewValue(keyConfig, String.valueOf(key), "controls");
         ControlsGUI.start();
     }
 

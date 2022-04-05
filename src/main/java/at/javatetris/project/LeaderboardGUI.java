@@ -93,6 +93,7 @@ public class LeaderboardGUI {
     @FXML private Text highscoreInfinity;
     @FXML private Text gamesPlayed;
     @FXML private Text playtime;
+    @FXML private Text loggedInAs;
 
 
     /**
@@ -133,14 +134,12 @@ public class LeaderboardGUI {
     /** on load */
     @FXML
     public void initialize() {
-        //String[] ownValues = UserDataOnline.update(Settings.searchSettings("username"));
-
-
         highscoreClassic.setText(ownValuesArray[0]);
         highscoreTime.setText(ownValuesArray[1]);
         highscoreInfinity.setText(ownValuesArray[2]);
         playtime.setText(calculateTime(ownValuesArray[3]));
         gamesPlayed.setText(ownValuesArray[4]);
+        loggedInAs.setText(Settings.searchSettings("username") + " (" + Settings.searchSettings("accountType") + ")");
     }
 
 

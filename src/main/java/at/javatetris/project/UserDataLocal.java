@@ -95,4 +95,8 @@ public class UserDataLocal {
         }
     }
 
+    public static String[] update() {
+        return new String[] {search("hs_classic"), search("hs_time"), search("hs_infinity"), search("timePlayed"), search("gamesPlayed")};
+    }
+
 }

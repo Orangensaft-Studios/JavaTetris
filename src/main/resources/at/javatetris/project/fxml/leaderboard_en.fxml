@@ -1881,6 +1881,8 @@
                               <Font size="25.0" />
                            </font>
                         </Text>
+                        <Text layoutX="14.0" layoutY="267.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logged in as:" />
+                        <Text fx:id="loggedInAs" layoutX="92.0" layoutY="267.0" strokeType="OUTSIDE" strokeWidth="0.0" text="USERNAME" />
                      </children>
                   </AnchorPane>
               </content>

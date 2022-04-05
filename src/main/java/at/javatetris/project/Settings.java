@@ -15,7 +15,7 @@ import java.util.Properties;
  */
 public class Settings {
     /** version number */
-    private static final String VERSION = "1.0.2";
+    private static final String VERSION = "1.0.3";
 
     /** user home path + AppData\Local\JavaTetris\ */
     private final static String JAVATETRIS_DIR_PATH = System.getProperty("user.home") + "\\AppData\\Local\\Orangensaft Studios\\JavaTetris\\";
@@ -56,7 +56,7 @@ public class Settings {
 
     /** default control lines for controls files */
     private static final List<String> DEFAULT_CONTROLS = Arrays.asList(
-            "pauseKey=ESC",
+            "pauseKey=ESCAPE",
             "dropKey=S",
             "rotateKey=W",
             "moveLeftKey=A",
