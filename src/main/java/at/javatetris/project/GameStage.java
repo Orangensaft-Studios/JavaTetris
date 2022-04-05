@@ -3,6 +3,7 @@ package at.javatetris.project;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
@@ -54,6 +55,8 @@ public class GameStage {
      * both mass and block in a group
      */
     private static TetrisBlock all = new TetrisBlock();
+
+    private static TetrisBlock holdyBlock = new TetrisBlock();
     /**
      * if the block is falling or not
      */
@@ -128,6 +131,7 @@ public class GameStage {
     private static boolean otherMove = false;
     private static boolean otherMoveLeft = false;
     private static boolean pause = false;
+    private static int level = 1;
 
     private static float opacity = 0;
 
@@ -138,12 +142,12 @@ public class GameStage {
      * @throws Exception to handle Exceptions
      */
     public static void start(String mode, Boolean reset, Boolean resetEndless) throws Exception {
-        System.out.println(reset);
         Timer fall = new Timer();
         Timer fall2 = new Timer();
         Timer fall3 = new Timer();
 
         if (reset) {
+            level = 1;
             opacity = 0;
             otherPlay = false;
             fall.cancel();
@@ -186,9 +190,6 @@ public class GameStage {
             secondsPassed.cancel();
             main.cancel();
             fall2.cancel();
-            System.out.println(all);
-            System.out.println(block);
-            System.out.println(nextBLock);
             all = new TetrisBlock();
             fieldStatus = new int[PLAY_AREA
                     / GameStage.SIZE][(getHeight() / GameStage.SIZE) + 1];
@@ -418,8 +419,6 @@ public class GameStage {
                             play = false;
                             if (!pause) {
                                 timing += 0.1;
-                                otherPlay = timing < 2.4 || (timing > 27 && timing < 30);
-                                System.out.println(otherPlay + "h");
                                 otherRotate = timing < 25 && timing > 22.6;
                                 otherMove = timing < 20.1 && timing > 18.5;
                                 otherMoveLeft = timing < 22.6 && timing > 21;
@@ -495,12 +494,12 @@ public class GameStage {
                                     rotate.setOpacity(0);
                                     hardDrop.setOpacity(opacity);
                                     opacity += 0.2;
-                                    if ((timing - 26) < 0.005 && timing > 25.9){
+                                    if ((timing - 26) < 0.005 && timing > 25.9) {
                                         spaceCooldown = true;
                                     }
-                                    if ((timing - 27) < 0.005 && timing > 26.9){
-                                        if (spaceCooldown){
-                                            moveDown(block,true,true);
+                                    if ((timing - 27) < 0.005 && timing > 26.9) {
+                                        if (spaceCooldown) {
+                                            moveDown(block, true, true);
                                         }
                                     }
                                 }
@@ -521,7 +520,7 @@ public class GameStage {
                                     tutorialEnd.setOpacity(opacity);
                                     opacity += 0.2;
                                 }
-                                if (timing > 34){
+                                if (timing > 34) {
                                     tutorialEnd.setOpacity(0);
                                     tutorialTimer.cancel();
                                     play = true;
@@ -540,6 +539,12 @@ public class GameStage {
             public void run() {
                 Platform.runLater(new Runnable() {
                     public void run() {
+                        /*
+                        if (points > 2) {
+                            level = 1 + points / 1000;
+                            sleep(Math.round(10 / level));
+
+                        }*/
 
                         if (otherPlay && !pause) {
                             moveDown(block, true, false);
@@ -571,7 +576,7 @@ public class GameStage {
                                         GameStage.start(mode, false, true);
                                     } catch (Exception e) {
                                         e.printStackTrace();
-                                        Main.errorAlert("ChooseModeGUI.java");
+                                        Main.errorAlert("Gamestage.java");
                                     }
                                 } else {
                                     GameOverGUI.start(gameMode);
@@ -604,8 +609,6 @@ public class GameStage {
                             moveDown(block, spawn, false);
 
                             score.setText(Language.getPhrase("score") + points);
-                        } else {
-                            //pause.setText("Pause");
                         }
                     }
                 });
@@ -619,6 +622,8 @@ public class GameStage {
                 Platform.runLater(new Runnable() {
                     public void run() {
                         if (play) {
+
+
                             seconds++;
 
                             if (timeMode) {
@@ -644,43 +649,33 @@ public class GameStage {
     }
 
     private static void keyPressed(TetrisBlock tBlock) {
+
         scene.setOnKeyPressed(e -> {
-            switch (e.getCode()) {
-                case A, LEFT:
-                    if (play) {
-                        moveLeft(block);
-                    }
-                    break;
-                case D, RIGHT:
-                    if (play) {
-                        moveRight(block);
-                    }
-                    break;
-                case W, UP:
-                    if (play) {
-                        rotateBlock(block);
-                    }
-                    break;
-                case S, DOWN:
-                    if (play) {
-                        moveDown(block, block.c1.getY() > SIZE
-                                || block.c2.getY() > SIZE || block.c3.getY() > SIZE
-                                || block.c4.getY() > SIZE, false);
-                    }
-                    break;
-                case ESCAPE:
+
+            if (play) {
+                if (Settings.searchControls("moveLeftKey").equals(e.getCode() + "")) {
+                    moveLeft(block);
+                } else if (Settings.searchControls("moveRightKey").equals(e.getCode() + "")) {
+                    moveRight(block);
+                } else if (Settings.searchControls("rotateKey").equals(e.getCode() + "")) {
+                    rotateBlock(block);
+                } else if (Settings.searchControls("dropKey").equals(e.getCode() + "")) {
+                    moveDown(block, block.c1.getY() > SIZE
+                            || block.c2.getY() > SIZE || block.c3.getY() > SIZE
+                            || block.c4.getY() > SIZE, false);
+                } else if (Settings.searchControls("pauseKey").equals(e.getCode() + "")) {
                     play = false;
                     pause = true;
                     PauseGUI.handle(e, gameMode);
-                    break;
-                case SPACE:
+                } else if (Settings.searchControls("hardDropKey").equals(e.getCode() + "")) {
                     if (play && spaceCooldown && top < 3) {
                         moveDown(block, true, true);
                     }
-                    break;
-                default:
-                    break;
+                } else if ((Settings.searchControls("holdKey").equals(e.getCode() + ""))) {
+                    hold(block);
+                }
             }
+
         });
     }
 
@@ -1014,9 +1009,9 @@ public class GameStage {
                         for (int i = 0; i < 1; i++) {
                             all.getChildren().remove(indexToDelete2);
                         }
-                    } else if (tutorial){
+                    } else if (tutorial) {
                         all.getChildren().remove(indexToDelte3);
-                    } else{
+                    } else {
                         for (int i = 0; i < 1; i++) {
                             all.getChildren().remove(indexToDelete);
                         }
@@ -1095,6 +1090,8 @@ public class GameStage {
                     for (int i = 0; i < 1; i++) {
                         all.getChildren().remove(indexToDelete2);
                     }
+                } else if (tutorial) {
+                    all.getChildren().remove(indexToDelte3);
                 } else {
                     for (int i = 0; i < 1; i++) {
                         all.getChildren().remove(indexToDelete);
@@ -1221,5 +1218,79 @@ public class GameStage {
 
     public static void setPause(boolean pause) {
         GameStage.pause = pause;
+    }
+
+    private static void sleep(long timeout) {
+        try {
+            Thread.sleep(timeout);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    private static void hold(TetrisBlock tBlock){
+        final int indexToDelete = 7;
+        final int indexToDelete2 = 8;
+        final int indexToDelte3 = 19;
+        final int yCoordinate = 70;
+        final int xCoordinate = 200;
+            if(holdyBlock == null){
+                group = new Group();
+                all.getChildren().remove(nextBLock.c1);
+                all.getChildren().remove(nextBLock.c2);
+                all.getChildren().remove(nextBLock.c3);
+                all.getChildren().remove(nextBLock.c4);
+
+                all.getChildren().remove(block.c1);
+                all.getChildren().remove(block.c2);
+                all.getChildren().remove(block.c3);
+                all.getChildren().remove(block.c4);
+
+                if (timeMode) {
+                    for (int i = 0; i < 1; i++) {
+                        all.getChildren().remove(indexToDelete2);
+                    }
+                } else if (tutorial) {
+                    all.getChildren().remove(indexToDelte3);
+                } else {
+                    for (int i = 0; i < 1; i++) {
+                        all.getChildren().remove(indexToDelete);
+                    }
+                }
+
+
+                group = saveArrayToGroup(group, everyCube);
+
+                all.getChildren().add(group);
+                nextBLock.c1.setTranslateX(0);
+                nextBLock.c2.setTranslateX(0);
+                nextBLock.c3.setTranslateX(0);
+                nextBLock.c4.setTranslateX(0);
+                nextBLock.c1.setTranslateY(0);
+                nextBLock.c2.setTranslateY(0);
+                nextBLock.c3.setTranslateY(0);
+                nextBLock.c4.setTranslateY(0);
+                TetrisBlock currentBlock = nextBLock;
+                nextBLock = Generate.generateBlock();
+                block = currentBlock;
+                all.getChildren().addAll(currentBlock.c1,
+                        currentBlock.c2, currentBlock.c3, currentBlock.c4);
+                keyPressed(currentBlock);
+
+                all.getChildren().addAll(nextBLock.c1, nextBLock.c2, nextBLock.c3, nextBLock.c4);
+
+                nextBLock.c1.setTranslateX(xCoordinate);
+                nextBLock.c2.setTranslateX(xCoordinate);
+                nextBLock.c3.setTranslateX(xCoordinate);
+                nextBLock.c4.setTranslateX(xCoordinate);
+                nextBLock.c1.setTranslateY(yCoordinate);
+                nextBLock.c2.setTranslateY(yCoordinate);
+                nextBLock.c3.setTranslateY(yCoordinate);
+                nextBLock.c4.setTranslateY(yCoordinate);
+                block = holdyBlock;
+            } else{
+                block = nextBLock;
+            }
+            holdyBlock = tBlock;
+
     }
 }
