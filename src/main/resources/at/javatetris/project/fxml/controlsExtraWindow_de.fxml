@@ -20,7 +20,7 @@
       </Text>
       <Pane layoutX="128.0" layoutY="129.0" onMouseClicked="#startListener" prefHeight="111.0" prefWidth="297.0" style="-fx-background-color: white;">
          <children>
-            <Text fx:id="pressedKey" layoutX="60.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="177.9999999999999">
+            <Text fx:id="pressedKey" layoutX="52.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="192.4000244140624">
                <font>
                   <Font size="32.0" />
                </font>

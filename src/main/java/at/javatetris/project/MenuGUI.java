@@ -98,6 +98,7 @@ public class MenuGUI {
     private void leaderboardClicked(ActionEvent actionEvent) {
         loading.setVisible(true);
         new leaderBoardLoadData().start();
+
     }
 
     private class leaderBoardLoadData extends Thread {
@@ -105,6 +106,11 @@ public class MenuGUI {
         public void run() {
             try {
                 Thread.sleep(1);
+
+                LeaderboardController.onlineData = UserDataOnline.updateData();
+                LeaderboardController.ownValuesArray = UserDataOnline.update(Settings.searchSettings("username"));
+
+                /*
                 if (Settings.searchSettings("accountType").equals("online")) {
                     LeaderboardGUI.setOwnValuesArray(UserDataOnline.update(Settings.searchSettings("username")));
                 } else if (Settings.searchSettings("accountType").equals("local")) {
@@ -113,9 +119,20 @@ public class MenuGUI {
                     LeaderboardGUI.setOwnValuesArray(new String[] {"0", "0", "0", "0", "0"});
                 }
 
+                 */
+
                 Platform.runLater(() -> {
                     loading.setVisible(false);
-                    LeaderboardGUI.start();
+                    try {
+                        FXMLLoader fxmlLoader = new FXMLLoader(LeaderboardGUI.class.getResource("fxml/leaderboardv2_" + Language.get() + ".fxml"));
+                        Scene scene = new Scene(fxmlLoader.load());
+                        Stage stage = Main.getStage();
+                        stage.setScene(scene);
+                        stage.show();
+                    } catch (IOException e) {
+                        Main.errorAlert("MenuGUI.java");
+                        e.printStackTrace();
+                    }
                 });
 
             } catch (InterruptedException ex) {

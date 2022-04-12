@@ -94,7 +94,6 @@ public class DataBaseAPI {
             } else {
                 conn.disconnect();
 
-                getData(username);
                 //return successful login
                 System.out.println("DataBaseAPI.java: Logged in with '" + username + "'");
                 Settings.setNewValue("accountType", "online", "settings");
@@ -195,6 +194,47 @@ public class DataBaseAPI {
             conn.disconnect();
 
             return data;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Main.errorAlert("DataBaseAPI.java");
+            return "error";
+        }
+    }
+
+    public static String getAllData() {
+        //data will store the JSON data streamed in string format
+        String response = "";
+
+        try {
+            URL url = new URL("https://81087.wayscript.io/getAllData");
+            HttpsURLConnection conn = (HttpsURLConnection)url.openConnection();
+
+            conn.setRequestMethod("GET");
+            conn.connect();
+
+            int responseCode = conn.getResponseCode();
+            System.out.println("DataBaseAPI.java: Response code is: " + responseCode);
+
+            if (responseCode == RESPONSE_CODE_404) {
+                conn.disconnect();
+                throw new RuntimeException("No username | HttpResponseCode: " + responseCode);
+            } else if (responseCode != RESPONSE_CODE_200) {
+                conn.disconnect();
+                throw new RuntimeException("HttpResponseCode: " + responseCode);
+            } else {
+                Scanner sc = new Scanner(url.openStream());
+
+                while (sc.hasNext()) {
+                    response += sc.nextLine();
+                }
+
+                sc.close();
+            }
+
+            conn.disconnect();
+
+            return response;
 
         } catch (Exception e) {
             e.printStackTrace();

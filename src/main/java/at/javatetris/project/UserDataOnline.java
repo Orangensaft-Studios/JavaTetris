@@ -1,6 +1,45 @@
 package at.javatetris.project;
 
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserDataOnline {
+
+    public static List<Player> updateData() {
+        String data = DataBaseAPI.getAllData();
+        System.out.println("UserDataOnline.java: updateData: " + data);
+
+        List<Player> allData = new ArrayList<>();
+
+        String[] dataUsers = data.split("}");
+
+        for (String d : dataUsers) {
+            int nameStart = d.indexOf(":");
+            String name = d.substring(nameStart + 1, d.indexOf(",", nameStart)).replaceAll("\"", "").trim();
+
+            int hsClassicStart = d.indexOf(":", nameStart + 1);
+            int hsClassic = Integer.parseInt(d.substring(hsClassicStart + 1, d.indexOf(",", hsClassicStart)).trim());
+
+            int hsTimeStart = d.indexOf(":", hsClassicStart + 1);
+            int hsTime = Integer.parseInt(d.substring(hsTimeStart + 1, d.indexOf(",", hsTimeStart)).trim());
+
+            int hsInfinityStart = d.indexOf(":", hsTimeStart + 1);
+            int hsInfinity = Integer.parseInt(d.substring(hsInfinityStart + 1, d.indexOf(",", hsInfinityStart)).trim());
+
+            int gamesPlayedStart = d.indexOf(":", hsInfinityStart + 1);
+            int gamesPlayed = Integer.parseInt(d.substring(gamesPlayedStart + 1, d.indexOf(",", gamesPlayedStart)).trim());
+
+            int timePlayedStart = d.indexOf(":", gamesPlayedStart + 1);
+            int timePlayed = Integer.parseInt(d.substring(timePlayedStart + 1).trim());
+
+            allData.add(new Player(name, hsClassic, hsTime, hsInfinity, gamesPlayed, timePlayed));
+        }
+
+        System.out.println(allData);
+
+        return allData;
+    }
 
     public static String[] update(String username) {
         String data = DataBaseAPI.getData(username);
