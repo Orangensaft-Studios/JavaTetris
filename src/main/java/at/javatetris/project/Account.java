@@ -66,9 +66,6 @@ public class Account {
             //set local username in config file
             setUsernamePasswordAccountTypeInSettings(username, password, "online");
 
-            //load data from DataBase for user
-            DataBaseAPI.getData(username);
-            //DataBase.loadOnlineUserData(DataBase.getConnection(), username);
 
             //PopUp Alert account created
             Alert alert = Main.alertBuilder(Alert.AlertType.INFORMATION, "accountCreatedTitle", "accountCreatedHeader", "accountCreatedContent", true);

@@ -1,6 +1,7 @@
 package at.javatetris.project;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -30,11 +31,7 @@ public class PauseGUI {
     @FXML
     private Text score;
 
-    /** your highscore */
-    @FXML
-    private Text highscore;
-
-    /** the before choosen gameMode */
+    /** the before chosen gameMode */
     private static String gameMode;
 
     @FXML
@@ -69,6 +66,7 @@ public class PauseGUI {
             newWindow.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResource("icons/jt_icon48x48_no_bg.png")).toURI().toString()));
             newWindow.setScene(scene);
             newWindow.show();
+
         } catch (IOException | URISyntaxException e) {
             Main.errorAlert("PauseGUI.java");
             e.printStackTrace();
@@ -79,6 +77,5 @@ public class PauseGUI {
     @FXML
     public void initialize() {
         score.setText(getPoints() + "");
-        highscore.setText("0");
     }
 }

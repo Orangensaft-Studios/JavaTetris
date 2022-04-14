@@ -15,7 +15,7 @@ import java.util.Properties;
  */
 public class Settings {
     /** version number */
-    private static final String VERSION = "1.1.0";
+    private static final String VERSION = "1.2.0";
 
     /** user home path + AppData\Local\JavaTetris\ */
     private final static String JAVATETRIS_DIR_PATH = System.getProperty("user.home") + "\\AppData\\Local\\Orangensaft Studios\\JavaTetris\\";
@@ -34,9 +34,6 @@ public class Settings {
 
     /** location of all usernames passwort properties file */
     private final static String ALL_USERNAMES_FILE_PATH = JAVATETRIS_USR_DATA_DIR_PATH + "allUsernames.txt";
-
-    /** location of highscore file */
-    private final static String HIGHSCORE_FILE_PATH = JAVATETRIS_USR_DATA_DIR_PATH + "highscores.txt";
 
     /** setting properties */
     private static Properties settings;
@@ -90,14 +87,6 @@ public class Settings {
     }
 
     /**
-     * getter for HIGHSCORE_FILE_PATH
-     * @return HIGHSCORE_FILE_PATH
-     */
-    public static String getHighscoreFilePath() {
-        return HIGHSCORE_FILE_PATH;
-    }
-
-    /**
      * getter for setting properties
      * @return the setting properties
      */
@@ -144,18 +133,12 @@ public class Settings {
             }
 
             File allUsernames = new File(ALL_USERNAMES_FILE_PATH);
-            File highscoreFile = new File(HIGHSCORE_FILE_PATH);
 
             if (!allUsernames.exists()) {
                 //create all usernames file (for Account.java)
                 Files.createFile(Paths.get(ALL_USERNAMES_FILE_PATH));
 
                 System.out.println("Settings.java: allUserNamesFile created here: " + allUsernames.getAbsolutePath());
-            }
-
-            if (!highscoreFile.exists()) {
-                Files.createFile(Paths.get(HIGHSCORE_FILE_PATH));
-                System.out.println("Settings.java: highscore File created here: " + highscoreFile.getAbsolutePath());
             }
 
             load();

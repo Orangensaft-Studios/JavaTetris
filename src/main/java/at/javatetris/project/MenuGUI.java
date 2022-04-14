@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -97,34 +98,25 @@ public class MenuGUI {
     @FXML
     private void leaderboardClicked(ActionEvent actionEvent) {
         loading.setVisible(true);
-        new leaderBoardLoadData().start();
+        new LeaderBoardLoadData().start();
 
     }
 
-    private class leaderBoardLoadData extends Thread {
+    private class LeaderBoardLoadData extends Thread {
         @Override
         public void run() {
             try {
                 Thread.sleep(1);
 
                 LeaderboardController.onlineData = UserDataOnline.updateData();
-                LeaderboardController.ownValuesArray = UserDataOnline.update(Settings.searchSettings("username"));
 
-                /*
-                if (Settings.searchSettings("accountType").equals("online")) {
-                    LeaderboardGUI.setOwnValuesArray(UserDataOnline.update(Settings.searchSettings("username")));
-                } else if (Settings.searchSettings("accountType").equals("local")) {
-                   LeaderboardGUI.setOwnValuesArray(UserDataLocal.update());
-                } else {
-                    LeaderboardGUI.setOwnValuesArray(new String[] {"0", "0", "0", "0", "0"});
-                }
+                LeaderboardController.localData = UserDataLocal.updateData();
 
-                 */
 
                 Platform.runLater(() -> {
                     loading.setVisible(false);
                     try {
-                        FXMLLoader fxmlLoader = new FXMLLoader(LeaderboardGUI.class.getResource("fxml/leaderboardv2_" + Language.get() + ".fxml"));
+                        FXMLLoader fxmlLoader = new FXMLLoader(MenuGUI.class.getResource("fxml/leaderboardv2_" + Language.get() + ".fxml"));
                         Scene scene = new Scene(fxmlLoader.load());
                         Stage stage = Main.getStage();
                         stage.setScene(scene);
@@ -141,4 +133,6 @@ public class MenuGUI {
             }
         }
     }
+
+
 }

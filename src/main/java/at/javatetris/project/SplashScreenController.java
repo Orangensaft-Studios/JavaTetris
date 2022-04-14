@@ -35,6 +35,8 @@ public class SplashScreenController implements Initializable {
     /** if there was a new major version */
     public static boolean newMajorVersion = false;
 
+    public static boolean couldntLogIn = false;
+
     /**
      * splash screen class
      */
@@ -68,27 +70,11 @@ public class SplashScreenController implements Initializable {
 
                 if (thereIsUser) {
                     if (accountType.equals("online")) {
-
                         loadingText.setText(Language.getPhrase("loadingAccountOnline") + username + "'...");
 
-
-                        if (DataBaseAPI.onlineLogin(username, password).equals("loggedIn")) {
-                            System.out.println("SplashScreenController.java: loggedIn");
-
-                        } else {
-                            Settings.setNewValue("username", "", "settings");
-                            Settings.setNewValue("password", "", "settings");
-                            Settings.setNewValue("accountType", "", "settings");
-                            Alert alert = Main.alertBuilder(Alert.AlertType.INFORMATION, "couldntLogInTitle", "couldntLogInHeader", "couldntLogInContent", true);
-                            alert.show();
+                        if (!DataBaseAPI.onlineLogin(username, password).equals("loggedIn")) {
+                            couldntLogIn = true;
                         }
-
-                    } else if (accountType.equals("local")) {
-
-                        loadingText.setText(Language.getPhrase("loadingAccountLocal") + username + "'...");
-
-                        //load data for username
-                        UserDataLocal.load(username);
                     }
                 }
 
@@ -124,7 +110,7 @@ public class SplashScreenController implements Initializable {
                     } catch (URISyntaxException e) {
                         e.printStackTrace();
                     }
-                    mainStage.setTitle("JavaTetris | Version: " + Settings.searchSettings("gameVersion") + " (ALPHA)");
+                    mainStage.setTitle("JavaTetris | Version: " + Settings.searchSettings("gameVersion"));
 
                     Main.setMainStage(mainStage);
 
@@ -137,6 +123,15 @@ public class SplashScreenController implements Initializable {
                         majorUpdateAlert.setHeaderText(Language.getPhrase("majorUpdateHeader") + Language.getPhrase("majorUpdateContent"));
                         majorUpdateAlert.setContentText(Settings.getJavatetrisDirPath() + " " + Language.getPhrase("majorUpdateContent2"));
                         majorUpdateAlert.show();
+                    }
+
+                    if (couldntLogIn) {
+                        System.out.println(true);
+                        Settings.setNewValue("username", "", "settings");
+                        Settings.setNewValue("password", "", "settings");
+                        Settings.setNewValue("accountType", "", "settings");
+                        Alert alert = Main.alertBuilder(Alert.AlertType.INFORMATION, "couldntLogInTitle", "couldntLogInHeader", "couldntLogInContent", true);
+                        alert.show();
                     }
 
                     pane.getScene().getWindow().hide();

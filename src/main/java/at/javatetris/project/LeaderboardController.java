@@ -13,56 +13,129 @@ import javafx.scene.text.Text;
 
 import java.util.List;
 
+/**
+ * class to display data in the leaderboards
+ * @author Severin Rosner
+ */
 public class LeaderboardController {
-    @FXML
-    private TableView<Player> onlineLeaderboard;
-    @FXML
-    private TableColumn<Player, String> onlineUsername;
-    @FXML
-    private TableColumn<Player, String> onlineClassic;
-    @FXML
-    private TableColumn<Player, String> onlineTime;
-    @FXML
-    private TableColumn<Player, String> onlineInfinity;
-    @FXML
-    private TableColumn<Player, String> onlineGames;
-    @FXML
-    private TableColumn<Player, String> onlineTimePlayed;
+    /**
+     * the TableView for the online leaderboard
+     */
+    @FXML private TableView<Player> onlineLeaderboard;
 
-    @FXML
-    private TableView<Player> localLeaderboard;
-    @FXML
-    private TableColumn<Player, String> localUsername;
-    @FXML
-    private TableColumn<Player, String> localClassic;
-    @FXML
-    private TableColumn<Player, String> localTime;
-    @FXML
-    private TableColumn<Player, String> localInfinity;
-    @FXML
-    private TableColumn<Player, String> localGames;
-    @FXML
-    private TableColumn<Player, String> localTimePlayed;
+    /**
+     * online username column
+     */
+    @FXML private TableColumn<Player, String> onlineUsername;
 
-    @FXML
-    private Text ysClassic;
-    @FXML
-    private Text ysTime;
-    @FXML
-    private Text ysInfinity;
-    @FXML
-    private Text ysPlaytime;
-    @FXML
-    private Text ysGamesPlayed;
-    @FXML
-    private Text loggedInAs;
+    /**
+     * online classic highscore column
+     */
+    @FXML private TableColumn<Player, String> onlineClassic;
 
+    /**
+     * online time highscore column
+     */
+    @FXML private TableColumn<Player, String> onlineTime;
+
+    /**
+     * online infinity highscore column
+     */
+    @FXML private TableColumn<Player, String> onlineInfinity;
+
+    /**
+     * online played games column
+     */
+    @FXML private TableColumn<Player, String> onlineGames;
+
+    /**
+     * online time played column
+     */
+    @FXML private TableColumn<Player, String> onlineTimePlayed;
+
+    /**
+     * the TableView for the local leaderboard
+     */
+    @FXML private TableView<Player> localLeaderboard;
+
+    /**
+     * local username column
+     */
+    @FXML private TableColumn<Player, String> localUsername;
+
+    /**
+     * local classic highscore column
+     */
+    @FXML private TableColumn<Player, String> localClassic;
+
+    /**
+     * local time highscore column
+     */
+    @FXML private TableColumn<Player, String> localTime;
+
+    /**
+     * local infinity highscore column
+     */
+    @FXML private TableColumn<Player, String> localInfinity;
+
+    /**
+     * local games played column
+     */
+    @FXML private TableColumn<Player, String> localGames;
+
+    /**
+     * local time played column
+     */
+    @FXML private TableColumn<Player, String> localTimePlayed;
+
+    /**
+     * your stats classic highscore
+     */
+    @FXML private Text ysClassic;
+
+    /**
+     * your stats time highscore
+     */
+    @FXML private Text ysTime;
+
+    /**
+     * your stats' infinity highscore
+     */
+    @FXML private Text ysInfinity;
+
+    /**
+     * your stats played time
+     */
+    @FXML private Text ysPlaytime;
+
+    /**
+     * your stats played games
+     */
+    @FXML private Text ysGamesPlayed;
+
+    /**
+     * your stats logged in as
+     */
+    @FXML private Text loggedInAs;
+
+    /**
+     * loading image
+     */
     @FXML private ImageView loading;
 
+    /**
+     * Player list of online data
+     */
     public static List<Player> onlineData;
 
-    public static String[] ownValuesArray;
+    /**
+     * Player list of local data
+     */
+    public static List<Player> localData;
 
+    /**
+     * on start fill leaderboards with data
+     */
     public void initialize() {
         loading.setVisible(false);
 
@@ -78,23 +151,47 @@ public class LeaderboardController {
         onlineGames.setStyle("-fx-alignment: CENTER;");
         onlineTimePlayed.setStyle("-fx-alignment: CENTER;");
         onlineUsername.setCellValueFactory((data) -> new SimpleStringProperty(data.getValue().getName()));
-        onlineClassic.setCellValueFactory((data) -> new SimpleStringProperty(String.valueOf(data.getValue().getHs_classic())));
-        onlineTime.setCellValueFactory((data) -> new SimpleStringProperty(String.valueOf(data.getValue().getHs_time())));
-        onlineInfinity.setCellValueFactory((data) -> new SimpleStringProperty(String.valueOf(data.getValue().getHs_infinity())));
+        onlineClassic.setCellValueFactory((data) -> new SimpleStringProperty(String.valueOf(data.getValue().getHsClassic())));
+        onlineTime.setCellValueFactory((data) -> new SimpleStringProperty(String.valueOf(data.getValue().getHsTime())));
+        onlineInfinity.setCellValueFactory((data) -> new SimpleStringProperty(String.valueOf(data.getValue().getHsInfinity())));
         onlineGames.setCellValueFactory((data) -> new SimpleStringProperty(String.valueOf(data.getValue().getGamesPlayed())));
         onlineTimePlayed.setCellValueFactory((data) -> new SimpleStringProperty(calculateTime(String.valueOf(data.getValue().getTimePlayed()))));
         onlineLeaderboard.getItems().addAll(onlineData);
         onlineLeaderboard.getSortOrder().add(onlineClassic);
 
+        localClassic.setSortType(TableColumn.SortType.DESCENDING);
+        localUsername.setStyle("-fx-alignment: CENTER;");
+        localClassic.setStyle("-fx-alignment: CENTER;");
+        localTime.setStyle("-fx-alignment: CENTER;");
+        localInfinity.setStyle("-fx-alignment: CENTER;");
+        localGames.setStyle("-fx-alignment: CENTER;");
+        localTimePlayed.setStyle("-fx-alignment: CENTER;");
+        localUsername.setCellValueFactory((data) -> new SimpleStringProperty(data.getValue().getName()));
+        localClassic.setCellValueFactory((data) -> new SimpleStringProperty(String.valueOf(data.getValue().getHsClassic())));
+        localTime.setCellValueFactory((data) -> new SimpleStringProperty(String.valueOf(data.getValue().getHsTime())));
+        localInfinity.setCellValueFactory((data) -> new SimpleStringProperty(String.valueOf(data.getValue().getHsInfinity())));
+        localGames.setCellValueFactory((data) -> new SimpleStringProperty(String.valueOf(data.getValue().getGamesPlayed())));
+        localTimePlayed.setCellValueFactory((data) -> new SimpleStringProperty(calculateTime(String.valueOf(data.getValue().getTimePlayed()))));
+        localLeaderboard.getItems().addAll(localData);
+        localLeaderboard.getSortOrder().add(localClassic);
+
 
         loggedInAs.setText(Settings.searchSettings("username") + " (" + Settings.searchSettings("accountType") + ")");
 
+        Player user;
+
         if (Settings.searchSettings("accountType").equals("online")) {
-            ysClassic.setText(ownValuesArray[0]);
-            ysTime.setText(ownValuesArray[1]);
-            ysInfinity.setText(ownValuesArray[2]);
-            ysPlaytime.setText(calculateTime(ownValuesArray[3]));
-            ysGamesPlayed.setText(ownValuesArray[4]);
+            user = Player.findUser(Settings.searchSettings("username"), onlineData);
+        } else {
+            user = Player.findUser(Settings.searchSettings("username"), localData);
+        }
+
+        if (user != null) {
+            ysClassic.setText(String.valueOf(user.getHsClassic()));
+            ysTime.setText(String.valueOf(user.getHsTime()));
+            ysInfinity.setText(String.valueOf(user.getHsInfinity()));
+            ysPlaytime.setText(calculateTime(String.valueOf(user.getTimePlayed())));
+            ysGamesPlayed.setText(String.valueOf(user.getGamesPlayed()));
         }
     }
 
@@ -107,22 +204,29 @@ public class LeaderboardController {
     @FXML
     private void update(ActionEvent actionEvent) {
         loading.setVisible(true);
-        new updateLeaderboard().start();
+        onlineLeaderboard.setPlaceholder(new Label(Language.getPhrase("loadingData")));
+        onlineLeaderboard.getItems().clear();
+        onlineData.clear();
+        localLeaderboard.setPlaceholder(new Label(Language.getPhrase("loadingData")));
+        localLeaderboard.getItems().clear();
+        localData.clear();
+        new UpdateLeaderboard().start();
     }
 
 
-    private class updateLeaderboard extends Thread {
+    private class UpdateLeaderboard extends Thread {
         @Override
         public void run() {
             try {
                 Thread.sleep(1);
-                onlineData.clear();
 
                 onlineData = UserDataOnline.updateData();
-                ownValuesArray = UserDataOnline.update(Settings.searchSettings("username"));
+
+                localData = UserDataLocal.updateData();
 
                 Platform.runLater(() -> {
                     loading.setVisible(false);
+                    initialize();
                 });
 
             } catch (InterruptedException ex) {
@@ -133,10 +237,12 @@ public class LeaderboardController {
     }
 
     private static String calculateTime(String time) {
+        final int sixtySeconds = 60;
+
         int timePlayedDB = Integer.parseInt(time);
-        int hours = timePlayedDB / 3600;
-        int minutes = (timePlayedDB % 3600) / 60;
-        int seconds = timePlayedDB % 60;
+        int hours = timePlayedDB / (sixtySeconds * sixtySeconds);
+        int minutes = (timePlayedDB % (sixtySeconds * sixtySeconds)) / sixtySeconds;
+        int seconds = timePlayedDB % sixtySeconds;
 
         return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }

@@ -1,11 +1,14 @@
 package at.javatetris.project;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
-import static java.nio.file.StandardOpenOption.APPEND;
 
 public class UserDataLocal {
     /** path where file is located */
@@ -43,12 +46,46 @@ public class UserDataLocal {
             InputStream userDataInputStream = new FileInputStream(getUsernameFile(username));
             userDataLocal.load(userDataInputStream);
 
+            userDataInputStream.close();
+
             System.out.println("UserData.java: " + username + " Properties" + userDataLocal);
         } catch (IOException e) {
+
             Main.errorAlert("UserData.java");
             e.printStackTrace();
         }
     }
+
+    //TODO ?
+    /*
+    public static void checkAllFiles() {
+        try {
+            //template and fill already with username, password and set highscores to 0
+
+
+            List<String> names = Files.readAllLines(Paths.get(Settings.getAllUsernamesFilePath()));
+            for (String name : names) {
+                if (!new File(USERNAME_FILE + name + ".properties").exists()) {
+                    final List<String> userDataTemplate = Arrays.asList(
+                            "username=" + name,
+                            "password=" + password,
+                            "hs_classic=0",
+                            "hs_time=0",
+                            "hs_infinity=0",
+                            "gamesPlayed=0",
+                            "timePlayed=0"
+                    );
+
+                    //write the config lines in the new created config.properties file
+                    Files.write(Paths.get(USERNAME_FILE + name + ".properties"), , StandardCharsets.UTF_8);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+     */
 
     /**
      * set to a key a value (UserData)
@@ -83,20 +120,31 @@ public class UserDataLocal {
         return getUserDataLocal().getProperty(key);
     }
 
-    public static void setNewHighscore(String value, String username) {
-        try {
-            Files.writeString(
-                    Path.of(Settings.getHighscoreFilePath()),
-                    value + username + System.lineSeparator(), APPEND
-            );
-        } catch (IOException e) {
-            e.printStackTrace();
-            Main.errorAlert("UserDataLocal.java");
-        }
+
+    public static String[] getDataUser() {
+        load(Settings.searchSettings("username"));
+        return new String[] {search("hs_classic"), search("hs_time"), search("hs_infinity"), search("timePlayed"), search("gamesPlayed")};
     }
 
-    public static String[] update() {
-        return new String[] {search("hs_classic"), search("hs_time"), search("hs_infinity"), search("timePlayed"), search("gamesPlayed")};
+    public static List<Player> updateData() {
+        try {
+            List<String> names = Files.readAllLines(Paths.get(Settings.getAllUsernamesFilePath()));
+
+            List<Player> allData = new ArrayList<>();
+
+            for (String name : names) {
+                load(name);
+                allData.add(new Player(name, Integer.parseInt(search("hs_classic")), Integer.parseInt(search("hs_time")), Integer.parseInt(search("hs_infinity")), Integer.parseInt(search("timePlayed")), Integer.parseInt(search("gamesPlayed"))));
+            }
+
+            //load(Settings.searchSettings("username"));
+
+            return allData;
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

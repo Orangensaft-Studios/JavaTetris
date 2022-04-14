@@ -1,6 +1,5 @@
 package at.javatetris.project;
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +32,7 @@ public class UserDataOnline {
             int timePlayedStart = d.indexOf(":", gamesPlayedStart + 1);
             int timePlayed = Integer.parseInt(d.substring(timePlayedStart + 1).trim());
 
-            allData.add(new Player(name, hsClassic, hsTime, hsInfinity, gamesPlayed, timePlayed));
+            allData.add(new Player(name, hsClassic, hsTime, hsInfinity, timePlayed, gamesPlayed));
         }
 
         System.out.println(allData);
@@ -41,11 +40,20 @@ public class UserDataOnline {
         return allData;
     }
 
-    public static String[] update(String username) {
+    public static void saveDataUser(int value, String field) {
+        System.out.println("UserDataOnline.java: Saving data: " + value + " to " + field);
+        DataBaseAPI.saveDataToDB(Settings.searchSettings("username"), Settings.searchSettings("password"), field, value);
+    }
+
+
+    public static String[] getDataUser(String username) {
         String data = DataBaseAPI.getData(username);
         System.out.println(data);
-        return new String[] {getJSONValue(data, "hs_classic"), getJSONValue(data, "hs_time"), getJSONValue(data, "hs_infinity"), getJSONValue(data, "timePlayed"), getJSONValue(data, "hs_infinity")};
+        return new String[] {getJSONValue(data, "hs_classic"), getJSONValue(data, "hs_time"), getJSONValue(data, "hs_infinity"), getJSONValue(data, "timePlayed"), getJSONValue(data, "gamesPlayed")};
     }
+
+
+
 
     /**
      * get a value from a JSON string
@@ -53,6 +61,7 @@ public class UserDataOnline {
      * @param dataBaseField the key/database field to search for
      * @return the value
      */
+
     public static String getJSONValue(String jsonString, String dataBaseField) {
         int beginIndex = jsonString.indexOf(dataBaseField);
         int endIndex = jsonString.indexOf("]", beginIndex);

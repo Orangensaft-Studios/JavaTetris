@@ -117,7 +117,7 @@ public class DataBaseAPI {
      * @param value the new value
      * @return if successful
      */
-    public static String saveData(String username, String password, String field, String value) {
+    public static String saveDataToDB(String username, String password, String field, int value) {
         try {
             String urlString = String.format("https://80458.wayscript.io/saveData?username=%s&password=%s&field=%s&value=%s", username, password, field, value);
             URL url = new URL(urlString);
@@ -140,6 +140,7 @@ public class DataBaseAPI {
                 conn.disconnect();
                 return "Error";
             } else {
+                conn.disconnect();
                 //successful
                 return "success";
             }
@@ -155,12 +156,55 @@ public class DataBaseAPI {
     }
 
     /**
+     * get all scores from database
+     * @return string in json format with all data
+     * @throws RuntimeException error
+     */
+    public static String getAllData() {
+        //data will store the JSON data streamed in string format
+        String response = "";
+
+        try {
+            URL url = new URL("https://81087.wayscript.io/getAllData");
+            HttpsURLConnection conn = (HttpsURLConnection)url.openConnection();
+
+            conn.setRequestMethod("GET");
+            conn.connect();
+
+            int responseCode = conn.getResponseCode();
+            System.out.println("DataBaseAPI.java: Response code is: " + responseCode);
+
+
+            if (responseCode != RESPONSE_CODE_200) {
+                conn.disconnect();
+                throw new RuntimeException("HttpResponseCode: " + responseCode);
+            } else {
+                Scanner sc = new Scanner(url.openStream());
+
+                while (sc.hasNext()) {
+                    response += sc.nextLine();
+                }
+
+                sc.close();
+            }
+
+            conn.disconnect();
+
+            return response;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            Main.errorAlert("DataBaseAPI.java");
+            throw new RuntimeException("Error");
+        }
+    }
+
+    /**
      * create api call to get user data
      * @param username to get data from
      * @return the data as string (in json format!)
      */
     public static String getData(String username) {
-        //data will store the JSON data streamed in string format
         String data = "";
 
         try {
@@ -173,10 +217,7 @@ public class DataBaseAPI {
             int responseCode = conn.getResponseCode();
             System.out.println("DataBaseAPI.java: Response code is: " + responseCode);
 
-            if (responseCode == RESPONSE_CODE_404) {
-                conn.disconnect();
-                throw new RuntimeException("No username | HttpResponseCode: " + responseCode);
-            } else if (responseCode != RESPONSE_CODE_200) {
+           if (responseCode != RESPONSE_CODE_200) {
                 conn.disconnect();
                 throw new RuntimeException("HttpResponseCode: " + responseCode);
             } else {
@@ -194,47 +235,6 @@ public class DataBaseAPI {
             conn.disconnect();
 
             return data;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Main.errorAlert("DataBaseAPI.java");
-            return "error";
-        }
-    }
-
-    public static String getAllData() {
-        //data will store the JSON data streamed in string format
-        String response = "";
-
-        try {
-            URL url = new URL("https://81087.wayscript.io/getAllData");
-            HttpsURLConnection conn = (HttpsURLConnection)url.openConnection();
-
-            conn.setRequestMethod("GET");
-            conn.connect();
-
-            int responseCode = conn.getResponseCode();
-            System.out.println("DataBaseAPI.java: Response code is: " + responseCode);
-
-            if (responseCode == RESPONSE_CODE_404) {
-                conn.disconnect();
-                throw new RuntimeException("No username | HttpResponseCode: " + responseCode);
-            } else if (responseCode != RESPONSE_CODE_200) {
-                conn.disconnect();
-                throw new RuntimeException("HttpResponseCode: " + responseCode);
-            } else {
-                Scanner sc = new Scanner(url.openStream());
-
-                while (sc.hasNext()) {
-                    response += sc.nextLine();
-                }
-
-                sc.close();
-            }
-
-            conn.disconnect();
-
-            return response;
 
         } catch (Exception e) {
             e.printStackTrace();
