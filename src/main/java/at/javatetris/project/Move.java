@@ -35,6 +35,7 @@ class Move extends TimerTask {
         tBlock.c2.setX(tBlock.c2.getX() - GameStage.SIZE);
         tBlock.c3.setX(tBlock.c3.getX() - GameStage.SIZE);
         tBlock.c4.setX(tBlock.c4.getX() - GameStage.SIZE);
+        setWentX(getWentX() - SIZE);
 
     }
 
@@ -61,6 +62,7 @@ class Move extends TimerTask {
         tBlock.c2.setX(tBlock.c2.getX() + GameStage.SIZE);
         tBlock.c3.setX(tBlock.c3.getX() + GameStage.SIZE);
         tBlock.c4.setX(tBlock.c4.getX() + GameStage.SIZE);
+        setWentX(getWentX() + SIZE);
 
     }
 

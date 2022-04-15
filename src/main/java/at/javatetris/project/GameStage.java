@@ -9,6 +9,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.sql.SQLOutput;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -39,6 +40,10 @@ public class GameStage {
      * the width of the Stage
      */
     private static final int WIDTH = PLAY_AREA + 150;
+
+    private static int wentY = 0;
+    private static int wentX = 0;
+    private static boolean hold = true;
     /**
      * the height of the stage
      */
@@ -57,6 +62,7 @@ public class GameStage {
     private static TetrisBlock all = new TetrisBlock();
 
     private static TetrisBlock holdyBlock = new TetrisBlock();
+    private static TetrisBlock tempSave;
     /**
      * if the block is falling or not
      */
@@ -147,6 +153,9 @@ public class GameStage {
         Timer fall3 = new Timer();
 
         if (reset) {
+            holdyBlock = new TetrisBlock();
+            wentY = 0;
+            wentX = 0;
             level = 1;
             opacity = 0;
             otherPlay = false;
@@ -214,7 +223,7 @@ public class GameStage {
         final int yCoordinate5 = 310;
         final int yCoordinate6 = 30;
         final int yCoordinate7 = 70;
-        final int yCoordinate8 = 250;
+        final int yCoordinate8 = 370;
         final int xCoordinate = 3;
         final int xCoordinate2 = 20;
         final int xCoordinate3 = 200;
@@ -328,6 +337,10 @@ public class GameStage {
         info.setStyle("-fx-font: 15 arial;");
         info.setY(yCoordinate + 380);
         info.setX(PLAY_AREA + xCoordinate);
+        Text holdText = new Text("Hold:");
+        holdText.setStyle("-fx-font: 20 arial;");
+        holdText.setY(yCoordinate8);
+        holdText.setX(PLAY_AREA + xCoordinate);
         Text endTime = new Text(Language.getPhrase("timeLeft"));
         endTime.setStyle("-fx-font: 20 arial;");
         endTime.setY(yCoordinate);
@@ -358,14 +371,14 @@ public class GameStage {
         points += xCoordinate2;
 
         if (timeMode) {
-            all.getChildren().addAll(line, score, info
+            all.getChildren().addAll(line, score, info, holdText
                     , playTime, time, nextBLocks, endTime, linesCleared, group);
         } else if (tutorial) {
-            all.getChildren().addAll(line, info, score, playTime, time, nextBLocks, linesCleared
+            all.getChildren().addAll(line, info, score, holdText, playTime, time, nextBLocks, linesCleared
                     , blockInfo, blockInfo2, blockInfo3, blockInfo4, blockInfo5, lineClear, move, moveLeft, rotate, hardDrop
                     , multiplier, tutorialEnd, group);
         } else {
-            all.getChildren().addAll(line, info, score, playTime, time, nextBLocks, linesCleared, group);
+            all.getChildren().addAll(line, info, score, holdText, playTime, time, nextBLocks, linesCleared, group);
         }
         // add additional columns and a row at the bottom to create a border for the playground
         for (int i = 0; i < fieldStatus.length; i++) {
@@ -671,7 +684,8 @@ public class GameStage {
                     if (play && spaceCooldown && top < 3) {
                         moveDown(block, true, true);
                     }
-                } else if ((Settings.searchControls("holdKey").equals(e.getCode() + ""))) {
+                } else if ((Settings.searchControls("holdKey").equals(e.getCode() + "")) && hold) {
+                    System.out.println("hold");
                     hold(block);
                 }
             }
@@ -967,9 +981,9 @@ public class GameStage {
     public static void moveDown(TetrisBlock tBlock, boolean spawn, boolean toBottom) {
         final int xCoordinate = 200;
         final int yCoordinate = 70;
-        final int indexToDelete = 7;
-        final int indexToDelete2 = 8;
-        final int indexToDelte3 = 19;
+        final int indexToDelete = 8;
+        final int indexToDelete2 = 9;
+        final int indexToDelte3 = 20;
         final int pointsToAdd = 20;
         Boolean end = false;
 
@@ -986,6 +1000,12 @@ public class GameStage {
                     all.getChildren().remove(nextBLock.c2);
                     all.getChildren().remove(nextBLock.c3);
                     all.getChildren().remove(nextBLock.c4);
+                    if (holdyBlock.c1 != null) {
+                        all.getChildren().remove(holdyBlock.c1);
+                        all.getChildren().remove(holdyBlock.c2);
+                        all.getChildren().remove(holdyBlock.c3);
+                        all.getChildren().remove(holdyBlock.c4);
+                    }
                     everyCube[(int) tBlock.c1.getX() / SIZE][(int) tBlock.c1.getY() / SIZE] = tBlock.c1;
                     everyCube[(int) tBlock.c2.getX() / SIZE][(int) tBlock.c2.getY() / SIZE] = tBlock.c2;
                     everyCube[(int) tBlock.c3.getX() / SIZE][(int) tBlock.c3.getY() / SIZE] = tBlock.c3;
@@ -1039,7 +1059,13 @@ public class GameStage {
 
 
                     all.getChildren().addAll(nextBLock.c1, nextBLock.c2, nextBLock.c3, nextBLock.c4);
+                    if (holdyBlock.c1 != null) {
+                        all.getChildren().addAll(holdyBlock.c1, holdyBlock.c2, holdyBlock.c3, holdyBlock.c4);
+                    }
 
+                    wentY = 0;
+                    wentX = 0;
+                    hold = true;
                     nextBLock.c1.setTranslateX(xCoordinate);
                     nextBLock.c2.setTranslateX(xCoordinate);
                     nextBLock.c3.setTranslateX(xCoordinate);
@@ -1054,6 +1080,7 @@ public class GameStage {
                     tBlock.c2.setY(tBlock.c2.getY() + SIZE);
                     tBlock.c3.setY(tBlock.c3.getY() + SIZE);
                     tBlock.c4.setY(tBlock.c4.getY() + SIZE);
+                    wentY += SIZE;
                 }
 
             } while (!end);
@@ -1067,6 +1094,12 @@ public class GameStage {
                 all.getChildren().remove(nextBLock.c2);
                 all.getChildren().remove(nextBLock.c3);
                 all.getChildren().remove(nextBLock.c4);
+                if (holdyBlock.c1 != null) {
+                    all.getChildren().remove(holdyBlock.c1);
+                    all.getChildren().remove(holdyBlock.c2);
+                    all.getChildren().remove(holdyBlock.c3);
+                    all.getChildren().remove(holdyBlock.c4);
+                }
                 everyCube[(int) tBlock.c1.getX() / SIZE][(int) tBlock.c1.getY() / SIZE] = tBlock.c1;
                 everyCube[(int) tBlock.c2.getX() / SIZE][(int) tBlock.c2.getY() / SIZE] = tBlock.c2;
                 everyCube[(int) tBlock.c3.getX() / SIZE][(int) tBlock.c3.getY() / SIZE] = tBlock.c3;
@@ -1120,7 +1153,13 @@ public class GameStage {
 
 
                 all.getChildren().addAll(nextBLock.c1, nextBLock.c2, nextBLock.c3, nextBLock.c4);
+                if (holdyBlock.c1 != null) {
+                    all.getChildren().addAll(holdyBlock.c1, holdyBlock.c2, holdyBlock.c3, holdyBlock.c4);
+                }
 
+                wentY = 0;
+                wentX = 0;
+                hold = true;
                 nextBLock.c1.setTranslateX(xCoordinate);
                 nextBLock.c2.setTranslateX(xCoordinate);
                 nextBLock.c3.setTranslateX(xCoordinate);
@@ -1135,6 +1174,7 @@ public class GameStage {
                 tBlock.c2.setY(tBlock.c2.getY() + SIZE);
                 tBlock.c3.setY(tBlock.c3.getY() + SIZE);
                 tBlock.c4.setY(tBlock.c4.getY() + SIZE);
+                wentY += SIZE;
             }
         }
 
@@ -1220,77 +1260,88 @@ public class GameStage {
         GameStage.pause = pause;
     }
 
-    private static void sleep(long timeout) {
-        try {
-            Thread.sleep(timeout);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+    private static void hold(TetrisBlock tBlock) {
+        if (holdyBlock.c1 != null){
+            holdyBlock.c1.setTranslateX(0);
+            holdyBlock.c1.setTranslateY(0);
+            holdyBlock.c2.setTranslateX(0);
+            holdyBlock.c2.setTranslateY(0);
+            holdyBlock.c3.setTranslateX(0);
+            holdyBlock.c3.setTranslateY(0);
+            holdyBlock.c4.setTranslateX(0);
+            holdyBlock.c4.setTranslateY(0);
         }
-    }
-    private static void hold(TetrisBlock tBlock){
-        final int indexToDelete = 7;
-        final int indexToDelete2 = 8;
-        final int indexToDelte3 = 19;
-        final int yCoordinate = 70;
+
         final int xCoordinate = 200;
-            if(holdyBlock == null){
-                group = new Group();
-                all.getChildren().remove(nextBLock.c1);
-                all.getChildren().remove(nextBLock.c2);
-                all.getChildren().remove(nextBLock.c3);
-                all.getChildren().remove(nextBLock.c4);
+        final int yCoordinate = 70;
+        final int yCoordinate2 = 400;
+        all.getChildren().remove(block.c1);
+        all.getChildren().remove(block.c2);
+        all.getChildren().remove(block.c3);
+        all.getChildren().remove(block.c4);
+        if (holdyBlock.c1 == null) {
+            all.getChildren().remove(nextBLock.c1);
+            all.getChildren().remove(nextBLock.c2);
+            all.getChildren().remove(nextBLock.c3);
+            all.getChildren().remove(nextBLock.c4);
+            holdyBlock = block;
+            nextBLock.c1.setTranslateX(0);
+            nextBLock.c2.setTranslateX(0);
+            nextBLock.c3.setTranslateX(0);
+            nextBLock.c4.setTranslateX(0);
+            nextBLock.c1.setTranslateY(0);
+            nextBLock.c2.setTranslateY(0);
+            nextBLock.c3.setTranslateY(0);
+            nextBLock.c4.setTranslateY(0);
+            block = nextBLock;
+            nextBLock = generateBlock();
+            all.getChildren().addAll(nextBLock.c1, nextBLock.c2, nextBLock.c3, nextBLock.c4);
+            nextBLock.c1.setTranslateX(xCoordinate);
+            nextBLock.c2.setTranslateX(xCoordinate);
+            nextBLock.c3.setTranslateX(xCoordinate);
+            nextBLock.c4.setTranslateX(xCoordinate);
+            nextBLock.c1.setTranslateY(yCoordinate);
+            nextBLock.c2.setTranslateY(yCoordinate);
+            nextBLock.c3.setTranslateY(yCoordinate);
+            nextBLock.c4.setTranslateY(yCoordinate);
+        } else {
+            all.getChildren().remove(holdyBlock.c1);
+            all.getChildren().remove(holdyBlock.c2);
+            all.getChildren().remove(holdyBlock.c3);
+            all.getChildren().remove(holdyBlock.c4);
+            tempSave = block;
+            block = holdyBlock;
+            holdyBlock = tempSave;
+        }
+        holdyBlock.c1.setY(holdyBlock.c1.getY() - wentY);
+        holdyBlock.c2.setY(holdyBlock.c2.getY() - wentY);
+        holdyBlock.c3.setY(holdyBlock.c3.getY() - wentY);
+        holdyBlock.c4.setY(holdyBlock.c4.getY() - wentY);
+        holdyBlock.c1.setX(holdyBlock.c1.getX() - wentX);
+        holdyBlock.c2.setX(holdyBlock.c2.getX() - wentX);
+        holdyBlock.c3.setX(holdyBlock.c3.getX() - wentX);
+        holdyBlock.c4.setX(holdyBlock.c4.getX() - wentX);
 
-                all.getChildren().remove(block.c1);
-                all.getChildren().remove(block.c2);
-                all.getChildren().remove(block.c3);
-                all.getChildren().remove(block.c4);
+        all.getChildren().addAll(holdyBlock.c1, holdyBlock.c2, holdyBlock.c3, holdyBlock.c4);
+        all.getChildren().addAll(block.c1, block.c2, block.c3, block.c4);
+        holdyBlock.c1.setTranslateX(xCoordinate);
+        holdyBlock.c1.setTranslateY(yCoordinate2);
+        holdyBlock.c2.setTranslateX(xCoordinate);
+        holdyBlock.c2.setTranslateY(yCoordinate2);
+        holdyBlock.c3.setTranslateX(xCoordinate);
+        holdyBlock.c3.setTranslateY(yCoordinate2);
+        holdyBlock.c4.setTranslateX(xCoordinate);
+        holdyBlock.c4.setTranslateY(yCoordinate2);
+        wentY = 0;
+        wentX = 0;
+        hold = false;
+    }
 
-                if (timeMode) {
-                    for (int i = 0; i < 1; i++) {
-                        all.getChildren().remove(indexToDelete2);
-                    }
-                } else if (tutorial) {
-                    all.getChildren().remove(indexToDelte3);
-                } else {
-                    for (int i = 0; i < 1; i++) {
-                        all.getChildren().remove(indexToDelete);
-                    }
-                }
+    public static int getWentX() {
+        return wentX;
+    }
 
-
-                group = saveArrayToGroup(group, everyCube);
-
-                all.getChildren().add(group);
-                nextBLock.c1.setTranslateX(0);
-                nextBLock.c2.setTranslateX(0);
-                nextBLock.c3.setTranslateX(0);
-                nextBLock.c4.setTranslateX(0);
-                nextBLock.c1.setTranslateY(0);
-                nextBLock.c2.setTranslateY(0);
-                nextBLock.c3.setTranslateY(0);
-                nextBLock.c4.setTranslateY(0);
-                TetrisBlock currentBlock = nextBLock;
-                nextBLock = Generate.generateBlock();
-                block = currentBlock;
-                all.getChildren().addAll(currentBlock.c1,
-                        currentBlock.c2, currentBlock.c3, currentBlock.c4);
-                keyPressed(currentBlock);
-
-                all.getChildren().addAll(nextBLock.c1, nextBLock.c2, nextBLock.c3, nextBLock.c4);
-
-                nextBLock.c1.setTranslateX(xCoordinate);
-                nextBLock.c2.setTranslateX(xCoordinate);
-                nextBLock.c3.setTranslateX(xCoordinate);
-                nextBLock.c4.setTranslateX(xCoordinate);
-                nextBLock.c1.setTranslateY(yCoordinate);
-                nextBLock.c2.setTranslateY(yCoordinate);
-                nextBLock.c3.setTranslateY(yCoordinate);
-                nextBLock.c4.setTranslateY(yCoordinate);
-                block = holdyBlock;
-            } else{
-                block = nextBLock;
-            }
-            holdyBlock = tBlock;
-
+    public static void setWentX(int wentX) {
+        GameStage.wentX = wentX;
     }
 }
