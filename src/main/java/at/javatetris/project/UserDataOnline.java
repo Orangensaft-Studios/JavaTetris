@@ -11,31 +11,35 @@ public class UserDataOnline {
 
         List<Player> allData = new ArrayList<>();
 
-        String[] dataUsers = data.split("}");
+        if (!data.equals("NoConnection")) {
 
-        for (String d : dataUsers) {
-            int nameStart = d.indexOf(":");
-            String name = d.substring(nameStart + 1, d.indexOf(",", nameStart)).replaceAll("\"", "").trim();
+            String[] dataUsers = data.split("}");
 
-            int hsClassicStart = d.indexOf(":", nameStart + 1);
-            int hsClassic = Integer.parseInt(d.substring(hsClassicStart + 1, d.indexOf(",", hsClassicStart)).trim());
+            for (String d : dataUsers) {
+                int nameStart = d.indexOf(":");
+                String name = d.substring(nameStart + 1, d.indexOf(",", nameStart)).replaceAll("\"", "").trim();
 
-            int hsTimeStart = d.indexOf(":", hsClassicStart + 1);
-            int hsTime = Integer.parseInt(d.substring(hsTimeStart + 1, d.indexOf(",", hsTimeStart)).trim());
+                int hsClassicStart = d.indexOf(":", nameStart + 1);
+                int hsClassic = Integer.parseInt(d.substring(hsClassicStart + 1, d.indexOf(",", hsClassicStart)).trim());
 
-            int hsInfinityStart = d.indexOf(":", hsTimeStart + 1);
-            int hsInfinity = Integer.parseInt(d.substring(hsInfinityStart + 1, d.indexOf(",", hsInfinityStart)).trim());
+                int hsTimeStart = d.indexOf(":", hsClassicStart + 1);
+                int hsTime = Integer.parseInt(d.substring(hsTimeStart + 1, d.indexOf(",", hsTimeStart)).trim());
 
-            int gamesPlayedStart = d.indexOf(":", hsInfinityStart + 1);
-            int gamesPlayed = Integer.parseInt(d.substring(gamesPlayedStart + 1, d.indexOf(",", gamesPlayedStart)).trim());
+                int hsInfinityStart = d.indexOf(":", hsTimeStart + 1);
+                int hsInfinity = Integer.parseInt(d.substring(hsInfinityStart + 1, d.indexOf(",", hsInfinityStart)).trim());
 
-            int timePlayedStart = d.indexOf(":", gamesPlayedStart + 1);
-            int timePlayed = Integer.parseInt(d.substring(timePlayedStart + 1).trim());
+                int gamesPlayedStart = d.indexOf(":", hsInfinityStart + 1);
+                int gamesPlayed = Integer.parseInt(d.substring(gamesPlayedStart + 1, d.indexOf(",", gamesPlayedStart)).trim());
 
-            allData.add(new Player(name, hsClassic, hsTime, hsInfinity, timePlayed, gamesPlayed));
+                int timePlayedStart = d.indexOf(":", gamesPlayedStart + 1);
+                int timePlayed = Integer.parseInt(d.substring(timePlayedStart + 1).trim());
+
+                allData.add(new Player(name, hsClassic, hsTime, hsInfinity, timePlayed, gamesPlayed));
+            }
+
+            System.out.println(allData);
+
         }
-
-        System.out.println(allData);
 
         return allData;
     }
@@ -49,9 +53,12 @@ public class UserDataOnline {
     public static String[] getDataUser(String username) {
         String data = DataBaseAPI.getData(username);
         System.out.println(data);
-        return new String[] {getJSONValue(data, "hs_classic"), getJSONValue(data, "hs_time"), getJSONValue(data, "hs_infinity"), getJSONValue(data, "timePlayed"), getJSONValue(data, "gamesPlayed")};
+        if (!data.equals("NoConnection")) {
+            return new String[]{getJSONValue(data, "hs_classic"), getJSONValue(data, "hs_time"), getJSONValue(data, "hs_infinity"), getJSONValue(data, "timePlayed"), getJSONValue(data, "gamesPlayed")};
+        } else {
+            return new String[] {"0", "0", "0", "0", "0"};
+        }
     }
-
 
 
 

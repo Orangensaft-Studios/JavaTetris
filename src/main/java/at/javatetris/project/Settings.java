@@ -15,7 +15,7 @@ import java.util.Properties;
  */
 public class Settings {
     /** version number */
-    private static final String VERSION = "1.2.0";
+    private static final String VERSION = "1.3.0";
 
     /** user home path + AppData\Local\JavaTetris\ */
     private final static String JAVATETRIS_DIR_PATH = System.getProperty("user.home") + "\\AppData\\Local\\Orangensaft Studios\\JavaTetris\\";

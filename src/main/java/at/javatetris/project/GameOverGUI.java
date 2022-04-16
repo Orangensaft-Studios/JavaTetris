@@ -14,6 +14,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 
+import static at.javatetris.project.GameStage.getEndTimer;
 import static at.javatetris.project.GameStage.getPoints;
 
 /**
@@ -40,11 +41,21 @@ public class GameOverGUI {
     @FXML
     private Text pointsToFirst;
 
+    @FXML
+    private Text noConnection1;
+
+    @FXML
+    private Text noConnection2;
+
+    @FXML
+    private Text noConnection3;
+
     /**
      * start gameOverGUI
      * @param mode the choosen mode
      */
     public static void start(String mode) {
+
         gameMode = mode;
 
         newWindow.setTitle("JavaTetris | Game Over");
@@ -55,14 +66,17 @@ public class GameOverGUI {
             case "Time" -> {
                 dbField = "hs_time";
                 arrayIndex = 1;
+                DiscordRPC.updateRPC(Language.getPhrase("dcGameOver") + " | Score: " + getPoints(), Language.getPhrase("dcPlayedAgainstTime"));
             }
             case "Endless" -> {
                 dbField = "hs_infinity";
                 arrayIndex = 2;
+                DiscordRPC.updateRPC(Language.getPhrase("dcGameOver") + " | Score: " + getPoints(), Language.getPhrase("dcPlayedEndless"));
             }
             case "" -> {
                 dbField = "hs_classic";
                 arrayIndex = 0;
+                DiscordRPC.updateRPC(Language.getPhrase("dcGameOver") + " | Score: " + getPoints(), Language.getPhrase("dcPlayedClassic"));
             }
         }
 
@@ -94,6 +108,12 @@ public class GameOverGUI {
         highscore.setText(Language.getPhrase("loadingData"));
         pointsToFirst.setText(Language.getPhrase("loadingData"));
 
+        if (!Settings.searchSettings("accountType").equals("online")) {
+            noConnection1.setVisible(false);
+            noConnection2.setVisible(false);
+            noConnection3.setVisible(false);
+        }
+
         new LoadAndSaveScore().start();
     }
 
@@ -110,11 +130,7 @@ public class GameOverGUI {
                 int scoreFirst = 0;
                 List<Player> playersList;
 
-                boolean accountTypeIsOnline = true;
-
-                if (Settings.searchSettings("accountType").equals("local")) {
-                    accountTypeIsOnline = false;
-                }
+                boolean accountTypeIsOnline = !Settings.searchSettings("accountType").equals("local");
 
                 if (accountTypeIsOnline) {
                     ownScores = UserDataOnline.getDataUser(username);
@@ -126,7 +142,6 @@ public class GameOverGUI {
 
                 if (Integer.parseInt(ownScores[arrayIndex]) <= getPoints()) {
                     if (accountTypeIsOnline) {
-                        System.out.println("GameOverGUI.java: online saving " + getPoints() + " to " + dbField);
                         UserDataOnline.saveDataUser(getPoints(), dbField);
                     } else {
                         System.out.println("GameOverGUI.java: local saving " + getPoints() + " to " + dbField);
@@ -189,13 +204,14 @@ public class GameOverGUI {
             try {
                 Thread.sleep(1);
 
+                //TODO zeit getter einbauen
+
                 if (Settings.searchSettings("accountType").equals("online")) {
                     DataBaseAPI.saveDataToDB(username, Settings.searchSettings("password"), "gamesPlayed", (Integer.parseInt(ownScores[4]) + 1));
-                    //TODO getter for time in gamestage
                     DataBaseAPI.saveDataToDB(username, Settings.searchSettings("password"), "timePlayed", (Integer.parseInt(ownScores[3]) + 10));//STATT 10 GETTER FÜR ZEIT
                 } else {
                     UserDataLocal.setNewValue(username, "gamesPlayed", ownScores[4] + 1);
-                    UserDataLocal.setNewValue(username, "timePlayed", ownScores[3] + 10); //STATT 10 GETTER FÜR ZEIT
+                    UserDataLocal.setNewValue(username, "timePlayed", ownScores[3] + 10);
                 }
 
                 Platform.runLater(() -> {

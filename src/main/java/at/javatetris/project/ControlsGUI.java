@@ -56,6 +56,7 @@ public class ControlsGUI {
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = Main.getStage();
             stage.setScene(scene);
+            DiscordRPC.updateStateRPC(Language.getPhrase("dcSettingControls"));
         } catch (IOException e) {
             Main.errorAlert("ControlsGUI.java");
             e.printStackTrace();

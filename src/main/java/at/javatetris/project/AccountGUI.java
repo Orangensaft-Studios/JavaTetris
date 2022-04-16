@@ -34,6 +34,7 @@ public class AccountGUI {
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = Main.getStage();
             stage.setScene(scene);
+            DiscordRPC.updateStateRPC(Language.getPhrase("dcViewingAccountPage"));
         } catch (IOException e) {
             Main.errorAlert("AccountGUI.java");
             e.printStackTrace();

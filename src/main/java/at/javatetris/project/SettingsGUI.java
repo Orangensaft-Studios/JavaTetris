@@ -30,6 +30,7 @@ public class SettingsGUI {
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = Main.getStage();
             stage.setScene(scene);
+            DiscordRPC.updateStateRPC(Language.getPhrase("dcLookingSettings"));
         } catch (IOException e) {
             Main.errorAlert("SettingsGUI.java");
             e.printStackTrace();

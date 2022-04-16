@@ -29,6 +29,7 @@ public class MenuGUI {
             Stage stage = Main.getStage();
             stage.setScene(scene);
             stage.show();
+            DiscordRPC.updateRPC("v." + Settings.searchSettings("gameVersion"), Language.getPhrase("dcInMenu"));
         } catch (IOException e) {
             Main.errorAlert("MenuGUI.java");
             e.printStackTrace();

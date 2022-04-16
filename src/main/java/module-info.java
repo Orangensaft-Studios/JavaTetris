@@ -8,6 +8,8 @@ module at.javatetris.project {
     requires org.kordamp.bootstrapfx.core;
     requires java.sql;
     requires javafx.media;
+    requires java.discord.rpc;
+
 
     opens at.javatetris.project to javafx.fxml;
     exports at.javatetris.project;

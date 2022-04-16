@@ -23,6 +23,7 @@ public class InfoGUI {
             Scene scene = new Scene(fxmlLoader.load());
             Stage stage = Main.getStage();
             stage.setScene(scene);
+            DiscordRPC.updateStateRPC(Language.getPhrase("dcLookingAbout"));
         } catch (IOException e) {
             Main.errorAlert("InfoGUI.java");
             e.printStackTrace();

@@ -7,42 +7,45 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="328.0" prefWidth="364.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.javatetris.project.GameOverGUI">
    <children>
-      <Text layoutX="85.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Game Over" wrappingWidth="203.0">
+      <Text layoutX="87.0" layoutY="57.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Game Over" wrappingWidth="203.0">
          <font>
             <Font size="40.0" />
          </font>
       </Text>
-      <Button layoutX="56.0" layoutY="259.0" mnemonicParsing="false" onAction="#retryClicked" prefHeight="44.0" prefWidth="117.0" style="-fx-background-color: black;" text="Retry" textFill="WHITE" />
-      <Button layoutX="187.0" layoutY="259.0" mnemonicParsing="false" onAction="#chooseModeClicked" prefHeight="44.0" prefWidth="117.0" style="-fx-background-color: black;" text="Choose Mode" textFill="WHITE" />
-      <Text layoutX="56.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score">
+      <Button layoutX="58.0" layoutY="234.0" mnemonicParsing="false" onAction="#retryClicked" prefHeight="44.0" prefWidth="117.0" style="-fx-background-color: black;" text="Retry" textFill="WHITE" />
+      <Button layoutX="189.0" layoutY="234.0" mnemonicParsing="false" onAction="#chooseModeClicked" prefHeight="44.0" prefWidth="117.0" style="-fx-background-color: black;" text="Choose Mode" textFill="WHITE" />
+      <Text layoutX="58.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Score">
          <font>
             <Font size="19.0" />
          </font>
       </Text>
-      <Text layoutX="56.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Highscore">
+      <Text layoutX="58.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Highscore">
          <font>
             <Font size="19.0" />
          </font>
       </Text>
-      <Text fx:id="score" layoutX="246.0" layoutY="144.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+      <Text fx:id="score" layoutX="248.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
          <font>
             <Font size="19.0" />
          </font>
       </Text>
-      <Text fx:id="highscore" layoutX="246.0" layoutY="181.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+      <Text fx:id="highscore" layoutX="248.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
          <font>
             <Font size="19.0" />
          </font>
       </Text>
-      <Text layoutX="56.0" layoutY="221.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Points to First">
+      <Text layoutX="58.0" layoutY="196.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Points to First">
          <font>
             <Font size="19.0" />
          </font>
       </Text>
-      <Text fx:id="pointsToFirst" layoutX="246.0" layoutY="220.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+      <Text fx:id="pointsToFirst" layoutX="248.0" layoutY="195.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
          <font>
             <Font size="19.0" />
          </font>
       </Text>
+      <Text fx:id="noConnection1" layoutX="20.0" layoutY="301.0" strokeType="OUTSIDE" strokeWidth="0.0" text="If you don't have a connection, Highscore and Points to First " />
+      <Text fx:id="noConnection2" layoutX="52.0" layoutY="318.0" strokeType="OUTSIDE" strokeWidth="0.0" text="are not real data and a new Highscore won't save" />
+      <Text fx:id="noConnection3" layoutX="331.0" layoutY="318.0" strokeType="OUTSIDE" strokeWidth="0.0" />
    </children>
 </Pane>

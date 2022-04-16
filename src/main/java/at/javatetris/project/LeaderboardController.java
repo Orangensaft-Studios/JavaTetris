@@ -137,6 +137,8 @@ public class LeaderboardController {
      * on start fill leaderboards with data
      */
     public void initialize() {
+        DiscordRPC.updateStateRPC(Language.getPhrase("dcLookingLeaderboards"));
+
         loading.setVisible(false);
 
         onlineLeaderboard.setPlaceholder(new Label(Language.getPhrase("noDataToShow")));
@@ -159,7 +161,7 @@ public class LeaderboardController {
         onlineLeaderboard.getItems().addAll(onlineData);
         onlineLeaderboard.getSortOrder().add(onlineClassic);
 
-        localClassic.setSortType(TableColumn.SortType.DESCENDING);
+        localClassic.setSortType(TableColumn.SortType.ASCENDING);
         localUsername.setStyle("-fx-alignment: CENTER;");
         localClassic.setStyle("-fx-alignment: CENTER;");
         localTime.setStyle("-fx-alignment: CENTER;");

@@ -17,6 +17,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import club.minnced.discord.rpc.*;
 
 /**
  * class to load splashScreen.fxml (the loading screen at game open)
@@ -88,16 +89,18 @@ public class SplashScreenController implements Initializable {
                 loadingText.setText(Language.getPhrase("loadingMenuStart"));
                 progressBar.setProgress(progress5);
 
+                //start discord rich presence
+                DiscordRPC.startPresence();
+
                 Thread.sleep(sleepTime);
                 progressBar.setProgress(progress6);
-
 
                 Platform.runLater(() -> {
                     Stage mainStage = new Stage();
 
                     Parent root = null;
                     try {
-                        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("fxml/menu_en.fxml")));
+                        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("fxml/menu_" + Language.get() + ".fxml")));
                     } catch (IOException ex) {
                         ex.printStackTrace();
                         Main.errorAlert("SplashScreenController.java");
@@ -115,7 +118,10 @@ public class SplashScreenController implements Initializable {
                     Main.setMainStage(mainStage);
 
                     mainStage.setScene(scene);
+
                     mainStage.show();
+
+                    DiscordRPC.updateRPC("v." + Settings.searchSettings("gameVersion"), Language.getPhrase("dcInMenu"));
 
                     if (newMajorVersion) {
                         Alert majorUpdateAlert = Main.alertBuilder(Alert.AlertType.INFORMATION, "majorUpdateTitle", "majorUpdateHeader", "majorUpdateContent", true);

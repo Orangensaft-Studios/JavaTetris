@@ -80,6 +80,7 @@ class Move extends TimerTask {
     public static OneCube[][] deleteRow(OneCube[][] cubes) {
         final int addPoints = 100;
         final int addSeconds = 10;
+        final int multiplier3 = 3;
         int multiplier = 0;
         boolean full = true;
         for (int y = (getHeight() / SIZE) - 1; y >= 0; y--) {
@@ -92,13 +93,13 @@ class Move extends TimerTask {
 
             }
             if (full) {
-                if (multiplier == 3){
-                    setPoints(getPoints() + addPoints + 200);
-                    setEndTimer(getEndTimer() + addSeconds + 20);
-                } else if(multiplier > 0){
-                    setPoints(getPoints() + addPoints + 100);
-                    setEndTimer(getEndTimer() + addSeconds + 10);
-                } else{
+                if (multiplier == multiplier3) {
+                    setPoints(getPoints() + addPoints + (addPoints * 2));
+                    setEndTimer(getEndTimer() + addSeconds + (addSeconds * 2));
+                } else if (multiplier > 0) {
+                    setPoints(getPoints() + addPoints + (addPoints));
+                    setEndTimer(getEndTimer() + addSeconds + (addSeconds));
+                } else {
                     setPoints(getPoints() + addPoints);
                     setEndTimer(getEndTimer() + addSeconds);
                 }
@@ -117,6 +118,8 @@ class Move extends TimerTask {
                 y++;
             }
         }
+
+        GameStage.updateDiscordRPC();
         return cubes;
     }
 

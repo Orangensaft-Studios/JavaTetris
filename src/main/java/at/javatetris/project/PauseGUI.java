@@ -40,6 +40,7 @@ public class PauseGUI {
         setPause(false);
         Main.getStage().setAlwaysOnTop(true);
         newWindow.close();
+        GameStage.updateDiscordRPC();
     }
 
     @FXML

@@ -17,7 +17,7 @@ public class DataBaseAPI {
     private static final int RESPONSE_CODE_404 = 404;
     /** response code 200 */
     private static final int RESPONSE_CODE_200 = 200;
-
+    //TODO bei allen rückgabe schauen wenn NoConnection, dh. mal alles ohne Internet probieren
     /**
      * create api call to create user
      * @param username to create
@@ -53,10 +53,7 @@ public class DataBaseAPI {
                 System.out.println("DataBaseAPI.java: Created account '" + username + "'");
                 return "AwC";
             }
-        } catch (IOException e) {
-            Main.errorAlert("DataBaseAPI.java");
-            e.printStackTrace();
-            return "error1";
+
         } catch (Exception e) {
             Main.errorAlert("DataBaseAPI.java");
             e.printStackTrace();
@@ -144,12 +141,14 @@ public class DataBaseAPI {
                 //successful
                 return "success";
             }
+        } catch (UnknownHostException e) {
+            return "NoConnection";
         } catch (IOException e) {
-            Main.errorAlert("DataBaseAPI.java");
+            //Main.errorAlert("DataBaseAPI.java");
             e.printStackTrace();
             return "error1";
         } catch (Exception e) {
-            Main.errorAlert("DataBaseAPI.java");
+            //Main.errorAlert("DataBaseAPI.java");
             e.printStackTrace();
             return "Error";
         }
@@ -184,7 +183,6 @@ public class DataBaseAPI {
                 while (sc.hasNext()) {
                     response += sc.nextLine();
                 }
-
                 sc.close();
             }
 
@@ -192,9 +190,12 @@ public class DataBaseAPI {
 
             return response;
 
+        } catch (UnknownHostException e) {
+            //e.g. when no internet
+            return "NoConnection";
+
         } catch (Exception e) {
             e.printStackTrace();
-            Main.errorAlert("DataBaseAPI.java");
             throw new RuntimeException("Error");
         }
     }
@@ -236,9 +237,11 @@ public class DataBaseAPI {
 
             return data;
 
+        } catch (UnknownHostException e) {
+            //e.g. when no internet
+            return "NoConnection";
         } catch (Exception e) {
             e.printStackTrace();
-            Main.errorAlert("DataBaseAPI.java");
             return "error";
         }
     }

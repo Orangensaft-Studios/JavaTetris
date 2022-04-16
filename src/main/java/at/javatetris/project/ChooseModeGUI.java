@@ -37,13 +37,12 @@ public class ChooseModeGUI {
             Stage stage = Main.getStage();
             stage.setScene(scene);
             stage.show();
+            DiscordRPC.updateRPC("v." + Settings.searchSettings("gameVersion"), Language.getPhrase("dcChoosingMode"));
         } catch (IOException e) {
             Main.errorAlert("ChooseModeGUI.java");
             e.printStackTrace();
         }
     }
-
-    //TODO check if you are logged in and ask if you really want to play without logged in and state who is logged in
 
     /**
      * username logged in with text

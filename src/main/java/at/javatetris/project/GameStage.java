@@ -3,13 +3,11 @@ package at.javatetris.project;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-import java.sql.SQLOutput;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -26,7 +24,9 @@ import static at.javatetris.project.OneCube.*;
 
 
 public class GameStage {
-
+    /**
+     * if space cooldown is activated
+     */
     private static Boolean spaceCooldown = false;
     /**
      * the Size of oen Block of a Tetromino
@@ -61,7 +61,7 @@ public class GameStage {
      */
     private static TetrisBlock all = new TetrisBlock();
 
-    private static TetrisBlock holdyBlock = new TetrisBlock();
+    private static TetrisBlock holdBlock = new TetrisBlock();
     private static TetrisBlock tempSave;
     /**
      * if the block is falling or not
@@ -153,7 +153,7 @@ public class GameStage {
         Timer fall3 = new Timer();
 
         if (reset) {
-            holdyBlock = new TetrisBlock();
+            holdBlock = new TetrisBlock();
             wentY = 0;
             wentX = 0;
             level = 1;
@@ -245,6 +245,8 @@ public class GameStage {
             case "Tutorial" -> tutorial = true;
             case "Endless" -> endless = true;
         }
+
+        updateDiscordRPC();
 
         Text info;
         if (timeMode) {
@@ -369,6 +371,7 @@ public class GameStage {
         nextBLocks.setX(PLAY_AREA + xCoordinate);
         nextBLocks.setY(yCoordinate6);
         points += xCoordinate2;
+        updateDiscordRPC();
 
         if (timeMode) {
             all.getChildren().addAll(line, score, info, holdText
@@ -679,6 +682,7 @@ public class GameStage {
                 } else if (Settings.searchControls("pauseKey").equals(e.getCode() + "")) {
                     play = false;
                     pause = true;
+                    DiscordRPC.updateDetailsRPC(Language.getPhrase("dcPause") + " | Score: " + getPoints());
                     PauseGUI.handle(e, gameMode);
                 } else if (Settings.searchControls("hardDropKey").equals(e.getCode() + "")) {
                     if (play && spaceCooldown && top < 3) {
@@ -1000,11 +1004,11 @@ public class GameStage {
                     all.getChildren().remove(nextBLock.c2);
                     all.getChildren().remove(nextBLock.c3);
                     all.getChildren().remove(nextBLock.c4);
-                    if (holdyBlock.c1 != null) {
-                        all.getChildren().remove(holdyBlock.c1);
-                        all.getChildren().remove(holdyBlock.c2);
-                        all.getChildren().remove(holdyBlock.c3);
-                        all.getChildren().remove(holdyBlock.c4);
+                    if (holdBlock.c1 != null) {
+                        all.getChildren().remove(holdBlock.c1);
+                        all.getChildren().remove(holdBlock.c2);
+                        all.getChildren().remove(holdBlock.c3);
+                        all.getChildren().remove(holdBlock.c4);
                     }
                     everyCube[(int) tBlock.c1.getX() / SIZE][(int) tBlock.c1.getY() / SIZE] = tBlock.c1;
                     everyCube[(int) tBlock.c2.getX() / SIZE][(int) tBlock.c2.getY() / SIZE] = tBlock.c2;
@@ -1056,11 +1060,11 @@ public class GameStage {
                             currentBlock.c2, currentBlock.c3, currentBlock.c4);
                     keyPressed(currentBlock);
                     points += pointsToAdd;
-
+                    updateDiscordRPC();
 
                     all.getChildren().addAll(nextBLock.c1, nextBLock.c2, nextBLock.c3, nextBLock.c4);
-                    if (holdyBlock.c1 != null) {
-                        all.getChildren().addAll(holdyBlock.c1, holdyBlock.c2, holdyBlock.c3, holdyBlock.c4);
+                    if (holdBlock.c1 != null) {
+                        all.getChildren().addAll(holdBlock.c1, holdBlock.c2, holdBlock.c3, holdBlock.c4);
                     }
 
                     wentY = 0;
@@ -1094,11 +1098,11 @@ public class GameStage {
                 all.getChildren().remove(nextBLock.c2);
                 all.getChildren().remove(nextBLock.c3);
                 all.getChildren().remove(nextBLock.c4);
-                if (holdyBlock.c1 != null) {
-                    all.getChildren().remove(holdyBlock.c1);
-                    all.getChildren().remove(holdyBlock.c2);
-                    all.getChildren().remove(holdyBlock.c3);
-                    all.getChildren().remove(holdyBlock.c4);
+                if (holdBlock.c1 != null) {
+                    all.getChildren().remove(holdBlock.c1);
+                    all.getChildren().remove(holdBlock.c2);
+                    all.getChildren().remove(holdBlock.c3);
+                    all.getChildren().remove(holdBlock.c4);
                 }
                 everyCube[(int) tBlock.c1.getX() / SIZE][(int) tBlock.c1.getY() / SIZE] = tBlock.c1;
                 everyCube[(int) tBlock.c2.getX() / SIZE][(int) tBlock.c2.getY() / SIZE] = tBlock.c2;
@@ -1150,11 +1154,11 @@ public class GameStage {
                         currentBlock.c2, currentBlock.c3, currentBlock.c4);
                 keyPressed(currentBlock);
                 points += pointsToAdd;
-
+                updateDiscordRPC();
 
                 all.getChildren().addAll(nextBLock.c1, nextBLock.c2, nextBLock.c3, nextBLock.c4);
-                if (holdyBlock.c1 != null) {
-                    all.getChildren().addAll(holdyBlock.c1, holdyBlock.c2, holdyBlock.c3, holdyBlock.c4);
+                if (holdBlock.c1 != null) {
+                    all.getChildren().addAll(holdBlock.c1, holdBlock.c2, holdBlock.c3, holdBlock.c4);
                 }
 
                 wentY = 0;
@@ -1261,15 +1265,15 @@ public class GameStage {
     }
 
     private static void hold(TetrisBlock tBlock) {
-        if (holdyBlock.c1 != null){
-            holdyBlock.c1.setTranslateX(0);
-            holdyBlock.c1.setTranslateY(0);
-            holdyBlock.c2.setTranslateX(0);
-            holdyBlock.c2.setTranslateY(0);
-            holdyBlock.c3.setTranslateX(0);
-            holdyBlock.c3.setTranslateY(0);
-            holdyBlock.c4.setTranslateX(0);
-            holdyBlock.c4.setTranslateY(0);
+        if (holdBlock.c1 != null){
+            holdBlock.c1.setTranslateX(0);
+            holdBlock.c1.setTranslateY(0);
+            holdBlock.c2.setTranslateX(0);
+            holdBlock.c2.setTranslateY(0);
+            holdBlock.c3.setTranslateX(0);
+            holdBlock.c3.setTranslateY(0);
+            holdBlock.c4.setTranslateX(0);
+            holdBlock.c4.setTranslateY(0);
         }
 
         final int xCoordinate = 200;
@@ -1279,12 +1283,12 @@ public class GameStage {
         all.getChildren().remove(block.c2);
         all.getChildren().remove(block.c3);
         all.getChildren().remove(block.c4);
-        if (holdyBlock.c1 == null) {
+        if (holdBlock.c1 == null) {
             all.getChildren().remove(nextBLock.c1);
             all.getChildren().remove(nextBLock.c2);
             all.getChildren().remove(nextBLock.c3);
             all.getChildren().remove(nextBLock.c4);
-            holdyBlock = block;
+            holdBlock = block;
             nextBLock.c1.setTranslateX(0);
             nextBLock.c2.setTranslateX(0);
             nextBLock.c3.setTranslateX(0);
@@ -1305,33 +1309,33 @@ public class GameStage {
             nextBLock.c3.setTranslateY(yCoordinate);
             nextBLock.c4.setTranslateY(yCoordinate);
         } else {
-            all.getChildren().remove(holdyBlock.c1);
-            all.getChildren().remove(holdyBlock.c2);
-            all.getChildren().remove(holdyBlock.c3);
-            all.getChildren().remove(holdyBlock.c4);
+            all.getChildren().remove(holdBlock.c1);
+            all.getChildren().remove(holdBlock.c2);
+            all.getChildren().remove(holdBlock.c3);
+            all.getChildren().remove(holdBlock.c4);
             tempSave = block;
-            block = holdyBlock;
-            holdyBlock = tempSave;
+            block = holdBlock;
+            holdBlock = tempSave;
         }
-        holdyBlock.c1.setY(holdyBlock.c1.getY() - wentY);
-        holdyBlock.c2.setY(holdyBlock.c2.getY() - wentY);
-        holdyBlock.c3.setY(holdyBlock.c3.getY() - wentY);
-        holdyBlock.c4.setY(holdyBlock.c4.getY() - wentY);
-        holdyBlock.c1.setX(holdyBlock.c1.getX() - wentX);
-        holdyBlock.c2.setX(holdyBlock.c2.getX() - wentX);
-        holdyBlock.c3.setX(holdyBlock.c3.getX() - wentX);
-        holdyBlock.c4.setX(holdyBlock.c4.getX() - wentX);
+        holdBlock.c1.setY(holdBlock.c1.getY() - wentY);
+        holdBlock.c2.setY(holdBlock.c2.getY() - wentY);
+        holdBlock.c3.setY(holdBlock.c3.getY() - wentY);
+        holdBlock.c4.setY(holdBlock.c4.getY() - wentY);
+        holdBlock.c1.setX(holdBlock.c1.getX() - wentX);
+        holdBlock.c2.setX(holdBlock.c2.getX() - wentX);
+        holdBlock.c3.setX(holdBlock.c3.getX() - wentX);
+        holdBlock.c4.setX(holdBlock.c4.getX() - wentX);
 
-        all.getChildren().addAll(holdyBlock.c1, holdyBlock.c2, holdyBlock.c3, holdyBlock.c4);
+        all.getChildren().addAll(holdBlock.c1, holdBlock.c2, holdBlock.c3, holdBlock.c4);
         all.getChildren().addAll(block.c1, block.c2, block.c3, block.c4);
-        holdyBlock.c1.setTranslateX(xCoordinate);
-        holdyBlock.c1.setTranslateY(yCoordinate2);
-        holdyBlock.c2.setTranslateX(xCoordinate);
-        holdyBlock.c2.setTranslateY(yCoordinate2);
-        holdyBlock.c3.setTranslateX(xCoordinate);
-        holdyBlock.c3.setTranslateY(yCoordinate2);
-        holdyBlock.c4.setTranslateX(xCoordinate);
-        holdyBlock.c4.setTranslateY(yCoordinate2);
+        holdBlock.c1.setTranslateX(xCoordinate);
+        holdBlock.c1.setTranslateY(yCoordinate2);
+        holdBlock.c2.setTranslateX(xCoordinate);
+        holdBlock.c2.setTranslateY(yCoordinate2);
+        holdBlock.c3.setTranslateX(xCoordinate);
+        holdBlock.c3.setTranslateY(yCoordinate2);
+        holdBlock.c4.setTranslateX(xCoordinate);
+        holdBlock.c4.setTranslateY(yCoordinate2);
         wentY = 0;
         wentX = 0;
         hold = false;
@@ -1343,5 +1347,17 @@ public class GameStage {
 
     public static void setWentX(int wentX) {
         GameStage.wentX = wentX;
+    }
+
+    /**
+     * update Discord Rich Presence with gamemode and score
+     */
+    public static void updateDiscordRPC() {
+        switch (gameMode) {
+            case "" -> DiscordRPC.updateRPC("Score: " + getPoints(), Language.getPhrase("dcPlayingClassic"));
+            case "Endless" -> DiscordRPC.updateRPC("Score: " + getPoints(), Language.getPhrase("dcPlayingEndless"));
+            case "Time" -> DiscordRPC.updateRPC("Score: " + getPoints(), Language.getPhrase("dcPlayingAgainstTime"));
+            case "Tutorial" -> DiscordRPC.updateRPC("Score: " + getPoints(), Language.getPhrase("dcPlayingTutorial"));
+        }
     }
 }
