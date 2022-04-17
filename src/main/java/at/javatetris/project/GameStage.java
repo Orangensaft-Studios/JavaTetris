@@ -236,7 +236,7 @@ public class GameStage {
         final int secondsPerMinute = 60;
         final int minutesPerHour = 60;
         final int second = 1000;
-        final int topBeforeLosing = 6;
+        final int topBeforeLosing = 10;
 
 
         gameMode = mode;
@@ -339,6 +339,14 @@ public class GameStage {
         info.setStyle("-fx-font: 15 arial;");
         info.setY(yCoordinate + 380);
         info.setX(PLAY_AREA + xCoordinate);
+        Text highscore = new Text("Highscore:");
+        highscore.setStyle("-fx-font: 20 arial;");
+        highscore.setY(yCoordinate8 + 90);
+        highscore.setX(PLAY_AREA + xCoordinate);
+        Text firstScore = new Text("To First:");
+        firstScore.setStyle("-fx-font: 20 arial;");
+        firstScore.setY(yCoordinate8 + 140);
+        firstScore.setX(PLAY_AREA + xCoordinate);
         Text holdText = new Text("Hold:");
         holdText.setStyle("-fx-font: 20 arial;");
         holdText.setY(yCoordinate8);
@@ -374,14 +382,14 @@ public class GameStage {
         updateDiscordRPC();
 
         if (timeMode) {
-            all.getChildren().addAll(line, score, info, holdText
+            all.getChildren().addAll(line, score, info, holdText, highscore, firstScore
                     , playTime, time, nextBLocks, endTime, linesCleared, group);
         } else if (tutorial) {
-            all.getChildren().addAll(line, info, score, holdText, playTime, time, nextBLocks, linesCleared
+            all.getChildren().addAll(line, info, score, holdText, highscore, firstScore, playTime, time, nextBLocks, linesCleared
                     , blockInfo, blockInfo2, blockInfo3, blockInfo4, blockInfo5, lineClear, move, moveLeft, rotate, hardDrop
                     , multiplier, tutorialEnd, group);
         } else {
-            all.getChildren().addAll(line, info, score, holdText, playTime, time, nextBLocks, linesCleared, group);
+            all.getChildren().addAll(line, info, score, holdText, highscore, firstScore, playTime, time, nextBLocks, linesCleared, group);
         }
         // add additional columns and a row at the bottom to create a border for the playground
         for (int i = 0; i < fieldStatus.length; i++) {
@@ -609,6 +617,8 @@ public class GameStage {
                             }
                             playTime.setText(Language.getPhrase("playTime"));
                             linesCleared.setText(Language.getPhrase("lines") + " " + lines);
+                            highscore.setText("Highscore" + highscorePoints);
+                            firstScore.setText("To Firsdt" + pointsToFirst);
                             if (timeMode) {
                                 if (endTimer < seconds10) {
                                     endTime.setFill(Color.web("#DC1B00"));
@@ -985,9 +995,9 @@ public class GameStage {
     public static void moveDown(TetrisBlock tBlock, boolean spawn, boolean toBottom) {
         final int xCoordinate = 200;
         final int yCoordinate = 70;
-        final int indexToDelete = 8;
-        final int indexToDelete2 = 9;
-        final int indexToDelte3 = 20;
+        final int indexToDelete = 10;
+        final int indexToDelete2 = 11;
+        final int indexToDelte3 = 22;
         final int pointsToAdd = 20;
         Boolean end = false;
 
@@ -1317,6 +1327,7 @@ public class GameStage {
             block = holdBlock;
             holdBlock = tempSave;
         }
+
         holdBlock.c1.setY(holdBlock.c1.getY() - wentY);
         holdBlock.c2.setY(holdBlock.c2.getY() - wentY);
         holdBlock.c3.setY(holdBlock.c3.getY() - wentY);
@@ -1336,6 +1347,7 @@ public class GameStage {
         holdBlock.c3.setTranslateY(yCoordinate2);
         holdBlock.c4.setTranslateX(xCoordinate);
         holdBlock.c4.setTranslateY(yCoordinate2);
+
         wentY = 0;
         wentX = 0;
         hold = false;
