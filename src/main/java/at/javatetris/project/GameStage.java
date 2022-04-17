@@ -62,6 +62,7 @@ public class GameStage {
     private static TetrisBlock all = new TetrisBlock();
 
     private static TetrisBlock holdBlock = new TetrisBlock();
+    private static int allSeconds = 0;
     private static TetrisBlock tempSave;
     /**
      * if the block is falling or not
@@ -180,6 +181,7 @@ public class GameStage {
             points = 0;
             scene = new Scene(all, WIDTH, HEIGHT);
             seconds = 0;
+            allSeconds = 0;
             minutes = 0;
             hours = 0;
             endTimer = CONSTANT;
@@ -651,6 +653,7 @@ public class GameStage {
 
 
                             seconds++;
+                            allSeconds++;
 
                             if (timeMode) {
                                 endTimer--;
@@ -1371,5 +1374,9 @@ public class GameStage {
             case "Time" -> DiscordRPC.updateRPC("Score: " + getPoints(), Language.getPhrase("dcPlayingAgainstTime"));
             case "Tutorial" -> DiscordRPC.updateRPC("Score: " + getPoints(), Language.getPhrase("dcPlayingTutorial"));
         }
+    }
+
+    public static int getAllSeconds() {
+        return allSeconds;
     }
 }
