@@ -8,6 +8,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -139,6 +140,9 @@ public class GameStage {
     private static boolean otherMoveLeft = false;
     private static boolean pause = false;
     private static int level = 1;
+
+    private static Text highscore;
+    private static Text firstScore;
 
     private static float opacity = 0;
 
@@ -341,13 +345,13 @@ public class GameStage {
         info.setStyle("-fx-font: 15 arial;");
         info.setY(yCoordinate + 380);
         info.setX(PLAY_AREA + xCoordinate);
-        Text highscore = new Text("Highscore:");
-        highscore.setStyle("-fx-font: 20 arial;");
+        highscore = new Text("");
+        highscore.setStyle("-fx-font: 15 arial;");
         highscore.setY(yCoordinate8 + 90);
         highscore.setX(PLAY_AREA + xCoordinate);
-        Text firstScore = new Text("To First:");
-        firstScore.setStyle("-fx-font: 20 arial;");
-        firstScore.setY(yCoordinate8 + 140);
+        firstScore = new Text("");
+        firstScore.setStyle("-fx-font: 15 arial;");
+        firstScore.setY(yCoordinate8 + 120);
         firstScore.setX(PLAY_AREA + xCoordinate);
         Text holdText = new Text("Hold:");
         holdText.setStyle("-fx-font: 20 arial;");
@@ -387,6 +391,10 @@ public class GameStage {
             all.getChildren().addAll(line, score, info, holdText, highscore, firstScore
                     , playTime, time, nextBLocks, endTime, linesCleared, group);
         } else if (tutorial) {
+            highscore.setVisible(false);
+            firstScore.setVisible(false);
+            playTime.setVisible(false);
+            time.setVisible(false);
             all.getChildren().addAll(line, info, score, holdText, highscore, firstScore, playTime, time, nextBLocks, linesCleared
                     , blockInfo, blockInfo2, blockInfo3, blockInfo4, blockInfo5, lineClear, move, moveLeft, rotate, hardDrop
                     , multiplier, tutorialEnd, group);
@@ -432,6 +440,9 @@ public class GameStage {
         //block.getChildren().addAll(blocks);
 
         stage.show();
+
+        highscore.setText("Highscore: ...");
+        firstScore.setText(Language.getPhrase("fromFirst") + "...");
 
         if (tutorial) {
             moveDown(block, true, false);
@@ -619,8 +630,7 @@ public class GameStage {
                             }
                             playTime.setText(Language.getPhrase("playTime"));
                             linesCleared.setText(Language.getPhrase("lines") + " " + lines);
-                            highscore.setText("Highscore" + highscorePoints);
-                            firstScore.setText("To Firsdt" + pointsToFirst);
+
                             if (timeMode) {
                                 if (endTimer < seconds10) {
                                     endTime.setFill(Color.web("#DC1B00"));
@@ -674,7 +684,7 @@ public class GameStage {
         };
         fall2.schedule(secondsPassed, 0, second);
 
-
+        new LoadScores().start();
     }
 
     private static void keyPressed(TetrisBlock tBlock) {
@@ -1378,5 +1388,93 @@ public class GameStage {
 
     public static int getAllSeconds() {
         return allSeconds;
+    }
+
+    private static class LoadScores extends Thread {
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(1);
+
+                String hs;
+                int scoreFirst = 0;
+                String[] ownScores;
+
+                if (!gameMode.equals("Tutorial")) {
+
+                    List<Player> playersList;
+                    String username = Settings.searchSettings("username");
+                    int arrayIndex;
+
+                    switch (gameMode) {
+                        case "Time" -> arrayIndex = 1;
+                        case "Endless" -> arrayIndex = 2;
+                        case "" -> arrayIndex = 0;
+                        default -> throw new RuntimeException("There was a problem with a String, this error shouldn't have occurred. Please contact the developers");
+                    }
+
+                    boolean accountTypeIsOnline = !Settings.searchSettings("accountType").equals("local");
+
+
+                    if (accountTypeIsOnline) {
+                        ownScores = UserDataOnline.getDataUser(username);
+                        playersList = UserDataOnline.updateData();
+                    } else {
+                        ownScores = UserDataLocal.getDataUser();
+                        playersList = UserDataLocal.updateData();
+                    }
+
+                    hs = ownScores[arrayIndex];
+
+
+                    int tempScore = 0;
+
+                    switch (gameMode) {
+                        case "":
+                            for (Player player : playersList) {
+                                if (player.getHsClassic() > tempScore) {
+                                    scoreFirst = player.getHsClassic();
+                                }
+                            }
+                            break;
+                        case "Time":
+                            for (Player player : playersList) {
+                                if (player.getHsTime() > tempScore) {
+                                    scoreFirst = player.getHsTime();
+                                }
+                            }
+                            break;
+                        case "Endless":
+                            for (Player player : playersList) {
+                                if (player.getHsInfinity() > tempScore) {
+                                    scoreFirst = player.getHsInfinity();
+                                }
+                            }
+                            break;
+                        default:
+                            throw new RuntimeException("There was a problem with a String, this error shouldn't have occurred. Please contact the developers");
+                    }
+                } else {
+                    hs = "---";
+                    ownScores = null;
+                }
+
+
+                    final String finalHs = hs;
+                    final int finalScoreFirst = scoreFirst;
+
+
+                Platform.runLater(() -> {
+                    highscore.setText("Highscore: " + finalHs);
+                    firstScore.setText(Language.getPhrase("fromFirst") + finalScoreFirst);
+                    if (!gameMode.equals("Tutorial")) {
+                        GameOverGUI.setOwnScores(ownScores);
+                    }
+                });
+
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
 }

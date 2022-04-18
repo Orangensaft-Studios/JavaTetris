@@ -17,6 +17,7 @@ public class DataBaseAPI {
     private static final int RESPONSE_CODE_404 = 404;
     /** response code 200 */
     private static final int RESPONSE_CODE_200 = 200;
+
     //TODO bei allen rückgabe schauen wenn NoConnection, dh. mal alles ohne Internet probieren
     /**
      * create api call to create user
@@ -218,7 +219,7 @@ public class DataBaseAPI {
             int responseCode = conn.getResponseCode();
             System.out.println("DataBaseAPI.java: Response code is: " + responseCode);
 
-           if (responseCode != RESPONSE_CODE_200) {
+            if (responseCode != RESPONSE_CODE_200) {
                 conn.disconnect();
                 throw new RuntimeException("HttpResponseCode: " + responseCode);
             } else {

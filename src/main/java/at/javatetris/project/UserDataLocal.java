@@ -1,18 +1,19 @@
 package at.javatetris.project;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 
-
+/**
+ * class to load and save local user data
+ * @author Severin Rosner
+ */
 public class UserDataLocal {
     /** path where file is located */
-    private static final String USERNAME_FILE = Settings.getJavatetrisUsrDataDirPath();
+    private static final String USR_DIR_PATH = Settings.getJavatetrisUsrDataDirPath();
 
     /** user data properties of current user */
     private static Properties userDataLocal;
@@ -22,16 +23,16 @@ public class UserDataLocal {
      * @return user data properties of current user
      */
     private static Properties getUserDataLocal() {
-        System.out.println("UserData.java: userData Properties: " + userDataLocal);
         return userDataLocal;
     }
 
     /**
      * get the path of user data file of current user
+     * @param username username of user
      * @return path as string
      */
     private static String getUsernameFile(String username) {
-        return USERNAME_FILE + username + ".properties";
+        return USR_DIR_PATH + username + ".properties";
     }
 
     /**
@@ -89,6 +90,7 @@ public class UserDataLocal {
 
     /**
      * set to a key a value (UserData)
+     * @param username username of user
      * @param key key in username UserData properties
      * @param value value in settings properties
      * */
@@ -120,12 +122,19 @@ public class UserDataLocal {
         return getUserDataLocal().getProperty(key);
     }
 
-
+    /**
+     * get local data of logged-in user
+     * @return an array with the data
+     */
     public static String[] getDataUser() {
         load(Settings.searchSettings("username"));
         return new String[] {search("hs_classic"), search("hs_time"), search("hs_infinity"), search("timePlayed"), search("gamesPlayed")};
     }
 
+    /**
+     * get all stored data and create Player's and return as List
+     * @return List of Player of all local stored user data
+     */
     public static List<Player> updateData() {
         try {
             List<String> names = Files.readAllLines(Paths.get(Settings.getAllUsernamesFilePath()));
@@ -137,7 +146,6 @@ public class UserDataLocal {
                 allData.add(new Player(name, Integer.parseInt(search("hs_classic")), Integer.parseInt(search("hs_time")), Integer.parseInt(search("hs_infinity")), Integer.parseInt(search("timePlayed")), Integer.parseInt(search("gamesPlayed"))));
             }
 
-            //load(Settings.searchSettings("username"));
 
             return allData;
 

@@ -78,5 +78,10 @@
       <Line endX="136.0" layoutX="464.0" layoutY="79.0" startX="-466.0" />
       <Line endX="119.0" layoutX="481.0" layoutY="340.0" startX="-481.0" />
       <Text layoutX="469.0" layoutY="391.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(c) Orangensaft Studios" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="450.0" layoutY="125.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../icons/osaft_logo_icon.png" />
+         </image>
+      </ImageView>
    </children>
 </Pane>

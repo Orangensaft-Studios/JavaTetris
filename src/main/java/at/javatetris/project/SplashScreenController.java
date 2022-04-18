@@ -17,7 +17,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import club.minnced.discord.rpc.*;
 
 /**
  * class to load splashScreen.fxml (the loading screen at game open)
@@ -36,6 +35,7 @@ public class SplashScreenController implements Initializable {
     /** if there was a new major version */
     public static boolean newMajorVersion = false;
 
+    /** if user couldn't log in */
     public static boolean couldntLogIn = false;
 
     /**

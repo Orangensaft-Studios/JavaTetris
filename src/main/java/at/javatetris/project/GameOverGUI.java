@@ -14,7 +14,7 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 
-import static at.javatetris.project.GameStage.getEndTimer;
+import static at.javatetris.project.GameStage.getAllSeconds;
 import static at.javatetris.project.GameStage.getPoints;
 
 /**
@@ -26,8 +26,20 @@ public class GameOverGUI {
     /** the before chosen gameMode */
     private static String gameMode;
 
+    /** array of own values */
+    private static String[] ownScores;
+
     /** newWindow stage */
-    private static Stage newWindow = new Stage();
+    private static final Stage GAME_OVER_WINDOW = new Stage();
+
+    /** database field/property key to save values to */
+    private static String dbField;
+
+    /** array index for own values for specific game mode */
+    private static int arrayIndex;
+
+    /** username */
+    private String username = Settings.searchSettings("username");
 
     /** score you achieved */
     @FXML
@@ -41,51 +53,57 @@ public class GameOverGUI {
     @FXML
     private Text pointsToFirst;
 
+    /** no connection text 1 */
     @FXML
     private Text noConnection1;
 
+    /** no connection text 2 */
     @FXML
     private Text noConnection2;
 
+    /** no connection text 2 */
     @FXML
     private Text noConnection3;
 
     /**
      * start gameOverGUI
      * @param mode the choosen mode
+     * @throws RuntimeException when false String as mode, shouldn't occur
      */
     public static void start(String mode) {
 
         gameMode = mode;
 
-        newWindow.setTitle("JavaTetris | Game Over");
-        newWindow.setResizable(false);
-        newWindow.setAlwaysOnTop(true);
-
-        switch (gameMode) {
-            case "Time" -> {
-                dbField = "hs_time";
-                arrayIndex = 1;
-                DiscordRPC.updateRPC(Language.getPhrase("dcGameOver") + " | Score: " + getPoints(), Language.getPhrase("dcPlayedAgainstTime"));
-            }
-            case "Endless" -> {
-                dbField = "hs_infinity";
-                arrayIndex = 2;
-                DiscordRPC.updateRPC(Language.getPhrase("dcGameOver") + " | Score: " + getPoints(), Language.getPhrase("dcPlayedEndless"));
-            }
-            case "" -> {
-                dbField = "hs_classic";
-                arrayIndex = 0;
-                DiscordRPC.updateRPC(Language.getPhrase("dcGameOver") + " | Score: " + getPoints(), Language.getPhrase("dcPlayedClassic"));
+        GAME_OVER_WINDOW.setTitle("JavaTetris | Game Over");
+        GAME_OVER_WINDOW.setResizable(false);
+        GAME_OVER_WINDOW.setAlwaysOnTop(true);
+        if (!gameMode.equals("Tutorial")) {
+            switch (gameMode) {
+                case "Time" -> {
+                    dbField = "hs_time";
+                    arrayIndex = 1;
+                    DiscordRPC.updateRPC(Language.getPhrase("dcGameOver") + " | Score: " + getPoints(), Language.getPhrase("dcPlayedAgainstTime"));
+                }
+                case "Endless" -> {
+                    dbField = "hs_infinity";
+                    arrayIndex = 2;
+                    DiscordRPC.updateRPC(Language.getPhrase("dcGameOver") + " | Score: " + getPoints(), Language.getPhrase("dcPlayedEndless"));
+                }
+                case "" -> {
+                    dbField = "hs_classic";
+                    arrayIndex = 0;
+                    DiscordRPC.updateRPC(Language.getPhrase("dcGameOver") + " | Score: " + getPoints(), Language.getPhrase("dcPlayedClassic"));
+                }
+                default -> throw new RuntimeException("There was a problem with a String, this error shouldn't have occurred. Please contact the developers");
             }
         }
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(GameOverGUI.class.getResource("fxml/gameOver_" + Language.get() + ".fxml"));
             Scene scene = new Scene(fxmlLoader.load());
-            newWindow.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResource("icons/jt_icon48x48_no_bg.png")).toURI().toString()));
-            newWindow.setScene(scene);
-            newWindow.show();
+            GAME_OVER_WINDOW.getIcons().add(new Image(Objects.requireNonNull(Main.class.getResource("icons/jt_icon48x48_no_bg.png")).toURI().toString()));
+            GAME_OVER_WINDOW.setScene(scene);
+            GAME_OVER_WINDOW.show();
 
         } catch (IOException | URISyntaxException e) {
             Main.errorAlert("GameOverGUI.java");
@@ -95,11 +113,6 @@ public class GameOverGUI {
 
 
     }
-
-    static String dbField;
-
-    static int arrayIndex;
-
 
     /** on load, set fxml texts */
     @FXML
@@ -117,8 +130,9 @@ public class GameOverGUI {
         new LoadAndSaveScore().start();
     }
 
-    String[] ownScores;
-    String username = Settings.searchSettings("username");
+    public static void setOwnScores(String[] ownScoresGameStage) {
+        ownScores = ownScoresGameStage;
+    }
 
     private class LoadAndSaveScore extends Thread {
         @Override
@@ -126,59 +140,73 @@ public class GameOverGUI {
             try {
                 Thread.sleep(1);
 
-                String hs = "0";
+                String hs;
                 int scoreFirst = 0;
                 List<Player> playersList;
 
+
                 boolean accountTypeIsOnline = !Settings.searchSettings("accountType").equals("local");
 
-                if (accountTypeIsOnline) {
-                    ownScores = UserDataOnline.getDataUser(username);
-                    playersList = UserDataOnline.updateData();
-                } else {
-                    ownScores = UserDataLocal.getDataUser();
-                    playersList = UserDataLocal.updateData();
-                }
+                if (!gameMode.equals("Tutorial")) {
 
-                if (Integer.parseInt(ownScores[arrayIndex]) <= getPoints()) {
                     if (accountTypeIsOnline) {
-                        UserDataOnline.saveDataUser(getPoints(), dbField);
+                        if (ownScores == null) {
+                            ownScores = UserDataOnline.getDataUser(username);
+                        }
+                        playersList = UserDataOnline.updateData();
                     } else {
-                        System.out.println("GameOverGUI.java: local saving " + getPoints() + " to " + dbField);
-                        UserDataLocal.setNewValue(username, dbField, String.valueOf(getPoints()));
+                        if (ownScores == null) {
+                            ownScores = UserDataLocal.getDataUser();
+                        }
+                        playersList = UserDataLocal.updateData();
                     }
 
-                    hs = String.valueOf(getPoints());
+                    if (Integer.parseInt(ownScores[arrayIndex]) <= getPoints()) {
+                        if (accountTypeIsOnline) {
+                            UserDataOnline.saveDataUser(getPoints(), dbField);
+                        } else {
+                            System.out.println("GameOverGUI.java: local saving " + getPoints() + " to " + dbField);
+                            UserDataLocal.setNewValue(username, dbField, String.valueOf(getPoints()));
+                        }
+
+                        hs = String.valueOf(getPoints());
+
+                    } else {
+                        hs = ownScores[arrayIndex];
+                    }
+
+
+                    int tempScore = 0;
+
+
+                    switch (gameMode) {
+                        case "":
+                            for (Player player : playersList) {
+                                if (player.getHsClassic() > tempScore) {
+                                    scoreFirst = player.getHsClassic();
+                                }
+                            }
+                            break;
+                        case "Time":
+                            for (Player player : playersList) {
+                                if (player.getHsTime() > tempScore) {
+                                    scoreFirst = player.getHsTime();
+                                }
+                            }
+                            break;
+                        case "Endless":
+                            for (Player player : playersList) {
+                                if (player.getHsInfinity() > tempScore) {
+                                    scoreFirst = player.getHsInfinity();
+                                }
+                            }
+                            break;
+                        default:
+                            throw new RuntimeException("There was a problem with a String, this error shouldn't have occurred. Please contact the developers");
+                    }
 
                 } else {
-                    hs = ownScores[arrayIndex];
-                }
-
-                int tempScore = 0;
-
-
-                switch (gameMode) {
-                    case "":
-                        for (Player player : playersList) {
-                            if (player.getHsClassic() > tempScore) {
-                                scoreFirst = player.getHsClassic();
-                            }
-                        }
-                        break;
-                    case "Time":
-                        for (Player player : playersList) {
-                            if (player.getHsTime() > tempScore) {
-                                scoreFirst = player.getHsTime();
-                            }
-                        }
-                        break;
-                    case "Endless":
-                        for (Player player : playersList) {
-                            if (player.getHsInfinity() > tempScore) {
-                                scoreFirst = player.getHsInfinity();
-                            }
-                        }
-                        break;
+                    hs = "---";
                 }
 
                 final String finalHs = hs;
@@ -186,14 +214,18 @@ public class GameOverGUI {
 
                 Platform.runLater(() -> {
                     highscore.setText(finalHs);
-                    pointsToFirst.setText(String.valueOf(finalScoreFirst - getPoints()));
+
+                    if (gameMode.equals("Tutorial")) {
+                        pointsToFirst.setText("---");
+                    } else {
+                        pointsToFirst.setText(String.valueOf(finalScoreFirst - getPoints()));
+                    }
 
                     new SaveGameAndTime().start();
                 });
 
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
-                Main.errorAlert("MenuGUI.java");
             }
         }
     }
@@ -204,23 +236,29 @@ public class GameOverGUI {
             try {
                 Thread.sleep(1);
 
-                //TODO zeit getter einbauen
+                if (!gameMode.equals("Tutorial")) {
 
-                if (Settings.searchSettings("accountType").equals("online")) {
-                    DataBaseAPI.saveDataToDB(username, Settings.searchSettings("password"), "gamesPlayed", (Integer.parseInt(ownScores[4]) + 1));
-                    DataBaseAPI.saveDataToDB(username, Settings.searchSettings("password"), "timePlayed", (Integer.parseInt(ownScores[3]) + 10));//STATT 10 GETTER FÜR ZEIT
-                } else {
-                    UserDataLocal.setNewValue(username, "gamesPlayed", ownScores[4] + 1);
-                    UserDataLocal.setNewValue(username, "timePlayed", ownScores[3] + 10);
+                    final int gamesPlayedIndex = 4;
+                    final int timePlayedIndex = 3;
+
+
+                    if (Settings.searchSettings("accountType").equals("online")) {
+                        DataBaseAPI.saveDataToDB(username, Settings.searchSettings("password"), "gamesPlayed", ((Integer.parseInt(ownScores[gamesPlayedIndex]) + 1)));
+                        DataBaseAPI.saveDataToDB(username, Settings.searchSettings("password"), "timePlayed", ((Integer.parseInt(ownScores[timePlayedIndex]) + getAllSeconds())));//STATT 10 GETTER FÜR ZEIT
+                    } else {
+                        UserDataLocal.setNewValue(username, "gamesPlayed", (ownScores[gamesPlayedIndex] + 1));
+                        UserDataLocal.setNewValue(username, "timePlayed", (ownScores[timePlayedIndex] + getAllSeconds()));
+                    }
                 }
 
                 Platform.runLater(() -> {
-                    System.out.println("GameOverGUI.java: saved Scores");
+                    if(!gameMode.equals("Tutorial")) {
+                        System.out.println("GameOverGUI.java: saved Scores");
+                    }
                 });
 
             } catch (InterruptedException ex) {
                 ex.printStackTrace();
-                Main.errorAlert("GameOverGUI.java");
             }
         }
     }
@@ -228,11 +266,12 @@ public class GameOverGUI {
     /**
      * restart the same gamemode
      * @param actionEvent click on retry button
+     * @throws Exception cannot start GameStage cause of error
      */
     @FXML
     private void retryClicked(ActionEvent actionEvent) throws Exception {
         GameStage.start(gameMode,true,false);
-        newWindow.close();
+        GAME_OVER_WINDOW.close();
     }
 
     /**
@@ -242,7 +281,7 @@ public class GameOverGUI {
     @FXML
     private void chooseModeClicked(ActionEvent actionEvent) {
         ChooseModeGUI.start(true);
-        newWindow.close();
+        GAME_OVER_WINDOW.close();
     }
 
 }
