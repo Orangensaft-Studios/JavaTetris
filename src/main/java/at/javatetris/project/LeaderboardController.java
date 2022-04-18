@@ -1,12 +1,14 @@
 package at.javatetris.project;
 
 import javafx.application.Platform;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
@@ -31,22 +33,22 @@ public class LeaderboardController {
     /**
      * online classic highscore column
      */
-    @FXML private TableColumn<Player, String> onlineClassic;
+    @FXML private TableColumn<Player, Number> onlineClassic;
 
     /**
      * online time highscore column
      */
-    @FXML private TableColumn<Player, String> onlineTime;
+    @FXML private TableColumn<Player, Number> onlineTime;
 
     /**
      * online infinity highscore column
      */
-    @FXML private TableColumn<Player, String> onlineInfinity;
+    @FXML private TableColumn<Player, Number> onlineInfinity;
 
     /**
      * online played games column
      */
-    @FXML private TableColumn<Player, String> onlineGames;
+    @FXML private TableColumn<Player, Number> onlineGames;
 
     /**
      * online time played column
@@ -66,22 +68,22 @@ public class LeaderboardController {
     /**
      * local classic highscore column
      */
-    @FXML private TableColumn<Player, String> localClassic;
+    @FXML private TableColumn<Player, Number> localClassic;
 
     /**
      * local time highscore column
      */
-    @FXML private TableColumn<Player, String> localTime;
+    @FXML private TableColumn<Player, Number> localTime;
 
     /**
      * local infinity highscore column
      */
-    @FXML private TableColumn<Player, String> localInfinity;
+    @FXML private TableColumn<Player, Number> localInfinity;
 
     /**
      * local games played column
      */
-    @FXML private TableColumn<Player, String> localGames;
+    @FXML private TableColumn<Player, Number> localGames;
 
     /**
      * local time played column
@@ -153,15 +155,15 @@ public class LeaderboardController {
         onlineGames.setStyle("-fx-alignment: CENTER;");
         onlineTimePlayed.setStyle("-fx-alignment: CENTER;");
         onlineUsername.setCellValueFactory((data) -> new SimpleStringProperty(data.getValue().getName()));
-        onlineClassic.setCellValueFactory((data) -> new SimpleStringProperty(String.valueOf(data.getValue().getHsClassic())));
-        onlineTime.setCellValueFactory((data) -> new SimpleStringProperty(String.valueOf(data.getValue().getHsTime())));
-        onlineInfinity.setCellValueFactory((data) -> new SimpleStringProperty(String.valueOf(data.getValue().getHsInfinity())));
-        onlineGames.setCellValueFactory((data) -> new SimpleStringProperty(String.valueOf(data.getValue().getGamesPlayed())));
+        onlineClassic.setCellValueFactory((data) -> new SimpleIntegerProperty(data.getValue().getHsClassic()));
+        onlineTime.setCellValueFactory((data) -> new SimpleIntegerProperty(data.getValue().getHsTime()));
+        onlineInfinity.setCellValueFactory((data) -> new SimpleIntegerProperty(data.getValue().getHsInfinity()));
+        onlineGames.setCellValueFactory((data) -> new SimpleIntegerProperty(data.getValue().getGamesPlayed()));
         onlineTimePlayed.setCellValueFactory((data) -> new SimpleStringProperty(calculateTime(String.valueOf(data.getValue().getTimePlayed()))));
         onlineLeaderboard.getItems().addAll(onlineData);
         onlineLeaderboard.getSortOrder().add(onlineClassic);
 
-        localClassic.setSortType(TableColumn.SortType.ASCENDING);
+        localClassic.setSortType(TableColumn.SortType.DESCENDING);
         localUsername.setStyle("-fx-alignment: CENTER;");
         localClassic.setStyle("-fx-alignment: CENTER;");
         localTime.setStyle("-fx-alignment: CENTER;");
@@ -169,10 +171,10 @@ public class LeaderboardController {
         localGames.setStyle("-fx-alignment: CENTER;");
         localTimePlayed.setStyle("-fx-alignment: CENTER;");
         localUsername.setCellValueFactory((data) -> new SimpleStringProperty(data.getValue().getName()));
-        localClassic.setCellValueFactory((data) -> new SimpleStringProperty(String.valueOf(data.getValue().getHsClassic())));
-        localTime.setCellValueFactory((data) -> new SimpleStringProperty(String.valueOf(data.getValue().getHsTime())));
-        localInfinity.setCellValueFactory((data) -> new SimpleStringProperty(String.valueOf(data.getValue().getHsInfinity())));
-        localGames.setCellValueFactory((data) -> new SimpleStringProperty(String.valueOf(data.getValue().getGamesPlayed())));
+        localClassic.setCellValueFactory((data) -> new SimpleIntegerProperty(data.getValue().getHsClassic()));
+        localTime.setCellValueFactory((data) -> new SimpleIntegerProperty(data.getValue().getHsTime()));
+        localInfinity.setCellValueFactory((data) -> new SimpleIntegerProperty(data.getValue().getHsInfinity()));
+        localGames.setCellValueFactory((data) -> new SimpleIntegerProperty(data.getValue().getGamesPlayed()));
         localTimePlayed.setCellValueFactory((data) -> new SimpleStringProperty(calculateTime(String.valueOf(data.getValue().getTimePlayed()))));
         localLeaderboard.getItems().addAll(localData);
         localLeaderboard.getSortOrder().add(localClassic);
